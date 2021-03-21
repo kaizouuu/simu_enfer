@@ -40,7 +40,7 @@ typedef struct torture{
 }TORTURE;
 
 //menu
-void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,EPILATION_CHEVEUX **,MARSEILLAIS **,int);
+void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,MARSEILLAIS **,int);
 //fonction de base de liste chainer
 PPF* CreerMaillon();
 void InsererMaillonEnQueue(PPF **,PPF *);
@@ -52,7 +52,7 @@ void SupprimerMaillon(PPF **,char *);
 void EcrireFichier (FILE *,PPF *);
 PPF* LireFichier(FILE *);
 //fonction timer
-void timer1(int *temps);
+void timer1(int *t);
 
 //Creer maillon pour toute les sales de l'enfer
 COURS_ALGO* CreerMaillonTortureCoursAlgo(COURS_ALGO *);

@@ -3,7 +3,7 @@
 #include <string.h>
 #include "fonctions_damnes.h"
 
-void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,int nombrerech)
+void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,int nombrerech)
 {
     int i;
     do{
@@ -58,8 +58,8 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 AfficherMaillonTortureCoursAlgo(*pt_tete_cours_algo);
                 break;
             case 9:
-                nouveau_cour_algo = CreerMaillonTortureFilePoste(*pt_tete_file_poste);
-                InsererMaillonEnQueueTortureFilePoste(pt_tete_file_poste,nouveau_cour_algo);
+                nouveau_file_poste = CreerMaillonTortureFilePoste(*pt_tete_file_poste);
+                InsererMaillonEnQueueTortureFilePoste(pt_tete_file_poste,nouveau_file_poste);
                 break;
             case 10:
                 AfficherMaillonTortureFilePoste(*pt_tete_file_poste);
@@ -240,6 +240,7 @@ void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALG
 
 void AiguillageTorture(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX **pt_tete_epilation,EPILATION_CHEVEUX *nouveau_epilation,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais)
 {
+    int t=0;
     if(pt_tete->score >= 750) //***Affectation PPf a sa torture en fonction de son score
     {
          if (pt_tete == NULL)
@@ -252,13 +253,14 @@ void AiguillageTorture(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *
                 InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo, nouveau_cour_algo);
                 pt_tete = pt_tete->suiv;
             }
-            timer1(10);
+            t=10;
+            timer1(t);
             while (pt_tete != NULL)
             {
                 int nombrerech=0;
                 for(nombrerech=0;(nombrerech=sizeof(COURS_ALGO));nombrerech++)
                 {
-                    SupprimerMaillonTortureCoursAlgo(*pt_tete_cours_algo,nombrerech);
+                    SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo,nombrerech);
                     pt_tete=pt_tete->suiv;
                 }
             }
@@ -272,7 +274,7 @@ void AiguillageTorture(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *
         {
             while (pt_tete != NULL)
             {
-                nouveau_cour_algo = CreerMaillonTortureMarseillais(*pt_tete_marseillais);
+                nouveau_marseillais = CreerMaillonTortureMarseillais(*pt_tete_marseillais);
                 InsererMaillonEnQueueTortureMarseillais(pt_tete_marseillais, nouveau_marseillais);
                 pt_tete = pt_tete->suiv;
             }
