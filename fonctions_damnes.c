@@ -219,7 +219,6 @@ PPF* LireFichier(FILE *database_PFF)
     fclose(database_PFF);
     return pt_tete;
 }
-<<<<<<< Updated upstream
 
 //fonction pour creer les totures
 
@@ -411,7 +410,7 @@ MARSEILLAIS* CreerMaillonTortureMarseillais(MARSEILLAIS *pt_tete_marseillais)
 
     return pt_maillon;
     }*/
-=======
+
 //fonction timer
 int timer(int *temps)
 {
@@ -429,4 +428,4 @@ int timer(int *temps)
 	}
 	return timer0;
 }
->>>>>>> Stashed changes
+
