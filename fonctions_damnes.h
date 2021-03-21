@@ -36,7 +36,7 @@ typedef struct marseillais {
 }MARSEILLAIS;
 
 //menu
-void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,EPILATION_CHEVEUX **,MARSEILLAIS **);
+void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,EPILATION_CHEVEUX **,MARSEILLAIS **,int);
 //fonction de base de liste chainer
 PPF* CreerMaillon();
 void InsererMaillonEnQueue(PPF **,PPF *);
@@ -57,7 +57,9 @@ MARSEILLAIS* CreerMaillonTortureMarseillais();
 //fonction pour manipuler les maillon des totures
 void InsererMaillonEnQueueTorture(COURS_ALGO **,COURS_ALGO *);
 void AfficherMaillonTorture(COURS_ALGO *);
-void RechercherMaillonToture(PPF *,char *);
-void SupprimerMaillonTorture(PPF **,char *);
+void RechercherMaillonTorture(COURS_ALGO *,int);
+void SupprimerMaillonTorture(COURS_ALGO **,int);
 //fonction pour écrire les logs des torture / pas de fonction lire car pas besoin de charger c'est fichier en entré
-void EcrireLogTorture (FILE *,PPF *);
+void EcrireLogTorture (FILE *,COURS_ALGO *);
+//fonction aiguillage purgatoire
+void AiguillagePurgatoire (PPF *,COURS_ALGO **,COURS_ALGO *);

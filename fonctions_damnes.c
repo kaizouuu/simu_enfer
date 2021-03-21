@@ -3,7 +3,7 @@
 #include <string.h>
 #include "fonctions_damnes.h"
 
-void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais)
+void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,int nombrerech)
 {
     int i;
     do{
@@ -19,6 +19,9 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
         printf( " 8 Test unitaire torture afficher la liste des maillon dans ma chaine \n");
         printf( " 9 Test unitaire torture Creer et inserer d'un nouveau maillon 2\n");
         printf( " 10 Test unitaire torture afficher la liste des maillon dans ma chaine 2\n");
+        printf (" 11 pour recherche un maillon dans la chaine de toture\n");
+        printf (" 12 pour supprimer un maillon dans la chaine de toture\n");
+        printf (" 13 pour aiguiller les dannees dans les différentes toture\n");
         scanf("%d",&i);
         switch(i)
         {
@@ -60,6 +63,19 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 break;
             case 10:
                 AfficherMaillonTorture(*pt_tete_file_poste);
+                break;
+            case 11:
+                printf("Entre le nombre du maillon à rechercher:\n");
+                scanf("%d",&nombrerech);
+                RechercherMaillonTorture(*pt_tete_cours_algo, nombrerech);
+                break;
+            case 12 :
+                printf("Entre le nombre du maillon à rechercher:\n");
+                scanf("%d",&nombrerech);
+                SupprimerMaillonTorture(pt_tete_cours_algo,nombrerech);
+                break;
+            case 13:
+                AiguillagePurgatoire(*pt_tete, pt_tete_cours_algo,nouveau_cour_algo);
                 break;
             default:
                 break;
@@ -269,6 +285,52 @@ void AfficherMaillonTorture(COURS_ALGO *pt_tete_cours_algo)
     }
 }
 
+void RechercherMaillonTorture(COURS_ALGO *pt_tete_cours_algo,int nombrerech)
+{
+    if (pt_tete_cours_algo == NULL)
+        printf ("\nLa liste est vide");
+    else
+    {
+        while (pt_tete_cours_algo != NULL && pt_tete_cours_algo->id != nombrerech)
+        {
+            pt_tete_cours_algo=pt_tete_cours_algo->suiv;
+        }
+        if (pt_tete_cours_algo == NULL)
+            printf ("\n%d n'est pas dans la liste",nombrerech);
+        else
+        {
+            printf("\nID: %d",pt_tete_cours_algo->id);
+            printf("\ncompteur: %d", pt_tete_cours_algo->cpt);
+        }
+    }
+}
+
+void SupprimerMaillonTorture(COURS_ALGO **pt_tete_cours_algo,int nombrerech)
+{
+    COURS_ALGO *pt_courant = *pt_tete_cours_algo;
+    COURS_ALGO *pt_precedent = *pt_tete_cours_algo;
+    if (*pt_tete_cours_algo == NULL)
+        printf ("\nLa liste est vide");
+    else
+    {
+        while (pt_tete_cours_algo != NULL && pt_courant->id != nombrerech)
+        {
+            pt_precedent = pt_courant;
+            pt_courant=pt_courant->suiv;
+        }
+        if (pt_courant == pt_precedent)
+            *pt_tete_cours_algo = pt_courant->suiv;
+        else
+        if (pt_courant== NULL)
+            printf("\n%d nest pas dans la liste",nombrerech);
+        else
+            pt_precedent->suiv=pt_courant->suiv;
+
+        free(pt_courant);
+        pt_courant=NULL;
+    }
+}
+
 FILE_POSTE* CreerMaillonTortureFilePoste(FILE_POSTE *pt_tete_file_poste)
 {
     FILE_POSTE *pt_maillon = NULL;
@@ -287,8 +349,22 @@ FILE_POSTE* CreerMaillonTortureFilePoste(FILE_POSTE *pt_tete_file_poste)
     pt_maillon->id = i;
     pt_maillon->cpt = 0;
     pt_maillon->suiv=NULL;
-
     return pt_maillon;
+}
+
+void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo)
+{
+    if (pt_tete == NULL)
+        printf ("\nLa liste est vide");
+    else
+    {
+        while (pt_tete != NULL)
+        {
+            nouveau_cour_algo = CreerMaillonTortureCoursAlgo(*pt_tete_cours_algo);
+            InsererMaillonEnQueueTorture(pt_tete_cours_algo, nouveau_cour_algo);
+            pt_tete = pt_tete->suiv;
+        }
+    }
 }
 
 /*EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveux(EPILATION_CHEVEUX *pt_tete_epilation_cheveux)
