@@ -47,6 +47,8 @@ void SupprimerMaillon(PPF **,char *);
 //fonction pour aller écrire et lire sans les fichiers
 void EcrireFichier (FILE *,PPF *);
 PPF* LireFichier(FILE *);
+//fonction timer
+int timer(int *temps)
 
 //Creer maillon pour toute les sales de l'enfer
 COURS_ALGO* CreerMaillonTortureCoursAlgo(COURS_ALGO *);

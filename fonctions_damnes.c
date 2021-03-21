@@ -203,6 +203,7 @@ PPF* LireFichier(FILE *database_PFF)
     fclose(database_PFF);
     return pt_tete;
 }
+<<<<<<< Updated upstream
 
 //fonction pour creer les totures
 
@@ -334,3 +335,22 @@ MARSEILLAIS* CreerMaillonTortureMarseillais(MARSEILLAIS *pt_tete_marseillais)
 
     return pt_maillon;
     }*/
+=======
+//fonction timer
+int timer(int *temps)
+{
+	
+	int timer0=0;
+	int *t=temps;
+	clock_t depart, arrivee = 0;
+	depart=clock();
+
+	if((depart - arrivee) == *t)
+	{
+		timer0++;
+		arrivee = depart;
+		printf("ca compte\n");
+	}
+	return timer0;
+}
+>>>>>>> Stashed changes
