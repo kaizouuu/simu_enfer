@@ -1,11 +1,12 @@
 #ifndef FCT_DAMNES
 #define FCT_DAMNES
 #define TCHAINE 60
+extern int timer;
 
 typedef struct ppf{
     int id;
     char name[TCHAINE];
-    int cpt;
+    int cpt ;
     int score;
     struct ppf *suiv;
 }PPF;
@@ -42,22 +43,25 @@ typedef struct torture{
 }TORTURE;
 
 //menu
-void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,MARSEILLAIS **,int);
+void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *,MARSEILLAIS **,MARSEILLAIS *,int);
 //fonction de base de liste chainer
 PPF* CreerMaillon();
 void InsererMaillonEnQueue(PPF **,PPF *);
+PPF* InsererMaillonEnQueuesimple(PPF *, PPF *);
 void InsererMaillonBonneplace(PPF **,PPF *); //fonction pour inserer les ppf à la bonne place dans le purgatoire
 void AfficherMaillon(PPF *);
 void RechercherMaillon(PPF *,char *);
+PPF* RechercherMaillonNombre(PPF *,int);
 void SupprimerMaillon(PPF **,char *);
 //fonction pour aller écrire et lire sans les fichiers
 void EcrireFichier (FILE *,PPF *);
 PPF* LireFichier(FILE *);
 //fonction timer
-void timer1(int *t, PPF *cpt);
+void timer1(int t, PPF *cpt);
 
 //Creer maillon pour toute les sales de l'enfer
 COURS_ALGO* CreerMaillonTortureCoursAlgo(COURS_ALGO *);
+COURS_ALGO * CreerMaillonTortureCoursAlgoID(int);
 void InsererMaillonEnQueueTortureCoursAlgo(COURS_ALGO **,COURS_ALGO *);
 void AfficherMaillonTortureCoursAlgo(COURS_ALGO *);
 void RechercherMaillonTortureCoursAlgo(COURS_ALGO *,int);
@@ -87,7 +91,10 @@ void SupprimerMaillonTortureMarseillais(MARSEILLAIS **,int);
 //fonction pour manipuler les maillon des totures
 //fonction pour écrire les logs des torture / pas de fonction lire car pas besoin de charger c'est fichier en entré
 void EcrireLogTorture (FILE *,COURS_ALGO *);
+
 //fonction aiguillage purgatoire
 void AiguillagePurgatoire (PPF *,COURS_ALGO **,COURS_ALGO *);
+void simulation(PPF **,COURS_ALGO **,FILE_POSTE **,EPILATION_CHEVEUX **,MARSEILLAIS **,PPF *,COURS_ALGO *,FILE_POSTE *,EPILATION_CHEVEUX *,MARSEILLAIS *);
+void update(PPF *,COURS_ALGO *,FILE_POSTE *,EPILATION_CHEVEUX *,MARSEILLAIS *,PPF *,COURS_ALGO *,FILE_POSTE *,EPILATION_CHEVEUX *,MARSEILLAIS *);
 
 #endif

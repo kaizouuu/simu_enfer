@@ -28,6 +28,17 @@ COURS_ALGO* CreerMaillonTortureCoursAlgo(COURS_ALGO *pt_tete_cours_algo)
     return pt_maillon;
 }
 
+COURS_ALGO* CreerMaillonTortureCoursAlgoID(int idtempo)
+{
+    COURS_ALGO *pt_maillon = NULL;
+    pt_maillon = (COURS_ALGO*)malloc(sizeof(COURS_ALGO));
+    pt_maillon->id = idtempo;
+    pt_maillon->cpt = 0;
+    pt_maillon->suiv=NULL;
+
+    return pt_maillon;
+}
+
 void InsererMaillonEnQueueTortureCoursAlgo(COURS_ALGO **pt_tete_cours_algo ,COURS_ALGO *nouveau_cour_algo)
 {
     COURS_ALGO *pt_courant = *pt_tete_cours_algo;
