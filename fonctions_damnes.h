@@ -1,3 +1,5 @@
+#ifndef FCT_DAMNES
+#define FCT_DAMNES
 #define TCHAINE 60
 
 typedef struct ppf{
@@ -52,7 +54,7 @@ void SupprimerMaillon(PPF **,char *);
 void EcrireFichier (FILE *,PPF *);
 PPF* LireFichier(FILE *);
 //fonction timer
-void timer1(int *t);
+void timer1(int *t, PPF *cpt);
 
 //Creer maillon pour toute les sales de l'enfer
 COURS_ALGO* CreerMaillonTortureCoursAlgo(COURS_ALGO *);
@@ -87,3 +89,5 @@ void SupprimerMaillonTortureMarseillais(MARSEILLAIS **,int);
 void EcrireLogTorture (FILE *,COURS_ALGO *);
 //fonction aiguillage purgatoire
 void AiguillagePurgatoire (PPF *,COURS_ALGO **,COURS_ALGO *);
+
+#endif

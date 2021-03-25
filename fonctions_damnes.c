@@ -3,6 +3,7 @@
 #include <string.h>
 #include "fonctions_damnes.h"
 
+
 void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,int nombrerech)
 {
     int i;
@@ -253,15 +254,18 @@ void AiguillageTorture(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *
                 InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo, nouveau_cour_algo);
                 pt_tete = pt_tete->suiv;
             }
-            t=10;
-            timer1(t);
-            while (pt_tete != NULL)
+            //t=10;
+            //timer1(t,pt_tete->cpt);
+            if(pt_tete->cpt == 10)
             {
-                int nombrerech=0;
-                for(nombrerech=0;(nombrerech=sizeof(COURS_ALGO));nombrerech++)
+                while (pt_tete != NULL)
                 {
-                    SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo,nombrerech);
-                    pt_tete=pt_tete->suiv;
+                    int nombrerech=0;
+                    for(nombrerech=0;(nombrerech=sizeof(COURS_ALGO));nombrerech++)
+                    {
+                        SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo,nombrerech);
+                        pt_tete=pt_tete->suiv;
+                    }
                 }
             }
         }
@@ -285,14 +289,15 @@ void AiguillageTorture(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *
 
 }
 
-void timer1(int *t)
+/*void timer1(int *t,PPF *cpt)
 {
     for(0;t;t++)
     {
         if(sleep(1000)==0)
-            t++;
+            printf("%d",cpt);
+            cpt++;
     }
-}
+}*/
 /*EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveux(EPILATION_CHEVEUX *pt_tete_epilation_cheveux)
 {
     EPILATION_CHEVEUX *pt_maillon = NULL;
