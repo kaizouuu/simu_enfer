@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "fonctions_damnes.h"
+#include "simulateur.h"
 #include "torture.h"
+#include "time.h"
 
 //fonction pour creer les totures
 //********************************FONCTION LISTE TORTURE COURS D'ALGO**********************************************************//
