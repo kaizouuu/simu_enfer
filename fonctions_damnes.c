@@ -2,11 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+<<<<<<< HEAD
+=======
+
+>>>>>>> AKA
 #include "fonctions_damnes.h"
+#include "torture.h"
+#include "simulateur.h"
 #include "time.h"
 
 
+<<<<<<< HEAD
 void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais,int nombrerech)
+=======
+void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux, EPILATION_CHEVEUX *nouveau_epilation_cheveux, MARSEILLAIS **pt_tete_marseillais, MARSEILLAIS *nouveau_marseillais, int nombrerech)
+>>>>>>> AKA
 {
     int i;
     do{
@@ -82,6 +92,9 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 break;
             case 13:
                 simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais);
+=======
+                AiguillageTorture(*pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais, nouveau_marseillais);
+>>>>>>> AKA
                 break;
             default:
                 break;
@@ -320,21 +333,22 @@ PPF* LireFichier(FILE *database_PFF)
 }
 
 
+<<<<<<< HEAD
+=======
 //*******************************Fonction Pour L'Aiguillage***************************************************
-void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo)
+/*void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo)
 {
-    int idtempo;
     if (pt_tete == NULL)
         printf ("\nLa liste est vide");
     else
     {
         while (pt_tete != NULL)
         {
-            idtempo = pt_tete->id;
-            nouveau_cour_algo = CreerMaillonTortureCoursAlgoID(idtempo);
+            nouveau_cour_algo = CreerMaillonTortureCoursAlgo(*pt_tete_cours_algo);
             InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo, nouveau_cour_algo);
             pt_tete = pt_tete->suiv;
         }
+        
     }
 }
 
@@ -374,6 +388,7 @@ void update(PPF *pt_tete,COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_file
 void AiguillageTorture(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX **pt_tete_epilation,EPILATION_CHEVEUX *nouveau_epilation,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais)
 {
     int t=0;
+    printf("rererer");
     if(pt_tete->score >= 750) //***Affectation PPf a sa torture en fonction de son score
     {
          if (pt_tete == NULL)
@@ -382,12 +397,13 @@ void AiguillageTorture(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *
         {
             while (pt_tete != NULL)
             {
+                printf("cc");
                 nouveau_cour_algo = CreerMaillonTortureCoursAlgo(*pt_tete_cours_algo);
                 InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo, nouveau_cour_algo);
                 pt_tete = pt_tete->suiv;
             }
             t=10;
-            //timer1(t,pt_tete);
+            timer1(&t,pt_tete);
             if(pt_tete->cpt == 10)
             {
                 while (pt_tete != NULL)
@@ -418,19 +434,30 @@ void AiguillageTorture(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *
         }
     }
 
+>>>>>>> AKA
 
-}
 
+<<<<<<< HEAD
 /*void timer1(int t,PPF *pt_tete)
 {
     for(0;t;t++)
     {
         if(sleep(1000)==0)
+=======
+void timer1(int *t,PPF *pt_tete)
+{
+    for(0;t;t++)
+    {
+        sleep(1);
+>>>>>>> AKA
             printf("%d",pt_tete->cpt);
             pt_tete->cpt++;
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> AKA
 /*EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveux(EPILATION_CHEVEUX *pt_tete_epilation_cheveux)
 {
     EPILATION_CHEVEUX *pt_maillon = NULL;
