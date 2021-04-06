@@ -72,10 +72,7 @@ void SupprimerMaillonTortureCoursAlgo(COURS_ALGO **,int);
 //fonction pour écrire les logs des torture / pas de fonction lire car pas besoin de charger c'est fichier en entré
 void EcrireLogTorture (FILE *,COURS_ALGO *);
 
-//fonction aiguillage purgatoire
-void AiguillagePurgatoire (PPF *,COURS_ALGO **,COURS_ALGO *);
-void simulation(PPF **,COURS_ALGO **,FILE_POSTE **,EPILATION_CHEVEUX **,MARSEILLAIS **,PPF *,COURS_ALGO *,FILE_POSTE *,EPILATION_CHEVEUX *,MARSEILLAIS *);
-void update(PPF *,COURS_ALGO *,FILE_POSTE *,EPILATION_CHEVEUX *,MARSEILLAIS *,PPF *,COURS_ALGO *,FILE_POSTE *,EPILATION_CHEVEUX *,MARSEILLAIS *);
+
 
 #endif
 

@@ -2,6 +2,9 @@
 #define SIMULATEUR
 
 //Mettre le code ici
-
+//fonction aiguillage purgatoire
+void AiguillagePurgatoire (PPF *,COURS_ALGO **,COURS_ALGO *);
+void simulation(PPF **,COURS_ALGO **,FILE_POSTE **,EPILATION_CHEVEUX **,MARSEILLAIS **,PPF *,COURS_ALGO *,FILE_POSTE *,EPILATION_CHEVEUX *,MARSEILLAIS *);
+void update(PPF *,COURS_ALGO *,FILE_POSTE *,EPILATION_CHEVEUX *,MARSEILLAIS *,PPF *,COURS_ALGO *,FILE_POSTE *,EPILATION_CHEVEUX *,MARSEILLAIS *);
 
 #endif
