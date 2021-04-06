@@ -44,11 +44,8 @@ typedef struct torture{
 }TORTURE;
 
 //menu
-<<<<<<< HEAD
 void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *,MARSEILLAIS **,MARSEILLAIS *,int);
-=======
-void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE *,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *, MARSEILLAIS **, MARSEILLAIS * ,int);
->>>>>>> AKA
+
 //fonction de base de liste chainer
 PPF* CreerMaillon();
 void InsererMaillonEnQueue(PPF **,PPF *);
@@ -63,11 +60,7 @@ void SupprimerMaillonID(PPF **,int);
 void EcrireFichier (FILE *,PPF *);
 PPF* LireFichier(FILE *);
 //fonction timer
-<<<<<<< HEAD
-void timer1(int t, PPF *cpt);
-=======
-void timer1(int *t, PPF *pt_tete);
->>>>>>> AKA
+
 
 //Creer maillon pour toute les sales de l'enfer
 COURS_ALGO* CreerMaillonTortureCoursAlgo(COURS_ALGO *);
@@ -80,11 +73,8 @@ void SupprimerMaillonTortureCoursAlgo(COURS_ALGO **,int);
 //fonction pour manipuler les maillon des totures
 //fonction pour écrire les logs des torture / pas de fonction lire car pas besoin de charger c'est fichier en entré
 void EcrireLogTorture (FILE *,COURS_ALGO *);
-<<<<<<< HEAD
-=======
 //fonction aiguillage purgatoire
 void AiguillageTorture(PPF *pt_tete, COURS_ALGO **pt_tete_cours_algo, COURS_ALGO *nouveau_cour_algo, FILE_POSTE **pt_tete_file_poste, FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation,EPILATION_CHEVEUX *nouveau_epilation,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais);
->>>>>>> AKA
 
 
 
