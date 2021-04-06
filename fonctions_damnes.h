@@ -58,6 +58,7 @@ void AfficherMaillon(PPF *);
 void RechercherMaillon(PPF *,char *);
 PPF* RechercherMaillonNombre(PPF *,int);
 void SupprimerMaillon(PPF **,char *);
+void SupprimerMaillonID(PPF **,int);
 //fonction pour aller écrire et lire sans les fichiers
 void EcrireFichier (FILE *,PPF *);
 PPF* LireFichier(FILE *);
