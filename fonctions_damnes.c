@@ -81,7 +81,6 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo,nombrerech);
                 break;
             case 13:
-                AiguillagePurgatoire(*pt_tete, pt_tete_cours_algo,nouveau_cour_algo);
                 simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais);
                 break;
             default:
@@ -127,13 +126,13 @@ PPF* InsererMaillonEnQueuesimple(PPF *pt_tete, PPF *nouveau)
 PPF *temp=pt_tete;
 //cas de la liste vide
     if(pt_tete == NULL)
-    return nouveau;
+        return nouveau;
     while(temp->suiv != NULL)
         {
-        temp=temp->suiv;
+            temp=temp->suiv;
         }
     temp->suiv=nouveau;
-    return pt_tete;
+    return temp;
 }
 
 void AfficherMaillon(PPF *pt_tete)
@@ -169,27 +168,29 @@ void RechercherMaillon(PPF *pt_tete,char *nomrech)
         }
     }
 }
+
 PPF* RechercherMaillonNombre(PPF *pt_tete,int nombrerech)
 {
-    PPF *temp=pt_tete;
-    if (temp == NULL)
+    PPF *temp = NULL;
+    if (pt_tete == NULL)
         printf ("\nLa liste est vide");
     else
     {
-        while (pt_tete != NULL && temp->id != nombrerech)
+        while (pt_tete != NULL && pt_tete->id != nombrerech)
         {
-            temp=temp->suiv;
+            pt_tete=pt_tete->suiv;
         }
-        if (temp == NULL)
-            printf ("\n%d n'est pas dans la liste",nombrerech);
-        else
-        {
-            printf("\nID: %d",temp->id);
-            printf("\nNom: %s", temp->name);
-            printf("\nNombre: %d",temp->score);
-            temp->suiv = NULL;
-            return temp;
-        }
+        temp = (PPF*)malloc(sizeof(PPF));
+        temp->id = pt_tete->id;
+        strcpy(temp->name,pt_tete->name);
+        temp->score = pt_tete->score -200;
+        temp->cpt = 0;
+        temp->suiv = NULL;
+
+        printf("\nID: %d",temp->id);
+        printf("\nNom: %s", temp->name);
+        printf("\nNombre: %d",temp->score);
+        return temp;
     }
 }
 
@@ -218,6 +219,60 @@ void SupprimerMaillon(PPF **pt_tete,char *nomrech)
         pt_courant=NULL;
     }
 }
+
+void SupprimerMaillonID(PPF **pt_tete,int nombrerech)
+{
+    PPF *pt_courant = *pt_tete;
+    PPF *pt_precedent = *pt_tete;
+    if (*pt_tete == NULL)
+        printf ("\nLa liste est vide");
+    else
+    {
+        while (pt_tete != NULL && pt_courant->id != nombrerech)
+        {
+            pt_precedent = pt_courant;
+            pt_courant=pt_courant->suiv;
+        }
+        if (pt_courant == pt_precedent)
+            *pt_tete = pt_courant->suiv;
+        else
+        if (pt_courant== NULL)
+            printf("\n%d nest pas dans la liste", nombrerech);
+        else
+            pt_precedent->suiv=pt_courant->suiv;
+
+        free(pt_courant);
+        pt_courant=NULL;
+    }
+}
+/*PPF* supprimerElement(PPF* pt_tete, int nombrerech)
+{
+    element  *tmp;
+    element  *previous;
+
+    if (list == NULL) // si la liste est NULL on s'arrete tout de suite
+        return (list);
+    previous = list;
+    if (previous->data == valeur) // Verifie la tete de liste, cas particulier
+    {
+        liste = previous->next;
+        free(previous);
+        return (list);
+    }
+    tmp = previous->next; // le cas n est gere on se place donc sur le cas n+1
+    while(tmp != NULL) // On Mouline est on supprime si on trouve l'element
+    {
+        if (tmp->data == valeur)
+        {
+            previous->next = tmp->next;
+            free(tmp);
+            return (liste);
+        }
+        previous = tmp; // pour ce souvenir dans la prochaine iteration du precedent
+        tmp = tmp->next;
+    }
+    return liste;
+}*/
 
 void EcrireFichier(FILE *database_PPF,PPF *pt_tete)
 {
@@ -282,6 +337,7 @@ void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALG
         }
     }
 }
+
 void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais)
 {
     unsigned long secondes = 0;
@@ -307,7 +363,7 @@ void update(PPF *pt_tete,COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_file
         {
             int nombrerech = pt_tete_cours_algo->id;
             nouveau = RechercherMaillonNombre(pt_tete,nombrerech);
-            nouveau->score = nouveau->score - 200;
+            SupprimerMaillonID(&pt_tete,nombrerech);
             pt_tete = InsererMaillonEnQueuesimple(pt_tete,nouveau);
         }
         pt_tete_cours_algo=pt_tete_cours_algo->suiv;
