@@ -83,7 +83,6 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 break;
             case 13:
                 simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais);
-                AiguillageTorture(*pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais, nouveau_marseillais);
                 break;
             default:
                 break;
@@ -247,34 +246,6 @@ void SupprimerMaillonID(PPF **pt_tete,int nombrerech)
         pt_courant=NULL;
     }
 }
-/*PPF* supprimerElement(PPF* pt_tete, int nombrerech)
-{
-    element  *tmp;
-    element  *previous;
-
-    if (list == NULL) // si la liste est NULL on s'arrete tout de suite
-        return (list);
-    previous = list;
-    if (previous->data == valeur) // Verifie la tete de liste, cas particulier
-    {
-        liste = previous->next;
-        free(previous);
-        return (list);
-    }
-    tmp = previous->next; // le cas n est gere on se place donc sur le cas n+1
-    while(tmp != NULL) // On Mouline est on supprime si on trouve l'element
-    {
-        if (tmp->data == valeur)
-        {
-            previous->next = tmp->next;
-            free(tmp);
-            return (liste);
-        }
-        previous = tmp; // pour ce souvenir dans la prochaine iteration du precedent
-        tmp = tmp->next;
-    }
-    return liste;
-}*/
 
 void EcrireFichier(FILE *database_PPF,PPF *pt_tete)
 {
