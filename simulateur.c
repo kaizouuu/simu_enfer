@@ -28,7 +28,6 @@ void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALG
 void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais)
 {
     unsigned long secondes = 0;
-    AiguillagePurgatoire(*pt_tete, pt_tete_cours_algo,nouveau_cour_algo);
     time_t begin = time( NULL );
     // Boucle du temps pour sequencer la simulation creer un tableau pour avoir des valeurs pret remplie
     while (secondes<2)
@@ -59,6 +58,5 @@ void update(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE *pt_tete_fi
             *pt_tete = InsererMaillonEnQueuesimple(*pt_tete,nouveau);
         }
         pt_courant_cours_algo = pt_courant_cours_algo->suiv;
-
     }
 }

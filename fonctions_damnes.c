@@ -25,7 +25,8 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
         printf( " 10 Test unitaire torture afficher la liste des maillon dans ma chaine 2\n");
         printf (" 11 pour recherche un maillon dans la chaine de toture\n");
         printf (" 12 pour supprimer un maillon dans la chaine de toture\n");
-        printf (" 13 pour aiguiller les dannees dans les différentes toture\n");
+        printf (" 13 pour simuler de manière unitaire après avoir aiguiller\n");
+        printf (" 14 pour aiguiller les dannees dans les différentes toture\n");
         scanf("%d",&i);
         switch(i)
         {
@@ -84,6 +85,9 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
             case 13:
                 simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais);
                 break;
+            case 14 :
+                AiguillagePurgatoire(*pt_tete, pt_tete_cours_algo,nouveau_cour_algo);
+                break;
             default:
                 break;
         }
@@ -108,7 +112,7 @@ PPF* CreerMaillon()
 void InsererMaillonEnQueue(PPF **pt_tete,PPF *nouveau)
 
 {
-    PPF *temp=*pt_tete;
+    PPF *temp= *pt_tete;
     //cas de la liste vide
     if(*pt_tete == NULL)
         *pt_tete=nouveau;
@@ -124,8 +128,8 @@ void InsererMaillonEnQueue(PPF **pt_tete,PPF *nouveau)
 
 PPF* InsererMaillonEnQueuesimple(PPF *pt_tete, PPF *nouveau)
 {
-PPF *temp=pt_tete;
-//cas de la liste vide
+    PPF *temp=pt_tete;
+    //cas de la liste vide
     if(pt_tete == NULL)
         return nouveau;
     while(temp->suiv != NULL)
@@ -172,7 +176,11 @@ void RechercherMaillon(PPF *pt_tete,char *nomrech)
 
 PPF* RechercherMaillonNombre(PPF *pt_tete,int nombrerech)
 {
-    PPF *temp = NULL;
+    PPF *pt_maillon = NULL;
+    pt_maillon = malloc(sizeof(PPF));
+    char nomtemp[TCHAINE] = "";
+    strcpy(pt_maillon->name,nomtemp);
+
     if (pt_tete == NULL)
         printf ("\nLa liste est vide");
     else
@@ -181,17 +189,18 @@ PPF* RechercherMaillonNombre(PPF *pt_tete,int nombrerech)
         {
             pt_tete=pt_tete->suiv;
         }
-        temp = (PPF*)malloc(sizeof(PPF));
-        temp->id = pt_tete->id;
-        strcpy(temp->name,pt_tete->name);
-        temp->score = pt_tete->score -200;
-        temp->cpt = 0;
-        temp->suiv = NULL;
 
-        printf("\nID: %d",temp->id);
-        printf("\nNom: %s", temp->name);
-        printf("\nNombre: %d",temp->score);
-        return temp;
+        pt_maillon->id = pt_tete->id;
+        strcpy(pt_maillon->name,pt_tete->name);
+        pt_maillon->score = pt_tete->score -200;
+        pt_maillon->cpt = 0;
+        pt_maillon->suiv = NULL;
+
+        printf("\nID: %d",pt_maillon->id);
+        printf("\nNom: %s", pt_maillon->name);
+        printf("\nNombre: %d",pt_maillon->score);
+
+        return pt_maillon;
     }
 }
 
@@ -292,176 +301,3 @@ PPF* LireFichier(FILE *database_PFF)
     return pt_tete;
 }
 
-
-
-//*******************************Fonction Pour L'Aiguillage***************************************************
-/*void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo)
-{
-    if (pt_tete == NULL)
-        printf ("\nLa liste est vide");
-    else
-    {
-        while (pt_tete != NULL)
-        {
-            nouveau_cour_algo = CreerMaillonTortureCoursAlgo(*pt_tete_cours_algo);
-            InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo, nouveau_cour_algo);
-            pt_tete = pt_tete->suiv;
-        }
-        
-    }
-}
-
-void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais)
-{
-    unsigned long secondes = 0;
-    AiguillagePurgatoire(*pt_tete, pt_tete_cours_algo,nouveau_cour_algo);
-    time_t begin = time( NULL );
-    while (secondes<2)
-    {
-        time_t end = time( NULL);
-        secondes = (unsigned long) difftime( end, begin );
-    }
-    printf( "Finished in %ld sec\n", secondes );
-    update(*pt_tete,*pt_tete_cours_algo,*pt_tete_file_poste,*pt_tete_epilation_cheveux,*pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais);
-    AfficherMaillonTortureCoursAlgo(*pt_tete_cours_algo);
-}
-
-void update(PPF *pt_tete,COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_file_poste,EPILATION_CHEVEUX *pt_tete_epilation_cheveux,MARSEILLAIS *pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais)
-{
-    int temps_toture_cours_dalgo = 2;
-    while (pt_tete_cours_algo != NULL)
-    {
-        pt_tete_cours_algo->cpt = pt_tete_cours_algo->cpt + 2;
-        if(pt_tete_cours_algo->cpt >= temps_toture_cours_dalgo)
-        {
-            int nombrerech = pt_tete_cours_algo->id;
-            nouveau = RechercherMaillonNombre(pt_tete,nombrerech);
-            SupprimerMaillonID(&pt_tete,nombrerech);
-            pt_tete = InsererMaillonEnQueuesimple(pt_tete,nouveau);
-        }
-        pt_tete_cours_algo=pt_tete_cours_algo->suiv;
-
-    }
-}
-
-void AiguillageTorture(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX **pt_tete_epilation,EPILATION_CHEVEUX *nouveau_epilation,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais) {
-    int t = 0;
-    printf("rererer");
-    if (pt_tete->score >= 750) //***Affectation PPf a sa torture en fonction de son score
-    {
-        if (pt_tete == NULL)
-            printf("\nLa liste est vide");
-        else {
-            while (pt_tete != NULL) {
-                printf("cc");
-                nouveau_cour_algo = CreerMaillonTortureCoursAlgo(*pt_tete_cours_algo);
-                InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo, nouveau_cour_algo);
-                pt_tete = pt_tete->suiv;
-            }
-            t = 10;
-            if (pt_tete->cpt == 10) {
-                while (pt_tete != NULL) {
-                    int nombrerech = 0;
-                    for (nombrerech = 0; (nombrerech = sizeof(COURS_ALGO)); nombrerech++) {
-                        SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo, nombrerech);
-                        pt_tete = pt_tete->suiv;
-                    }
-                }
-            }
-        }
-    }
-    if (pt_tete->score <= 250) {
-        if (pt_tete == NULL)
-            printf("\nLa liste est vide");
-        else {
-            while (pt_tete != NULL) {
-                nouveau_marseillais = CreerMaillonTortureMarseillais(*pt_tete_marseillais);
-                InsererMaillonEnQueueTortureMarseillais(pt_tete_marseillais, nouveau_marseillais);
-                pt_tete = pt_tete->suiv;
-            }
-
-        }
-    }
-}
-/*void timer1(int t,PPF *pt_tete)
-{
-    for(0;t;t++)
-    {
-        if(sleep(1000)==0)
-=======
-void timer1(int *t,PPF *pt_tete)
-{
-    for(0;t;t++)
-    {
-        sleep(1);
->>>>>>> AKA
-            printf("%d",pt_tete->cpt);
-            pt_tete->cpt++;
-    }
-}
-<<<<<<< HEAD
-
-=======
->>>>>>> AKA
-/*EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveux(EPILATION_CHEVEUX *pt_tete_epilation_cheveux)
-{
-    EPILATION_CHEVEUX *pt_maillon = NULL;
-    pt_maillon = (EPILATION_CHEVEUX*)malloc(sizeof(EPILATION_CHEVEUX));
-    int i = 0;
-    if(pt_tete_epilation_cheveux == NULL)
-        pt_maillon->id = 0;
-    else
-    {
-        while(pt_tete_epilation_cheveux != NULL)
-        {
-            pt_tete_epilation_cheveux = pt_tete_epilation_cheveux->suiv;
-            i ++;
-        }
-    }
-    pt_maillon->id = i;
-    pt_maillon->cpt = 0;
-    pt_maillon->suiv=NULL;
-
-    return pt_maillon;
-}
-
-MARSEILLAIS* CreerMaillonTortureMarseillais(MARSEILLAIS *pt_tete_marseillais)
-{
-    MARSEILLAIS *pt_maillon = NULL;
-    pt_maillon = (MARSEILLAIS*)malloc(sizeof(MARSEILLAIS));
-    int i = 0;
-    if(pt_tete_marseillais == NULL)
-    pt_maillon->id = 0;
-    else
-    {
-        while(pt_tete_marseillais != NULL)
-        {
-            pt_tete_marseillais = pt_tete_marseillais->suiv;
-            i ++;
-        }
-    }
-    pt_maillon->id = i;
-    pt_maillon->cpt = 0;
-    pt_maillon->suiv=NULL;
-
-    return pt_maillon;
-    }*/
-
-//fonction timer
-/*int timer(int *temps)
-{
-	
-	int timer0=0;
-	int *t=temps;
-	clock_t depart, arrivee = 0;
-	depart=clock();
-
-	if((depart - arrivee) == *t)
-	{
-		timer0++;
-		arrivee = depart;
-		printf("ca compte\n");
-	}
-	return timer0;
-}
-*/
