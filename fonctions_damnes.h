@@ -1,7 +1,7 @@
 #ifndef FCT_DAMNES
 #define FCT_DAMNES
 
-#define TCHAINE 60
+#define TCHAINE 600
 extern int timer;
 
 typedef struct ppf{

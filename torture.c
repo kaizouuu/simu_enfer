@@ -128,6 +128,7 @@ void SupprimerMaillonTortureCoursAlgo(COURS_ALGO **pt_tete_cours_algo,int nombre
         pt_courant=NULL;
     }
 }
+
 //********************************FONCTION LISTE TORTURE FILE POSTE**********************************************************//
 
 
