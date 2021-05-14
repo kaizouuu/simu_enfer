@@ -152,6 +152,17 @@ FILE_POSTE* CreerMaillonTortureFilePoste(FILE_POSTE *pt_tete_file_poste)
     pt_maillon->suiv=NULL;
     return pt_maillon;
 }
+
+FILE_POSTE* CreerMaillonTortureFilePosteID(int idtempo)
+{
+    FILE_POSTE *pt_maillon = NULL;
+    pt_maillon = (FILE_POSTE*)malloc(sizeof(FILE_POSTE));
+    pt_maillon->id = idtempo;
+    pt_maillon->cpt = 0;
+    pt_maillon->suiv=NULL;
+
+    return pt_maillon;
+}
 void InsererMaillonEnQueueTortureFilePoste(FILE_POSTE **pt_tete_file_poste ,FILE_POSTE *nouveau_file_poste)
 {
     FILE_POSTE *pt_courant = *pt_tete_file_poste;
@@ -262,6 +273,17 @@ EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveux(EPILATION_CHEVEUX *pt_tet
     return pt_maillon;
 }
 
+EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveuxID(int idtempo)
+{
+    EPILATION_CHEVEUX *pt_maillon = NULL;
+    pt_maillon = (EPILATION_CHEVEUX*)malloc(sizeof(EPILATION_CHEVEUX));
+    pt_maillon->id = idtempo;
+    pt_maillon->cpt = 0;
+    pt_maillon->suiv=NULL;
+
+    return pt_maillon;
+}
+
 void InsererMaillonEnQueueTortureEpilationCheveux(EPILATION_CHEVEUX **pt_tete_epilation ,EPILATION_CHEVEUX *nouveau_epilation)
 {
     EPILATION_CHEVEUX *pt_courant = *pt_tete_epilation;
@@ -368,6 +390,16 @@ MARSEILLAIS* CreerMaillonTortureMarseillais(MARSEILLAIS *pt_tete_marseillais)
     pt_maillon->id = i;
     pt_maillon->cpt = 0;
     pt_maillon->suiv=NULL;
+    return pt_maillon;
+}
+MARSEILLAIS* CreerMaillonTortureMarseillaisID(int idtempo)
+{
+    MARSEILLAIS *pt_maillon = NULL;
+    pt_maillon = (MARSEILLAIS*)malloc(sizeof(MARSEILLAIS));
+    pt_maillon->id = idtempo;
+    pt_maillon->cpt = 0;
+    pt_maillon->suiv=NULL;
+
     return pt_maillon;
 }
 

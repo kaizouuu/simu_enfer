@@ -65,6 +65,11 @@ PPF* LireFichier(FILE *);
 //Creer maillon pour toute les sales de l'enfer
 COURS_ALGO* CreerMaillonTortureCoursAlgo(COURS_ALGO *);
 COURS_ALGO * CreerMaillonTortureCoursAlgoID(int);
+MARSEILLAIS* CreerMaillonTortureMarseillaisID(int);
+EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveuxID(int);
+FILE_POSTE* CreerMaillonTortureFilePosteID(int);
+
+
 void InsererMaillonEnQueueTortureCoursAlgo(COURS_ALGO **,COURS_ALGO *);
 void AfficherMaillonTortureCoursAlgo(COURS_ALGO *);
 void RechercherMaillonTortureCoursAlgo(COURS_ALGO *,int);

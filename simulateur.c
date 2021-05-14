@@ -8,21 +8,79 @@
 
 
 //*******************************Fonction Pour L'Aiguillage***************************************************
-void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo)
+void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo, FILE_POSTE **pt_tete_file_poste, FILE_POSTE*nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux, EPILATION_CHEVEUX *nouveau_epilation_cheveux, MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais)
 {
-    if (pt_tete == NULL)
-        printf ("\nLa liste est vide");
-    else
+    if(pt_tete->score >= 750)
     {
-        while (pt_tete != NULL)
+        if (pt_tete == NULL)
+            printf ("\nLa liste est vide");
+        else
         {
-            int id_tempo = pt_tete->id;
-            nouveau_cour_algo = CreerMaillonTortureCoursAlgoID(id_tempo);
-            InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo, nouveau_cour_algo);
-            pt_tete = pt_tete->suiv;
-        }
+            while (pt_tete != NULL)
+            {
+                int id_tempo = pt_tete->id;
+                nouveau_cour_algo = CreerMaillonTortureCoursAlgoID(id_tempo);
+                InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo, nouveau_cour_algo);
+                pt_tete = pt_tete->suiv;
+            }
+            int id_tempo = 0;
 
+        }
     }
+    if((pt_tete->score < 750) && (pt_tete->score >= 500))
+    {
+        if (pt_tete == NULL)
+            printf ("\nLa liste est vide");
+        else
+        {
+            while (pt_tete != NULL)
+            {
+                int id_tempo = pt_tete->id;
+                nouveau_file_poste = CreerMaillonTortureFilePosteID(id_tempo);
+                InsererMaillonEnQueueTortureFilePoste(pt_tete_file_poste, nouveau_file_poste);
+                pt_tete = pt_tete->suiv;
+            }
+            int id_tempo = 0;
+
+        }
+    }
+    if((pt_tete->score < 500) && (pt_tete->score >= 250))
+    {
+        if (pt_tete == NULL)
+            printf ("\nLa liste est vide");
+        else
+        {
+            while (pt_tete != NULL)
+            {
+                int id_tempo = pt_tete->id;
+                nouveau_epilation_cheveux = CreerMaillonTortureEpilationCheveuxID(id_tempo);
+                InsererMaillonEnQueueTortureEpilationCheveux(pt_tete_epilation_cheveux, nouveau_epilation_cheveux);
+                pt_tete = pt_tete->suiv;
+            }
+            int id_tempo = 0;
+
+        }
+    }
+    if((pt_tete->score < 250) && (pt_tete->score >= 0))
+    {
+        if (pt_tete == NULL)
+            printf ("\nLa liste est vide");
+        else
+        {
+            while (pt_tete != NULL)
+            {
+                int id_tempo = pt_tete->id;
+                nouveau_marseillais = CreerMaillonTortureMarseillaisID(id_tempo);
+                InsererMaillonEnQueueTortureMarseillais(pt_tete_marseillais, nouveau_marseillais);
+                pt_tete = pt_tete->suiv;
+            }
+            int id_tempo = 0;
+
+        }
+    }
+
+
+
 }
 
 void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais)
