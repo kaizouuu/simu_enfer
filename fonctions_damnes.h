@@ -7,7 +7,7 @@ extern int timer;
 typedef struct ppf{
     int id;
     char name[TCHAINE];
-    int cpt ;
+    int cpt;
     int score;
     struct ppf *suiv;
 }PPF;
@@ -57,8 +57,8 @@ PPF* RechercherMaillonNombre(PPF *,int);
 void SupprimerMaillon(PPF **,char *);
 void SupprimerMaillonID(PPF **,int);
 //fonction pour aller écrire et lire sans les fichiers
-void EcrireFichier (FILE *,PPF *);
-PPF* LireFichier(FILE *);
+void EcrireFichier (FILE *,PPF *,int);
+PPF* LireFichier(FILE *, int);
 //fonction timer
 
 

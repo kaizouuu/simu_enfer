@@ -128,6 +128,50 @@ void SupprimerMaillonTortureCoursAlgo(COURS_ALGO **pt_tete_cours_algo,int nombre
         pt_courant=NULL;
     }
 }
+void EcrireFichierCoursAlgo(FILE *database_COURS_ALGO,COURS_ALGO *pt_tete_cours_algo)
+{
+    database_COURS_ALGO = fopen ("database_COURS_ALGO.bin","w+");
+    int i = 0;
+    while(pt_tete_cours_algo != NULL)
+    {
+        i = fwrite(pt_tete_cours_algo,sizeof(COURS_ALGO),1, database_COURS_ALGO);
+        if(i != 1)
+        {
+            printf("\nErreur a l'ecriture");
+            break;
+        }
+        pt_tete_cours_algo = pt_tete_cours_algo->suiv;
+    }
+    fclose(database_COURS_ALGO);
+}
+
+COURS_ALGO* LireFichierCoursAlgo(FILE *database_COURS_ALGO)
+{
+    database_COURS_ALGO = fopen ("database_COURS_ALGO.bin","r");
+    COURS_ALGO tmp;
+    COURS_ALGO *pt_tete_cours_algo = NULL;
+    COURS_ALGO *pt_nouveau = NULL;
+    fseek(database_COURS_ALGO,0, SEEK_SET);
+    memset(&tmp,'\0', sizeof(COURS_ALGO));
+    while(fread(&tmp,sizeof(COURS_ALGO),1,database_COURS_ALGO))
+    {
+        if(NULL == (pt_nouveau = (COURS_ALGO*)malloc(sizeof(COURS_ALGO))))
+        {
+            printf("\nErreur a la creation du maillon");
+            break;
+        }
+        else
+        {
+            *pt_nouveau = tmp;
+            pt_nouveau->suiv = NULL;
+            InsererMaillonEnQueueTortureCoursAlgo(&pt_tete_cours_algo, pt_nouveau);
+            memset(&tmp,'\0', sizeof(COURS_ALGO));
+        }
+
+    }
+    fclose(database_COURS_ALGO);
+    return pt_tete_cours_algo;
+}
 
 //********************************FONCTION LISTE TORTURE FILE POSTE**********************************************************//
 
@@ -248,6 +292,51 @@ void SupprimerMaillonTortureFilePoste(FILE_POSTE **pt_tete_file_poste,int nombre
         free(pt_courant);
         pt_courant=NULL;
     }
+}
+
+void EcrireFichierFilePoste(FILE *database_FILE_POSTE,FILE_POSTE *pt_tete_file_poste)
+{
+    database_FILE_POSTE = fopen ("database_FILE_POSTE.bin","w+");
+    int i = 0;
+    while(pt_tete_file_poste != NULL)
+    {
+        i = fwrite(pt_tete_file_poste,sizeof(FILE_POSTE),1, database_FILE_POSTE);
+        if(i != 1)
+        {
+            printf("\nErreur a l'ecriture");
+            break;
+        }
+        pt_tete_file_poste = pt_tete_file_poste->suiv;
+    }
+    fclose(database_FILE_POSTE);
+}
+
+FILE_POSTE* LireFichierFilePoste(FILE *database_FILE_POSTE)
+{
+    database_FILE_POSTE = fopen ("database_FILE_POSTE.bin","r");
+    FILE_POSTE tmp;
+    FILE_POSTE *pt_tete_file_poste = NULL;
+    FILE_POSTE *pt_nouveau = NULL;
+    fseek(database_FILE_POSTE,0, SEEK_SET);
+    memset(&tmp,'\0', sizeof(FILE_POSTE));
+    while(fread(&tmp,sizeof(FILE_POSTE),1,database_FILE_POSTE))
+    {
+        if(NULL == (pt_nouveau = (FILE_POSTE*)malloc(sizeof(FILE_POSTE))))
+        {
+            printf("\nErreur a la creation du maillon");
+            break;
+        }
+        else
+        {
+            *pt_nouveau = tmp;
+            pt_nouveau->suiv = NULL;
+            InsererMaillonEnQueueTortureFilePoste(&pt_tete_file_poste, pt_nouveau);
+            memset(&tmp,'\0', sizeof(FILE_POSTE));
+        }
+
+    }
+    fclose(database_FILE_POSTE);
+    return pt_tete_file_poste;
 }
 
 //********************************FONCTION LISTE TORTURE EPILATION CHEVEUX**********************************************************//
@@ -371,6 +460,51 @@ void SupprimerMaillonTortureEpilationCheveux(EPILATION_CHEVEUX **pt_tete_epilati
     }
 }
 
+void EcrireFichierEpilationCheveux(FILE *database_EPILATION_CHEVEUX,EPILATION_CHEVEUX *pt_tete_epilation_cheveux)
+{
+    database_EPILATION_CHEVEUX = fopen ("database_EPILATION_CHEVEUX.bin","w+");
+    int i = 0;
+    while(pt_tete_epilation_cheveux != NULL)
+    {
+        i = fwrite(pt_tete_epilation_cheveux,sizeof(FILE_POSTE),1, database_EPILATION_CHEVEUX);
+        if(i != 1)
+        {
+            printf("\nErreur a l'ecriture");
+            break;
+        }
+        pt_tete_epilation_cheveux = pt_tete_epilation_cheveux->suiv;
+    }
+    fclose(database_EPILATION_CHEVEUX);
+}
+
+EPILATION_CHEVEUX* LireFichierEpilationCheveux(FILE *database_EPILATION_CHEVEUX)
+{
+    database_EPILATION_CHEVEUX = fopen ("database_EPILATION_CHEVEUX.bin","r");
+    EPILATION_CHEVEUX tmp;
+    EPILATION_CHEVEUX *pt_tete_epilation_cheveux = NULL;
+    EPILATION_CHEVEUX *pt_nouveau = NULL;
+    fseek(database_EPILATION_CHEVEUX,0, SEEK_SET);
+    memset(&tmp,'\0', sizeof(EPILATION_CHEVEUX));
+    while(fread(&tmp,sizeof(EPILATION_CHEVEUX),1,database_EPILATION_CHEVEUX))
+    {
+        if(NULL == (pt_nouveau = (EPILATION_CHEVEUX*)malloc(sizeof(EPILATION_CHEVEUX))))
+        {
+            printf("\nErreur a la creation du maillon");
+            break;
+        }
+        else
+        {
+            *pt_nouveau = tmp;
+            pt_nouveau->suiv = NULL;
+            InsererMaillonEnQueueTortureEpilationCheveux(&pt_tete_epilation_cheveux, pt_nouveau);
+            memset(&tmp,'\0', sizeof(EPILATION_CHEVEUX));
+        }
+
+    }
+    fclose(database_EPILATION_CHEVEUX);
+    return pt_tete_epilation_cheveux;
+}
+
 //********************************FONCTION LISTE TORTURE MARSEILLAIS**********************************************************//
 MARSEILLAIS* CreerMaillonTortureMarseillais(MARSEILLAIS *pt_tete_marseillais)
 {
@@ -488,4 +622,49 @@ void SupprimerMaillonTortureMarseillais(MARSEILLAIS **pt_tete_marseillais,int no
         free(pt_courant);
         pt_courant=NULL;
     }
+}
+
+void EcrireFichierMarseillais(FILE *database_MARSEILLAIS,MARSEILLAIS *pt_tete_marseillais)
+{
+    database_MARSEILLAIS = fopen ("database_MARSEILLAIS.bin","w+");
+    int i = 0;
+    while(pt_tete_marseillais != NULL)
+    {
+        i = fwrite(pt_tete_marseillais,sizeof(MARSEILLAIS),1, database_MARSEILLAIS);
+        if(i != 1)
+        {
+            printf("\nErreur a l'ecriture");
+            break;
+        }
+        pt_tete_marseillais = pt_tete_marseillais->suiv;
+    }
+    fclose(database_MARSEILLAIS);
+}
+
+MARSEILLAIS* LireFichierMarseillais(FILE *database_MARSEILLAIS)
+{
+    database_MARSEILLAIS = fopen ("database_MARSEILLAIS.bin","r");
+    MARSEILLAIS tmp;
+    MARSEILLAIS *pt_tete_file_poste = NULL;
+    MARSEILLAIS *pt_nouveau = NULL;
+    fseek(database_MARSEILLAIS,0, SEEK_SET);
+    memset(&tmp,'\0', sizeof(MARSEILLAIS));
+    while(fread(&tmp,sizeof(MARSEILLAIS),1,database_MARSEILLAIS))
+    {
+        if(NULL == (pt_nouveau = (MARSEILLAIS*)malloc(sizeof(MARSEILLAIS))))
+        {
+            printf("\nErreur a la creation du maillon");
+            break;
+        }
+        else
+        {
+            *pt_nouveau = tmp;
+            pt_nouveau->suiv = NULL;
+            InsererMaillonEnQueueTortureMarseillais(&pt_tete_file_poste, pt_nouveau);
+            memset(&tmp,'\0', sizeof(MARSEILLAIS));
+        }
+
+    }
+    fclose(database_MARSEILLAIS);
+    return pt_tete_file_poste;
 }
