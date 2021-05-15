@@ -10,6 +10,7 @@
 void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais,int nombrerech)
 {
     int i;
+    int flag;
     do{
         printf("\n********** Vous etes la pour creer des lens **********\n");
         printf (" 0 pour quitter le programme\n");
@@ -53,10 +54,12 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 SupprimerMaillon(pt_tete,nomrech);
                 break;
             case 5:
-                EcrireFichier(database_PFF,*pt_tete);
+                flag = 0;
+                EcrireFichier(database_PFF,*pt_tete,flag);
                 break;
             case 6:
-                *pt_tete = LireFichier(database_PFF);
+                flag = 0;
+                *pt_tete = LireFichier(database_PFF,flag);
                 break;
             case 7:
                 nouveau_cour_algo = CreerMaillonTortureCoursAlgo(*pt_tete_cours_algo);
@@ -86,7 +89,7 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais);
                 break;
             case 14 :
-                AiguillagePurgatoire( pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais);
+                AiguillagePurgatoire(pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais);
                 break;
             default:
                 break;
@@ -102,6 +105,7 @@ PPF* CreerMaillon()
     scanf("%d",&(*pt_maillon).id);
     printf("Donner un nom a votre PFF: \n");
     scanf("%s",pt_maillon->name);
+    pt_maillon->cpt = 0;
     printf("Entrer le score de depravation de votre PPF:\n");
     scanf("%d",&(*pt_maillon).score);
     pt_maillon->suiv=NULL;
@@ -177,10 +181,6 @@ void RechercherMaillon(PPF *pt_tete,char *nomrech)
 PPF* RechercherMaillonNombre(PPF *pt_tete,int nombrerech)
 {
     PPF *pt_maillon = NULL;
-    pt_maillon = malloc(sizeof(PPF));
-    char nomtemp[TCHAINE] = "";
-    strcpy(pt_maillon->name,nomtemp);
-
     if (pt_tete == NULL)
         printf ("\nLa liste est vide");
     else
@@ -189,18 +189,25 @@ PPF* RechercherMaillonNombre(PPF *pt_tete,int nombrerech)
         {
             pt_tete=pt_tete->suiv;
         }
+        if (pt_tete == NULL)
+            return pt_maillon;
+        else
+        {
+            PPF *pt_maillon_ok = NULL;
+            pt_maillon_ok = (PPF*)malloc(sizeof(PPF));
+            pt_maillon_ok->id = pt_tete->id;
+            strcpy(pt_maillon_ok->name,pt_tete->name);
+            // Placer le nombre de torture en parametre et faire un case of pour le score de depravation
+            pt_maillon_ok->score = pt_tete->score -200;
+            pt_maillon_ok->cpt = 0;
+            pt_maillon_ok->suiv = NULL;
 
-        pt_maillon->id = pt_tete->id;
-        strcpy(pt_maillon->name,pt_tete->name);
-        pt_maillon->score = pt_tete->score -200;
-        pt_maillon->cpt = 0;
-        pt_maillon->suiv = NULL;
+            printf("\nID: %d",pt_maillon_ok->id);
+            printf("\nNom: %s", pt_maillon_ok->name);
+            printf("\nNombre: %d",pt_maillon_ok->score);
 
-        printf("\nID: %d",pt_maillon->id);
-        printf("\nNom: %s", pt_maillon->name);
-        printf("\nNombre: %d",pt_maillon->score);
-
-        return pt_maillon;
+            return pt_maillon_ok;
+        }
     }
 }
 
@@ -256,9 +263,12 @@ void SupprimerMaillonID(PPF **pt_tete,int nombrerech)
     }
 }
 
-void EcrireFichier(FILE *database_PPF,PPF *pt_tete)
+void EcrireFichier(FILE *database_PPF,PPF *pt_tete,int flag)
 {
-    database_PPF = fopen ("database_PFF.bin","w+");
+    if (flag == 0)
+        database_PPF = fopen ("database_PFF.bin","w+");
+    else
+        database_PPF = fopen("database_PFF_SIMU.bin","w+");
     int i = 0;
     while(pt_tete != NULL)
     {
@@ -273,9 +283,12 @@ void EcrireFichier(FILE *database_PPF,PPF *pt_tete)
     fclose(database_PPF);
 }
 
-PPF* LireFichier(FILE *database_PFF)
+PPF* LireFichier(FILE *database_PFF, int flag)
 {
-    database_PFF = fopen ("database_PFF.bin","r");
+    if (flag == 0)
+        database_PFF = fopen ("database_PFF.bin","r");
+    else
+        database_PFF = fopen("database_PFF_SIMU.bin","r");
     PPF tmp;
     PPF *pt_tete = NULL;
     PPF *pt_nouveau = NULL;
@@ -300,4 +313,3 @@ PPF* LireFichier(FILE *database_PFF)
     fclose(database_PFF);
     return pt_tete;
 }
-
