@@ -173,6 +173,17 @@ COURS_ALGO* LireFichierCoursAlgo(FILE *database_COURS_ALGO)
     return pt_tete_cours_algo;
 }
 
+int CompteurCoursAlgo (COURS_ALGO *pt_tete_cours_algo)
+{
+    int i = 0;
+    while (pt_tete_cours_algo != NULL)
+    {
+        i++;
+        pt_tete_cours_algo =pt_tete_cours_algo->suiv;
+    }
+    return i;
+}
+
 //********************************FONCTION LISTE TORTURE FILE POSTE**********************************************************//
 
 

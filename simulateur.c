@@ -8,7 +8,7 @@
 
 
 //*******************************Fonction Pour L'Aiguillage***************************************************
-void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo, FILE_POSTE **pt_tete_file_poste, FILE_POSTE*nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux, EPILATION_CHEVEUX *nouveau_epilation_cheveux, MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais)
+void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo, FILE_POSTE **pt_tete_file_poste, FILE_POSTE*nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux, EPILATION_CHEVEUX *nouveau_epilation_cheveux, MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais, int nb_pers_cours_algo)
 {
     int id_tempo;
     while (pt_tete != NULL)
@@ -17,13 +17,16 @@ void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALG
         {
             // Verifier la taille des listes des chambre  dans cette section
             pt_tete->cpt = 1;
-
-            if(pt_tete->score >= 750)
+            if (nb_pers_cours_algo<1)
             {
-                id_tempo = pt_tete->id;
-                nouveau_cour_algo = CreerMaillonTortureCoursAlgoID(id_tempo);
-                InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo, nouveau_cour_algo);
-                id_tempo = 0;
+                if(pt_tete->score >= 750)
+                {
+                    id_tempo = pt_tete->id;
+                    nouveau_cour_algo = CreerMaillonTortureCoursAlgoID(id_tempo);
+                    InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo, nouveau_cour_algo);
+                    id_tempo = 0;
+                    nb_pers_cours_algo++;
+                }
             }
 
             if((pt_tete->score < 750) && (pt_tete->score >= 500))
@@ -59,10 +62,11 @@ void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALG
 
 void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais)
 {
+    int nb_pers_cours_algo = 0 ;
     while (*pt_tete != NULL)
     {
 
-        AiguillagePurgatoire(*pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais);
+        AiguillagePurgatoire(*pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais,nb_pers_cours_algo);
         unsigned long secondes = 0;
         time_t begin = time( NULL );
         // Boucle du temps pour sequencer la simulation creer un tableau pour avoir des valeurs pret remplie
@@ -71,9 +75,10 @@ void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_te
             time_t end = time( NULL);
             secondes = (unsigned long) difftime( end, begin );
         }
+        nb_pers_cours_algo = CompteurCoursAlgo(*pt_tete_cours_algo);
         printf( "\n\n******************* Mise à jour apres %ld ans **********************\n", secondes );
         update(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais);
-        AfficherMaillonTortureCoursAlgo(*pt_tete_cours_algo);
+        Affichageapresupdate(*pt_tete_cours_algo, *pt_tete_file_poste, *pt_tete_epilation_cheveux, *pt_tete_marseillais);
     }
 }
 
@@ -113,11 +118,12 @@ void update(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_f
     EcrireFichierMarseillais(database_MARSEILLAIS,*pt_tete_marseillais);
     pt_courant_marseillais = LireFichierMarseillais(database_MARSEILLAIS);
 
+    //DEfine dans le main par utilisateur
     int nombrerech;
-    int temps_torture_cours_dalgo = 5;
-    int temps_torture_file_poste = 2;
-    int temps_torture_epilation_cheveux = 2;
-    int temps_torture_marseilllais = 2;
+    int temps_torture_cours_dalgo = 8;
+    int temps_torture_file_poste = 8;
+    int temps_torture_epilation_cheveux = 8;
+    int temps_torture_marseilllais = 8;
 
     // Boucle qui vient update tout les temps de torture des chambres pour pouvoir ensuite les suprimer et les replacer dans le purgatoire
     while (pt_courant_cours_algo != NULL)
@@ -226,4 +232,80 @@ COURS_ALGO* copieListeFrag(COURS_ALGO *S) {
         }
     }
     return copie;
+}
+
+void Affichageapresupdate(COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_file_poste,EPILATION_CHEVEUX *pt_tete_epilation_cheveux,MARSEILLAIS *pt_tete_marseillais)
+{
+    int tableau_affichage_cours_algo_id[TAFFICHAGE];
+    int tableau_affichage_cours_algo_cpt[TAFFICHAGE];
+    int i = 0;
+    int nbdanne = 3 ;
+    printf ("\n\n Affichage des dannées en cours d'algo ci dessous: \n");
+    {
+        if(pt_tete_cours_algo == NULL)
+            printf("Les salles de cette toture sont vides, les diables ont pris leurs pause.");
+        while (pt_tete_cours_algo != NULL && i < nbdanne)
+        {
+            tableau_affichage_cours_algo_id[i] = pt_tete_cours_algo->id;
+            tableau_affichage_cours_algo_cpt[i] = pt_tete_cours_algo->cpt;
+            pt_tete_cours_algo = pt_tete_cours_algo->suiv;
+            i++;
+        }
+        for (i=0; i<nbdanne; i++)
+            printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_cours_algo_id[i],tableau_affichage_cours_algo_cpt[i]);
+    }
+
+    int tableau_affichage_file_poste_id[TAFFICHAGE];
+    int tableau_affichage_file_poste_cpt[TAFFICHAGE];
+    i=0;
+    printf ("\n\n Affichage des dannées qui font la queue à la poste ci dessous: \n");
+    {
+        if(pt_tete_file_poste == NULL)
+            printf("Les salles de cette toture sont vides, les diables ont pris leurs pause.");
+        while (pt_tete_file_poste != NULL && i < nbdanne)
+        {
+            tableau_affichage_file_poste_id[i] = pt_tete_file_poste->id;
+            tableau_affichage_file_poste_cpt[i] = pt_tete_file_poste->cpt;
+            pt_tete_file_poste = pt_tete_file_poste->suiv;
+            i++;
+        }
+        for (i=0; i<nbdanne; i++)
+            printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_file_poste_id[i],tableau_affichage_file_poste_cpt[i]);
+    }
+
+    int tableau_affichage_epilation_cheveux_id[TAFFICHAGE];
+    int tableau_affichage_epilation_cheveux_cpt[TAFFICHAGE];
+    i = 0;
+    printf ("\n\n Affichage des dannées qui se font épiller un par un leurs cheveux ci dessous: \n");
+    {
+        if(pt_tete_epilation_cheveux == NULL)
+            printf("Les salles de cette toture sont vides, les diables ont pris leurs pause.");
+        while (pt_tete_epilation_cheveux != NULL && i < nbdanne)
+        {
+            tableau_affichage_epilation_cheveux_id[i] = pt_tete_epilation_cheveux->id;
+            tableau_affichage_epilation_cheveux_cpt[i] = pt_tete_epilation_cheveux->cpt;
+            pt_tete_epilation_cheveux = pt_tete_epilation_cheveux->suiv;
+            i++;
+        }
+        for (i=0; i<nbdanne; i++)
+            printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_epilation_cheveux_id[i],tableau_affichage_epilation_cheveux_cpt[i]);
+    }
+
+    int tableau_affichage_marseillais_id[TAFFICHAGE];
+    int tableau_affichage_marseillais_cpt[TAFFICHAGE];
+    i = 0;
+    printf ("\n\n Affichage des dannées qui visionnent les maisaillais en boucle ci dessous: \n");
+    {
+        if(pt_tete_marseillais == NULL)
+            printf("Les salles de cette toture sont vides, les diables ont pris leurs pause.");
+        while (pt_tete_marseillais != NULL && i < nbdanne)
+        {
+            tableau_affichage_marseillais_id[i] = pt_tete_marseillais->id;
+            tableau_affichage_marseillais_cpt[i] = pt_tete_marseillais->cpt;
+            pt_tete_marseillais = pt_tete_marseillais->suiv;
+            i++;
+        }
+        for (i=0; i<nbdanne; i++)
+            printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_marseillais_id[i],tableau_affichage_marseillais_cpt[i]);
+    }
 }

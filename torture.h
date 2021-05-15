@@ -18,7 +18,7 @@ void RechercherMaillonTortureFilePoste(FILE_POSTE *,int);
 void SupprimerMaillonTortureFilePoste(FILE_POSTE **,int);
 void EcrireFichierFilePoste(FILE *,FILE_POSTE *);
 FILE_POSTE* LireFichierFilePoste(FILE *);
-
+int CompteurCoursAlgo (COURS_ALGO *);
 
 EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveux();
 void InsererMaillonEnQueueTortureEpilationCheveux(EPILATION_CHEVEUX **,EPILATION_CHEVEUX *);
