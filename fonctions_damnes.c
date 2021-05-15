@@ -89,7 +89,7 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais);
                 break;
             case 14 :
-                AiguillagePurgatoire(pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais);
+                //AiguillagePurgatoire(pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais);
                 break;
             default:
                 break;
@@ -201,10 +201,6 @@ PPF* RechercherMaillonNombre(PPF *pt_tete,int nombrerech)
             pt_maillon_ok->score = pt_tete->score -200;
             pt_maillon_ok->cpt = 0;
             pt_maillon_ok->suiv = NULL;
-
-            printf("\nID: %d",pt_maillon_ok->id);
-            printf("\nNom: %s", pt_maillon_ok->name);
-            printf("\nNombre: %d",pt_maillon_ok->score);
 
             return pt_maillon_ok;
         }

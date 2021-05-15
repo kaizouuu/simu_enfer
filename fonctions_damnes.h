@@ -2,6 +2,8 @@
 #define FCT_DAMNES
 
 #define TCHAINE 600
+#define TAFFICHAGE 20
+
 extern int timer;
 
 typedef struct ppf{
