@@ -7,7 +7,7 @@
 #include "simulateur.h"
 #include "time.h"
 
-void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais,int nombrerech)
+void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais,int nombrerech, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais,int temps_torture_cours_dalgo, int temps_torture_file_poste, int temps_torture_epilation_cheveux, int temps_torture_marseilllais)
 {
     int i;
     int flag;
@@ -86,10 +86,12 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo,nombrerech);
                 break;
             case 13:
-                simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais);
+                simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais,nb_place_cours_algo, nb_place_file_poste,nb_place_epilation_cheveux, nb_place_marseillais, temps_torture_cours_dalgo, temps_torture_file_poste, temps_torture_epilation_cheveux, temps_torture_marseilllais);
                 break;
             case 14 :
                 //AiguillagePurgatoire(pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais);
+                 //DemandeUtilisateur(nb_place_cours_algo, nb_place_file_poste, nb_place_epilation_cheveux, nb_place_marseillais,temps_torture_cours_dalgo, temps_torture_file_poste, temps_torture_epilation_cheveux, temps_torture_marseilllais);
+
                 break;
             default:
                 break;
@@ -309,3 +311,37 @@ PPF* LireFichier(FILE *database_PFF, int flag)
     fclose(database_PFF);
     return pt_tete;
 }
+/*void DemandeUtilisateur(int *nb_place_cours_algo, int *nb_place_file_poste, int *nb_place_epilation_cheveux, int *nb_place_marseillais,int *temps_torture_cours_dalgo, int *temps_torture_file_poste, int *temps_torture_epilation_cheveux, int *temps_torture_marseilllais)
+{
+
+    printf("Combien de place voulez-vous affecter à la torture Cours Algo :");    
+    scanf ("%d",nb_place_cours_algo);
+
+    printf("Combien de temps voulez-vous affecter à la torture Cours Algo :");
+    scanf("%d",temps_torture_cours_dalgo);
+
+
+    printf("Combien de place voulez-vous affecter à la torture File Poste :");        
+    scanf("%d",nb_place_file_poste);
+
+    printf("Combien de temps voulez-vous affecter à la torture File Poste :");
+    scanf("%d",temps_torture_file_poste);
+
+
+    printf("Combien de place voulez-vous affecter à la torture Epilation Cheveux :");    
+    scanf("%d",nb_place_epilation_cheveux);
+
+    printf("Combien de temps voulez-vous affecter à la torture Epilation Cheveux :");
+    scanf("%d",temps_torture_epilation_cheveux);
+
+
+    printf("Combien de place voulez-vous affecter à la torture Marseillais :");    
+    scanf("%d",nb_place_marseillais);
+
+    printf("Combien de temps voulez-vous affecter à la torture Marseillais :");
+    scanf("%d",temps_torture_marseilllais);
+
+
+
+
+}*/

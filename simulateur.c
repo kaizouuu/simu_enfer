@@ -8,7 +8,7 @@
 
 
 //*******************************Fonction Pour L'Aiguillage***************************************************
-void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo, FILE_POSTE **pt_tete_file_poste, FILE_POSTE*nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux, EPILATION_CHEVEUX *nouveau_epilation_cheveux, MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais, int nb_pers_cours_algo)
+void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo, FILE_POSTE **pt_tete_file_poste, FILE_POSTE*nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux, EPILATION_CHEVEUX *nouveau_epilation_cheveux, MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais, int nb_pers_cours_algo, int nb_pers_file_poste, int nb_pers_epilation_cheveux, int nb_pers_marseillais, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais)
 {
     int id_tempo;
     while (pt_tete != NULL)
@@ -17,7 +17,7 @@ void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALG
         {
             // Verifier la taille des listes des chambre  dans cette section
             pt_tete->cpt = 1;
-            if (nb_pers_cours_algo<1)
+            if (nb_pers_cours_algo < nb_place_cours_algo)
             {
                 if(pt_tete->score >= 750)
                 {
@@ -28,28 +28,36 @@ void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALG
                     nb_pers_cours_algo++;
                 }
             }
-
-            if((pt_tete->score < 750) && (pt_tete->score >= 500))
+            if (nb_pers_file_poste < nb_place_file_poste)
             {
-                id_tempo = pt_tete->id;
-                nouveau_file_poste = CreerMaillonTortureFilePosteID(id_tempo);
-                InsererMaillonEnQueueTortureFilePoste(pt_tete_file_poste, nouveau_file_poste);
-                id_tempo = 0;
+                if((pt_tete->score < 750) && (pt_tete->score >= 500))
+                {
+                    id_tempo = pt_tete->id;
+                    nouveau_file_poste = CreerMaillonTortureFilePosteID(id_tempo);
+                    InsererMaillonEnQueueTortureFilePoste(pt_tete_file_poste, nouveau_file_poste);
+                    id_tempo = 0;
+                }
             }
-            if((pt_tete->score < 500) && (pt_tete->score >= 250))
+            if (nb_pers_epilation_cheveux < nb_place_epilation_cheveux)
             {
-                id_tempo = pt_tete->id;
-                nouveau_epilation_cheveux = CreerMaillonTortureEpilationCheveuxID(id_tempo);
-                InsererMaillonEnQueueTortureEpilationCheveux(pt_tete_epilation_cheveux, nouveau_epilation_cheveux);
-                id_tempo = 0;
+                if((pt_tete->score < 500) && (pt_tete->score >= 250))
+                {
+                    id_tempo = pt_tete->id;
+                    nouveau_epilation_cheveux = CreerMaillonTortureEpilationCheveuxID(id_tempo);
+                    InsererMaillonEnQueueTortureEpilationCheveux(pt_tete_epilation_cheveux, nouveau_epilation_cheveux);
+                    id_tempo = 0;
 
+                }
             }
-            if((pt_tete->score < 250) && (pt_tete->score >= 0))
+            if (nb_pers_marseillais < nb_place_marseillais)
             {
-                id_tempo = pt_tete->id;
-                nouveau_marseillais = CreerMaillonTortureMarseillaisID(id_tempo);
-                InsererMaillonEnQueueTortureMarseillais(pt_tete_marseillais, nouveau_marseillais);
-                id_tempo = 0;
+                if((pt_tete->score < 250) && (pt_tete->score >= 0))
+                {
+                    id_tempo = pt_tete->id;
+                    nouveau_marseillais = CreerMaillonTortureMarseillaisID(id_tempo);
+                    InsererMaillonEnQueueTortureMarseillais(pt_tete_marseillais, nouveau_marseillais);
+                    id_tempo = 0;
+                }
             }
             pt_tete = pt_tete->suiv;
         }
@@ -60,13 +68,17 @@ void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALG
     }
 }
 
-void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais)
+void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais, int temps_torture_cours_dalgo, int temps_torture_file_poste, int temps_torture_epilation_cheveux, int temps_torture_marseilllais)
 {
     int nb_pers_cours_algo = 0 ;
+    int nb_pers_file_poste = 0 ;
+    int nb_pers_epilation_cheveux = 0 ;
+    int nb_pers_marseillais = 0 ;
+
     while (*pt_tete != NULL)
     {
 
-        AiguillagePurgatoire(*pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais,nb_pers_cours_algo);
+        AiguillagePurgatoire(*pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais,nb_pers_cours_algo, nb_pers_file_poste, nb_pers_epilation_cheveux, nb_pers_marseillais, nb_place_cours_algo, nb_place_file_poste, nb_place_epilation_cheveux, nb_place_marseillais);
         unsigned long secondes = 0;
         time_t begin = time( NULL );
         // Boucle du temps pour sequencer la simulation creer un tableau pour avoir des valeurs pret remplie
@@ -76,13 +88,16 @@ void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_te
             secondes = (unsigned long) difftime( end, begin );
         }
         nb_pers_cours_algo = CompteurCoursAlgo(*pt_tete_cours_algo);
+        nb_pers_file_poste = CompteurFilePoste(*pt_tete_file_poste);
+        nb_pers_epilation_cheveux = CompteurEpilationCheveux(*pt_tete_epilation_cheveux);
+        nb_pers_marseillais = CompteurMarseillais(*pt_tete_marseillais);
         printf( "\n\n******************* Mise à jour apres %ld ans **********************\n", secondes );
-        update(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais);
+        update(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais, temps_torture_cours_dalgo, temps_torture_file_poste, temps_torture_epilation_cheveux, temps_torture_marseilllais);
         Affichageapresupdate(*pt_tete_cours_algo, *pt_tete_file_poste, *pt_tete_epilation_cheveux, *pt_tete_marseillais);
     }
 }
 
-void update(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais)
+void update(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais, int temps_torture_cours_dalgo, int temps_torture_file_poste, int temps_torture_epilation_cheveux, int temps_torture_marseilllais)
 {
     int flag =1;
     // Faire une fonction qui augmente le compteur de toutes les chambre
@@ -120,10 +135,6 @@ void update(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_f
 
     //DEfine dans le main par utilisateur
     int nombrerech;
-    int temps_torture_cours_dalgo = 8;
-    int temps_torture_file_poste = 8;
-    int temps_torture_epilation_cheveux = 8;
-    int temps_torture_marseilllais = 8;
 
     // Boucle qui vient update tout les temps de torture des chambres pour pouvoir ensuite les suprimer et les replacer dans le purgatoire
     while (pt_courant_cours_algo != NULL)
