@@ -10,6 +10,7 @@ void RechercherMaillonTortureCoursAlgo(COURS_ALGO *,int);
 void SupprimerMaillonTortureCoursAlgo(COURS_ALGO **,int);
 void EcrireFichierCoursAlgo(FILE *,COURS_ALGO *);
 COURS_ALGO* LireFichierCoursAlgo (FILE *);
+int CompteurCoursAlgo (COURS_ALGO *);
 
 FILE_POSTE* CreerMaillonTortureFilePoste(FILE_POSTE *);
 void InsererMaillonEnQueueTortureFilePoste(FILE_POSTE **,FILE_POSTE *);
@@ -18,7 +19,8 @@ void RechercherMaillonTortureFilePoste(FILE_POSTE *,int);
 void SupprimerMaillonTortureFilePoste(FILE_POSTE **,int);
 void EcrireFichierFilePoste(FILE *,FILE_POSTE *);
 FILE_POSTE* LireFichierFilePoste(FILE *);
-int CompteurCoursAlgo (COURS_ALGO *);
+int CompteurFilePoste (FILE_POSTE *);
+
 
 EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveux();
 void InsererMaillonEnQueueTortureEpilationCheveux(EPILATION_CHEVEUX **,EPILATION_CHEVEUX *);
@@ -27,6 +29,7 @@ void RechercherMaillonTortureEpillationCheveux(EPILATION_CHEVEUX *,int);
 void SupprimerMaillonTortureEpilationCheveux(EPILATION_CHEVEUX **,int);
 void EcrireFichierEpilationCheveux(FILE *,EPILATION_CHEVEUX *);
 EPILATION_CHEVEUX* LireFichierEpilationCheveux(FILE *);
+int CompteurEpilationCheveux (EPILATION_CHEVEUX *);
 
 
 MARSEILLAIS* CreerMaillonTortureMarseillais();
@@ -36,5 +39,6 @@ void RechercherMaillonTortureMarseillais(MARSEILLAIS *,int);
 void SupprimerMaillonTortureMarseillais(MARSEILLAIS **,int);
 void EcrireFichierMarseillais(FILE *,MARSEILLAIS *);
 MARSEILLAIS* LireFichierMarseillais(FILE *);
+int CompteurMarseillais (MARSEILLAIS *);
 
 #endif

@@ -46,7 +46,7 @@ typedef struct torture{
 }TORTURE;
 
 //menu
-void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *,MARSEILLAIS **,MARSEILLAIS *,int);
+void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *,MARSEILLAIS **,MARSEILLAIS *,int, int, int, int, int, int, int, int, int);
 
 //fonction de base de liste chainer
 PPF* CreerMaillon();
@@ -83,6 +83,7 @@ void EcrireLogTorture (FILE *,COURS_ALGO *);
 //fonction aiguillage purgatoire
 void AiguillageTorture(PPF *pt_tete, COURS_ALGO **pt_tete_cours_algo, COURS_ALGO *nouveau_cour_algo, FILE_POSTE **pt_tete_file_poste, FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation,EPILATION_CHEVEUX *nouveau_epilation,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais);
 
+//void DemandeUtilisateur(int *nb_place_cours_algo, int *nb_place_file_poste, int *nb_place_epilation_cheveux, int *nb_place_marseillais,int *temps_torture_cours_dalgo, int *temps_torture_file_poste, int *temps_torture_epilation_cheveux, int *temps_torture_marseilllais);
 
 
 #endif
