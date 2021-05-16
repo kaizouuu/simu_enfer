@@ -3,6 +3,7 @@
 #include <string.h>
 #include "fonctions_damnes.h"
 #include "torture.h"
+#include "simulateur.h"
 
 int main()
 {
@@ -20,6 +21,10 @@ int main()
     MARSEILLAIS *pt_tete_marseillais = NULL;
     MARSEILLAIS *nouveau_marseillais = NULL;
 
+	ECH File;
+	EVT *cour = NULL;
+	initFile(&File);
+	
     char nomrech[TCHAINE];
     int nombrerech = 0;
     int nb_place_cours_algo =0;

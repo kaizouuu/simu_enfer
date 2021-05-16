@@ -9,25 +9,43 @@
 
 void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais,int nombrerech, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais,int temps_torture_cours_dalgo, int temps_torture_file_poste, int temps_torture_epilation_cheveux, int temps_torture_marseilllais)
 {
-    int i;
+    int i = 0;
+    int simu_en_marche = 1;
     int flag;
     do{
-        printf("\n********** Vous etes la pour creer des lens **********\n");
-        printf (" 0 pour quitter le programme\n");
-        printf (" 1 pour Creer et inserer d'un nouveau maillon\n");
-        printf (" 2 pour afficher la liste des maillon dans ma chaine\n");
-        printf (" 3 pour recherche un maillon dans la chaine\n");
-        printf (" 4 pour supprimer un maillon\n");
-        printf (" 5 pour ecrire la chaine en cour dans un fichier\n");
-        printf (" 6 pour lire le fichier \n");
-        printf( " 7 Test unitaire torture Creer et inserer d'un nouveau maillon \n");
-        printf( " 8 Test unitaire torture afficher la liste des maillon dans ma chaine \n");
-        printf( " 9 Test unitaire torture Creer et inserer d'un nouveau maillon 2\n");
-        printf( " 10 Test unitaire torture afficher la liste des maillon dans ma chaine 2\n");
-        printf (" 11 pour recherche un maillon dans la chaine de toture\n");
-        printf (" 12 pour supprimer un maillon dans la chaine de toture\n");
-        printf (" 13 pour simuler de manière unitaire après avoir aiguiller\n");
-        printf (" 14 pour aiguiller les dannees dans les différentes toture\n");
+        //~ printf (" 0 pour quitter le programme\n");
+        //~ printf (" 1 pour Creer et inserer d'un nouveau maillon\n");
+        //~ printf (" 2 pour afficher la liste des maillon dans ma chaine\n");
+        //~ printf (" 3 pour recherche un maillon dans la chaine\n");
+        //~ printf (" 4 pour supprimer un maillon\n");
+        //~ printf (" 5 pour ecrire la chaine en cour dans un fichier\n");
+        //~ printf (" 6 pour lire le fichier \n");
+        //~ printf( " 7 Test unitaire torture Creer et inserer d'un nouveau maillon \n");
+        //~ printf( " 8 Test unitaire torture afficher la liste des maillon dans ma chaine \n");
+        //~ printf( " 9 Test unitaire torture Creer et inserer d'un nouveau maillon 2\n");
+        //~ printf( " 10 Test unitaire torture afficher la liste des maillon dans ma chaine 2\n");
+        //~ printf (" 11 pour recherche un maillon dans la chaine de toture\n");
+        //~ printf (" 12 pour supprimer un maillon dans la chaine de toture\n");
+        //~ printf (" 13 pour simuler de manière unitaire après avoir aiguiller\n");
+        //~ printf (" 14 pour aiguiller les dannees dans les différentes toture\n");
+        
+        printf("\n********** Configuration de la Simulation **********\n");
+        printf ("|  0 | Quitter le programme\n");
+        printf ("|  1 | Créer une nouvelle âme damnées\n");
+        printf ("|  2 | Afficher la liste des âmes damnées\n");
+        printf ("|  3 | Rechercher un damné\n");  //A FAIRE
+        printf ("|  4 | Supprimer un damné\n");
+        printf ("|  5 | Sauvegarde MARCHE PAS\n");
+        printf ("|  6 | Chargement Sauvegarde MARCHE PAS\n");
+        printf( "|  7 | Test unitaire torture : Creer et inserer d'un nouveau maillon ALGO\n");
+        printf( "|  8 | Test unitaire torture : Afficher la liste des maillon dans ma chaine ALGO\n");
+        printf( "|  9 | Test unitaire torture : Creer et inserer d'un nouveau maillon POSTE\n");
+        printf( "| 10 | Test unitaire torture : Afficher la liste des maillon dans ma chaine POSTE\n");
+        printf ("| 11 | Test unitaire torture : Rechercher un maillon dans la chaine de torture ALGO\n");
+        printf ("| 12 | Test unitaire torture :  Supprimer un maillon dans la chaine de torture ALGO\n");
+        printf ("| 13 | LANCER LA SIMULATION\n");
+        printf ("| 14 | \n");
+        printf("\n********** Configuration de la Simulation **********\n");
         scanf("%d",&i);
         switch(i)
         {
@@ -86,7 +104,9 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo,nombrerech);
                 break;
             case 13:
-                simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais,nb_place_cours_algo, nb_place_file_poste,nb_place_epilation_cheveux, nb_place_marseillais, temps_torture_cours_dalgo, temps_torture_file_poste, temps_torture_epilation_cheveux, temps_torture_marseilllais);
+				//~ while (simu_en_marche)
+					//~ simu_en_marche = moteurSimulation(A);
+                //~ simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais,nb_place_cours_algo, nb_place_file_poste,nb_place_epilation_cheveux, nb_place_marseillais, temps_torture_cours_dalgo, temps_torture_file_poste, temps_torture_epilation_cheveux, temps_torture_marseilllais);
                 break;
             case 14 :
                 //AiguillagePurgatoire(pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais);
@@ -340,8 +360,4 @@ PPF* LireFichier(FILE *database_PFF, int flag)
 
     printf("Combien de temps voulez-vous affecter à la torture Marseillais :");
     scanf("%d",temps_torture_marseilllais);
-
-
-
-
 }*/
