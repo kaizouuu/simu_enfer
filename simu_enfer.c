@@ -20,10 +20,13 @@ int main()
     MARSEILLAIS *pt_tete_marseillais = NULL;
     MARSEILLAIS *nouveau_marseillais = NULL;
 
+    ECH *pt_tete_echancier = NULL;
+    EVT *pt_tete_evenement = NULL;
+
     char nomrech[TCHAINE];
     int nombrerech = 0;
 
-    menu(&pt_tete,nouveau,nomrech,database_PPF,&pt_tete_cours_algo,nouveau_cour_algo,&pt_tete_file_poste,nouveau_file_poste,&pt_tete_epilation_cheveux,nouveau_epilation_cheveux,&pt_tete_marseillais,nouveau_marseillais,nombrerech);
+    menu(&pt_tete,nouveau,nomrech,database_PPF,&pt_tete_cours_algo,nouveau_cour_algo,&pt_tete_file_poste,nouveau_file_poste,&pt_tete_epilation_cheveux,nouveau_epilation_cheveux,&pt_tete_marseillais,nouveau_marseillais,nombrerech,pt_tete_echancier,pt_tete_evenement);
 
     fclose(database_PPF);
     return 0;
