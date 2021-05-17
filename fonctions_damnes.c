@@ -87,10 +87,12 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo,nombrerech);
                 break;
             case 13:
-                simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais);
+                simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais,nb_place_cours_algo, nb_place_file_poste,nb_place_epilation_cheveux, nb_place_marseillais, temps_torture_cours_dalgo, temps_torture_file_poste, temps_torture_epilation_cheveux, temps_torture_marseilllais);
                 break;
             case 14 :
                 //AiguillagePurgatoire(pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais);
+                 //DemandeUtilisateur(nb_place_cours_algo, nb_place_file_poste, nb_place_epilation_cheveux, nb_place_marseillais,temps_torture_cours_dalgo, temps_torture_file_poste, temps_torture_epilation_cheveux, temps_torture_marseilllais);
+
                 break;
             case 15 :
                 simulationSed(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais,pt_tete_echancier,pt_tete_evenement);
@@ -312,105 +314,4 @@ PPF* LireFichier(FILE *database_PFF, int flag)
     }
     fclose(database_PFF);
     return pt_tete;
-}
-
-// FIFO à priorité pour les évènements
-void initFile(ECH *F)
-{
-    F->debut = NULL;
-}
-int filevide(ECH *F)        /* retourne 1 si la file est vide, 0 sinon*/
-{   if (F->debut == NULL)
-        return 1;
-    else
-        return 0;
-}
-int filepleine(ECH*F)   /* retourne 1 si la file est pleine SIZEMAX, 0 sinon*/
-{
-    int iNb = 0;
-    EVT *cour;
-    for(cour = F->debut; cour != NULL; cour = cour->suiv)
-        iNb++;
-    if (iNb >= SIZEMAX)
-        return 1;
-    else
-        return 0;
-}
-int retirer(ECH *F, int *id_retire)
-{   EVT *aSupp;
-    if(filevide(F)==1)
-    {   printf("\nFile vide\n");
-        return 0;
-    }
-    else
-    {   aSupp = F->debut;
-        *id_retire = aSupp->id_ppf;
-        F->debut = aSupp->suiv;
-        //~ if (F->premier == NULL) //Inutile avec priorité ?
-        //~ F->dernier = NULL;
-        free(aSupp);
-        return 1;
-    }
-}
-//~ int ajouter(ECH *F, int id_ajout)
-//~ {   EVT *E;
-//~ if (filepleine(F) ==1)
-//~ {   printf("\ntaille maximale de la file atteinte, ajout interdit\n");
-//~ return 0;
-//~ }
-//~ E = (PPF*) malloc(sizeof(PPF));
-//~ if (E == NULL)
-//~ {   printf("\nAjout impossible !\n");
-//~ return 0;
-//~ }
-//~ else
-//~ {   E->id = id_ajout;
-//~ E->suiv = NULL;
-//~ if (filevide(F)==1)
-//~ F->premier = E;
-//~ else
-//~ F->dernier->suiv = E;
-//~ F->dernier = E;
-//~ return 1;
-//~ }
-//~ }
-// Function to Create A New Node
-EVT* nouveauMaillonPriorite( int id_pff, int id_score, int type_evt, int t_evt, int type_torture)
-{
-    EVT* temp = (EVT*)malloc(sizeof(EVT));
-    temp->id_ppf = id_pff;
-    temp->id_score = id_score;
-    temp->type_evt= type_evt;
-    temp->t_evt = t_evt;
-    temp->type_torture = type_torture;
-
-    temp->suiv = NULL;
-    return temp;
-}
-
-void ajouterAvecPriorite(ECH* debut_ech, int id_pff, int id_score, int type_evt, int t_evt, int type_torture)
-{
-    EVT* start = debut_ech->debut;
-    // Create new Node
-    EVT* temp = nouveauMaillonPriorite(id_pff,  id_score,  type_evt,  t_evt,  type_torture);
-    // Special Case: The head of list has lesser
-    // priority than new node. So insert new
-    // node before head node and change head node.
-    if (debut_ech->debut->t_evt > t_evt) {
-        // Insert New Node before head
-        temp->suiv = debut_ech->debut;
-        debut_ech->debut = temp;
-    }
-    else {
-        // Traverse the list and find a
-        // position to insert new node
-        while (start->suiv != NULL &&
-               start->suiv->t_evt < t_evt) {
-            start = start->suiv;
-        }
-        // Either at the ends of the list
-        // or at required position
-        temp->suiv = start->suiv;
-        start->suiv = temp;
-    }
 }

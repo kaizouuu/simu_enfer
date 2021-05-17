@@ -350,6 +350,17 @@ FILE_POSTE* LireFichierFilePoste(FILE *database_FILE_POSTE)
     return pt_tete_file_poste;
 }
 
+int CompteurFilePoste (FILE_POSTE *pt_tete_file_poste)
+{
+    int i = 0;
+    while (pt_tete_file_poste != NULL)
+    {
+        i++;
+        pt_tete_file_poste =pt_tete_file_poste->suiv;
+    }
+    return i;
+}
+
 //********************************FONCTION LISTE TORTURE EPILATION CHEVEUX**********************************************************//
 
 EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveux(EPILATION_CHEVEUX *pt_tete_epilation)
@@ -516,6 +527,17 @@ EPILATION_CHEVEUX* LireFichierEpilationCheveux(FILE *database_EPILATION_CHEVEUX)
     return pt_tete_epilation_cheveux;
 }
 
+int CompteurEpilationCheveux (EPILATION_CHEVEUX *pt_tete_epilation_cheveux)
+{
+    int i = 0;
+    while (pt_tete_epilation_cheveux != NULL)
+    {
+        i++;
+        pt_tete_epilation_cheveux = pt_tete_epilation_cheveux->suiv;
+    }
+    return i;
+}
+
 //********************************FONCTION LISTE TORTURE MARSEILLAIS**********************************************************//
 MARSEILLAIS* CreerMaillonTortureMarseillais(MARSEILLAIS *pt_tete_marseillais)
 {
@@ -678,4 +700,15 @@ MARSEILLAIS* LireFichierMarseillais(FILE *database_MARSEILLAIS)
     }
     fclose(database_MARSEILLAIS);
     return pt_tete_file_poste;
+}
+
+int CompteurMarseillais (MARSEILLAIS *pt_tete_marseillais)
+{
+    int i = 0;
+    while (pt_tete_marseillais != NULL)
+    {
+        i++;
+        pt_tete_marseillais = pt_tete_marseillais->suiv;
+    }
+    return i;
 }
