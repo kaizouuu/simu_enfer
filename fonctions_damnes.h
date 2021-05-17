@@ -3,6 +3,11 @@
 
 #define TCHAINE 600
 #define TAFFICHAGE 20
+#define ARRIVEE 1
+#define ATTENTE 2
+#define DEBUT_TORTURE 3
+#define FIN_TORTURE 4
+#define SIZEMAX 10
 
 extern int timer;
 
@@ -41,12 +46,29 @@ typedef struct marseillais {
 
 }MARSEILLAIS;
 
-typedef struct torture{
-    int num;
-}TORTURE;
+typedef struct evt{
+    int id_ppf;               // je sais pas trop ce que c'est
+    int id_score;            // identifiant du damné affecté
+    int type_evt;            // Ils peuvent prendre les valeurs définies par les define plus haut, ARRIVE ATTENTE DEBUT_TORTURE et FIN_TORTURE
+    int t_evt;               // temps auquel on devra sauter pour exécuter cette évènement, cet entier fait office de priorité. Le tps le plus faible est prioritaire dans la liste.
+    int type_torture;        // Algo = 4, Poste = 3, Epilation = 2, Marseillais = 1 et Paradis = 0
+
+    struct evt *suiv;
+} EVT;
+
+typedef struct ech{
+    int t_cour;                      //garde en tête l'horloge (ou compteur)
+    int nb_evt;                      // Nombre d'évènement dans l'échéancier
+    EVT *debut;                     // Pointe vers le début de la liste chaînée des EVT
+    int salle_torture_libre_algo;
+    int salle_torture_libre_mars;
+    int salle_torture_libre_poste;
+    int salle_torture_libre_epil;
+    int efficacite;
+} ECH;
 
 //menu
-void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *,MARSEILLAIS **,MARSEILLAIS *,int);
+void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *,MARSEILLAIS **,MARSEILLAIS *,int,ECH*,EVT*);
 
 //fonction de base de liste chainer
 PPF* CreerMaillon();
@@ -77,13 +99,13 @@ void AfficherMaillonTortureCoursAlgo(COURS_ALGO *);
 void RechercherMaillonTortureCoursAlgo(COURS_ALGO *,int);
 void SupprimerMaillonTortureCoursAlgo(COURS_ALGO **,int);
 
-//fonction pour manipuler les maillon des totures
-//fonction pour écrire les logs des torture / pas de fonction lire car pas besoin de charger c'est fichier en entré
-void EcrireLogTorture (FILE *,COURS_ALGO *);
-//fonction aiguillage purgatoire
-void AiguillageTorture(PPF *pt_tete, COURS_ALGO **pt_tete_cours_algo, COURS_ALGO *nouveau_cour_algo, FILE_POSTE **pt_tete_file_poste, FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation,EPILATION_CHEVEUX *nouveau_epilation,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais);
 
-
+//Fonction pour traitement de la liste à priorité des évènements
+void ajouterAvecPriorite(ECH* debut, int id_pff, int id_score, int type_evt, int t_evt, int type_torture);
+EVT* nouveauMaillonPriorite( int id_pff, int id_score, int type_evt, int t_evt, int type_torture);
+int ajouter(ECH *F, int id_ajout);
+int retirer(ECH *F, int *id_retire);
+int filepleine(ECH*F);
 
 #endif
 

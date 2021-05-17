@@ -309,3 +309,37 @@ void Affichageapresupdate(COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_fil
             printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_marseillais_id[i],tableau_affichage_marseillais_cpt[i]);
     }
 }
+
+void simulationSed(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais,ECH *pt_tete_enchancier, EVT *pt_tete_evenement)
+{
+    int nb_pers_cours_algo = 3;
+    AiguillagePurgatoireSed(*pt_tete, pt_tete_enchancier,pt_tete_evenement,nb_pers_cours_algo);
+}
+
+void AiguillagePurgatoireSed(PPF *pt_tete,ECH *pt_tete_enchancier, EVT *pt_tete_evenement, int nb_pers_cours_algo)
+{
+    int id_tempo;
+    int score_tempo;
+    int type_evt_tempo;
+    int t_evt_tempo;
+    int type_toture_tempo;
+
+    while (pt_tete != NULL)
+    {
+        id_tempo = pt_tete->id;
+        score_tempo = pt_tete->score;
+        if (pt_tete->score >750)
+            type_toture_tempo = 4;
+        if (pt_tete->score > 500)
+            type_toture_tempo = 3;
+        if (pt_tete->score > 250)
+            type_toture_tempo = 2;
+        if (pt_tete->score > 0)
+            type_toture_tempo = 1;
+
+        t_evt_tempo = pt_tete->score/10;
+        type_evt_tempo = 0;
+
+        ajouterAvecPriorite(pt_tete_enchancier,id_tempo,score_tempo,type_evt_tempo,t_evt_tempo,type_toture_tempo);
+    }
+}
