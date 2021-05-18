@@ -40,7 +40,7 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
         printf( "|  9 | Test unitaire torture : Creer et inserer d'un nouveau maillon POSTE\n");
         printf( "| 10 | Test unitaire torture : Afficher la liste des maillon dans ma chaine POSTE\n");
         printf ("| 11 | Test unitaire torture : Rechercher un maillon dans la chaine de torture ALGO\n");
-        printf ("| 12 | Test unitaire torture : Supprimer un maillon dans la chaine de torture ALGO\\nn");
+        printf ("| 12 | Test unitaire torture : Supprimer un maillon dans la chaine de torture ALGO\n\n");
         
         printf ("| 13 | LANCER LA SIMULATION\n\n");
         
@@ -84,12 +84,12 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 SupprimerMaillonDamnes(pt_tete,nomrech);
                 break;
             case 5:
-                //~ flag = 0;
-                //~ EcrireFichier(database_PFF,*pt_tete,flag);
+                flag = 0;
+                EcrireFichier(database_PFF,*pt_tete,flag);
                 break;
             case 6:
-                //~ flag = 0;
-                //~ *pt_tete = LireFichier(database_PFF,flag);
+                flag = 0;
+                *pt_tete = LireFichier(database_PFF,flag);
                 break;
             case 7:
                 nouveau_cour_algo = CreerMaillonTortureCoursAlgo(*pt_tete_cours_algo);
@@ -116,13 +116,7 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo,nombrerech);
                 break;
             case 13:
-				while (simu_en_marche)
-				{
-					simu_en_marche = moteurSimulation(echeancier);
-					printf("\nAppuyer sur ENTREE pour sauter au prochain évènement"); 
-						while ((getchar())!= '\n');
-							getchar();
-               }
+                simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais,nb_place_cours_algo, nb_place_file_poste,nb_place_epilation_cheveux, nb_place_marseillais, efficacite_algo, efficacite_poste, efficacite_epil, efficacite_mars);
                 break;
             case 14 :
                 //AiguillagePurgatoire(pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais);
@@ -149,11 +143,6 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 break;
                 
                 case 16:
-                //~ if (retirer(&FILE, &theVal)== 1)
-				//~ printf("\nValeur récupérée : %d", (int) theVal);	
-			//~ else
-				//~ printf("\nFile vide aucune valeur récupérée");	
-			//~ break;
 			
 				if (retirerFileEvenement(echeancier, &q, &r, &s, &t, &u, &v)== 1)	
 				{
@@ -210,6 +199,15 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
 						
 						ppf_cour = ppf_cour->suiv;
                      }
+                break;
+                case 21:
+				while (simu_en_marche)
+				{
+					simu_en_marche = moteurSimulation(echeancier);
+					printf("\nAppuyer sur ENTREE pour sauter au prochain évènement"); 
+						while ((getchar())!= '\n');
+							getchar();
+                }
                 break;
                 
             default:
@@ -394,56 +392,56 @@ void SupprimerMaillonIDDamnes(PPF **pt_tete,int nombrerech)
     }
 }
 
-//~ void EcrireFichier(FILE *database_PPF,PPF *pt_tete,int flag)
-//~ {
-    //~ if (flag == 0)
-        //~ database_PPF = fopen ("database_PFF.bin","w+");
-    //~ else
-        //~ database_PPF = fopen("database_PFF_SIMU.bin","w+");
-    //~ int i = 0;
-    //~ while(pt_tete != NULL)
-    //~ {
-        //~ i = fwrite(pt_tete,sizeof(PPF),1, database_PPF);
-        //~ if(i != 1)
-        //~ {
-            //~ printf("\nErreur a l'ecriture");
-            //~ break;
-        //~ }
-        //~ pt_tete = pt_tete->suiv;
-    //~ }
-    //~ fclose(database_PPF);
-//~ }
+void EcrireFichier(FILE *database_PPF,PPF *pt_tete,int flag)
+{
+    if (flag == 0)
+        database_PPF = fopen ("database_PFF.bin","w+");
+    else
+        database_PPF = fopen("database_PFF_SIMU.bin","w+");
+    int i = 0;
+    while(pt_tete != NULL)
+    {
+        i = fwrite(pt_tete,sizeof(PPF),1, database_PPF);
+        if(i != 1)
+        {
+            printf("\nErreur a l'ecriture");
+            break;
+        }
+        pt_tete = pt_tete->suiv;
+    }
+    fclose(database_PPF);
+}
 
-//~ PPF* LireFichier(FILE *database_PFF, int flag)
-//~ {
-    //~ if (flag == 0)
-        //~ database_PFF = fopen ("database_PFF.bin","r");
-    //~ else
-        //~ database_PFF = fopen("database_PFF_SIMU.bin","r");
-    //~ PPF tmp;
-    //~ PPF *pt_tete = NULL;
-    //~ PPF *pt_nouveau = NULL;
-    //~ fseek(database_PFF,0, SEEK_SET);
-    //~ memset(&tmp,'\0', sizeof(PPF));
-    //~ while(fread(&tmp,sizeof(PPF),1,database_PFF))
-    //~ {
-        //~ if(NULL == (pt_nouveau = (PPF*)malloc(sizeof(PPF))))
-        //~ {
-            //~ printf("\nErreur a la creation du maillon");
-            //~ break;
-        //~ }
-        //~ else
-        //~ {
-            //~ *pt_nouveau = tmp;
-            //~ pt_nouveau->suiv = NULL;
-            //~ InsererMaillonEnQueue(&pt_tete, pt_nouveau);
-            //~ memset(&tmp,'\0', sizeof(PPF));
-        //~ }
+PPF* LireFichier(FILE *database_PFF, int flag)
+{
+    if (flag == 0)
+        database_PFF = fopen ("database_PFF.bin","r");
+    else
+        database_PFF = fopen("database_PFF_SIMU.bin","r");
+    PPF tmp;
+    PPF *pt_tete = NULL;
+    PPF *pt_nouveau = NULL;
+    fseek(database_PFF,0, SEEK_SET);
+    memset(&tmp,'\0', sizeof(PPF));
+    while(fread(&tmp,sizeof(PPF),1,database_PFF))
+    {
+        if(NULL == (pt_nouveau = (PPF*)malloc(sizeof(PPF))))
+        {
+            printf("\nErreur a la creation du maillon");
+            break;
+        }
+        else
+        {
+            *pt_nouveau = tmp;
+            pt_nouveau->suiv = NULL;
+            InsererMaillonEnQueueDamnes(&pt_tete, pt_nouveau);
+            memset(&tmp,'\0', sizeof(PPF));
+        }
 
-    //~ }
-    //~ fclose(database_PFF);
-    //~ return pt_tete;
-//~ }
+    }
+    fclose(database_PFF);
+    return pt_tete;
+}
 
 void selectionArchitecture(int *nb_place_cours_algo, int *nb_place_file_poste, int *nb_place_epilation_cheveux, int *nb_place_marseillais,int *temps_torture_cours_dalgo, int *temps_torture_file_poste, int *temps_torture_epilation_cheveux, int *temps_torture_marseilllais,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais)
 {
