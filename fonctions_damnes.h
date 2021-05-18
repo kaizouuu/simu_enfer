@@ -78,6 +78,7 @@ void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FI
 
 //fonction de base de liste chainer
 PPF* CreerMaillonDamnes();
+PPF* CreerMaillonAvecIDDamnes(int identifiant_damne);
 void InsererMaillonEnQueueDamnes(PPF **,PPF *);
 PPF* InsererMaillonEnQueuesimpleDamnes(PPF *, PPF *);
 void InsererMaillonBonneplace(PPF **,PPF *); //fonction pour inserer les ppf à la bonne place dans le purgatoire
@@ -112,7 +113,7 @@ void EcrireLogTorture (FILE *,COURS_ALGO *);
 //fonction aiguillage purgatoire
 void AiguillageTorture(PPF *pt_tete, COURS_ALGO **pt_tete_cours_algo, COURS_ALGO *nouveau_cour_algo, FILE_POSTE **pt_tete_file_poste, FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation,EPILATION_CHEVEUX *nouveau_epilation,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais);
 
-//void DemandeUtilisateur(int *nb_place_cours_algo, int *nb_place_file_poste, int *nb_place_epilation_cheveux, int *nb_place_marseillais,int *temps_torture_cours_dalgo, int *temps_torture_file_poste, int *temps_torture_epilation_cheveux, int *temps_torture_marseilllais);
+void selectionArchitecture(int *nb_place_cours_algo, int *nb_place_file_poste, int *nb_place_epilation_cheveux, int *nb_place_marseillais,int *temps_torture_cours_dalgo, int *temps_torture_file_poste, int *temps_torture_epilation_cheveux, int *temps_torture_marseilllais);
 
 //Fonction pour traitement de la liste à priorité des évènements
 void ajouterAvecPrioriteFileEvenement(ECH* debut, int id_pff, int id_score, int type_evt, int t_evt, int type_torture);
@@ -125,6 +126,8 @@ void initFileEvenement(ECH *F);
 void afficherFileEvenement(ECH*F);
 
 int moteurSimulation(ECH *A); //Essai FLORENT
+
+void selectionTempsArret(int * tps);
 
 #endif
 

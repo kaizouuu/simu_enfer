@@ -14,6 +14,10 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
     int q = 0, r=0, s=0, t=0, u=0 ; //utilisé en test 15 pour retirer dans la structure évènement
     int simu_en_marche = 1 ;
     int flag ;
+    int t_final_arret = 0;
+    int nbr_ames_initial=0;
+  
+    
     do{
 		      
         printf("\n********** Configuration de la Simulation **********\n");
@@ -39,7 +43,11 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
         
         printf ("| 14 | Test unitaire évènement : Créer Maillon de la File et insérer à la bonne place\n");
         printf ("| 15 | Test unitaire évènement : Afficher la file des évènements\n");
-        printf ("| 16 | Test unitaire évènement : Retirer évènement (avec t_evt le plus petit)\n");
+        printf ("| 16 | Test unitaire évènement : Retirer évènement (avec t_evt le plus petit)\n\n");
+        
+        printf ("| 17 | FONCTION CONFIGURATION : Sélection du temps d'arrêt de la simulation\n");
+        printf ("| 18 | FONCTION CONFIGURATION : Séléction de l'Architecture des Enfers\n");
+        printf ("| 19 | FONCTION CONFIGURATION : Séléction du nombre de damnés original à générer\n");
         printf("\n********** Configuration de la Simulation **********\n");
         scanf("%d",&i);
         switch(i)
@@ -132,17 +140,40 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
 				//~ printf("\nFile vide aucune valeur récupérée");	
 			//~ break;
 			
-			if (retirerFileEvenement(echeancier, &q, &r, &s, &t, &u)== 1)	
-			{
-				printf("\nIdentifiant du damné: %d", q);
-				printf("\nScore du damné: %d", r);
-				printf("\nType de l'évènement (1 pour ARRIVEE, 2 pour ATTENTE, 3 pour DEBUT_TORTURE et 4 pour FIN_TORTURE): %d", s); //faire un truc pour ne pas afficher le nombre mais le string
-				printf("\nTemps déroulement de l'évènement: %d", t);
-				printf("\nType de torture (Algo = 4, Poste = 3, Epilation = 2, Marseillais = 1 et Paradis = 0): %d\n", u);
-			}
-			else
-				printf("\nFile vide aucune valeur récupérée");	
-             break;
+				if (retirerFileEvenement(echeancier, &q, &r, &s, &t, &u)== 1)	
+				{
+					printf("\nIdentifiant du damné: %d", q);
+					printf("\nScore du damné: %d", r);
+					printf("\nType de l'évènement (1 pour ARRIVEE, 2 pour ATTENTE, 3 pour DEBUT_TORTURE et 4 pour FIN_TORTURE): %d", s); //faire un truc pour ne pas afficher le nombre mais le string
+					printf("\nTemps déroulement de l'évènement: %d", t);
+					printf("\nType de torture (Algo = 4, Poste = 3, Epilation = 2, Marseillais = 1 et Paradis = 0): %d\n", u);
+				}
+				else
+					printf("\nFile vide aucune valeur récupérée\n");	
+				break;
+             
+				case 17:
+					//~ printf("\nVeuillez sélectionner le temps d'arrêt de la simulation: ");
+					//~ scanf("%d",&t_final_arret);
+					selectionTempsArret(& t_final_arret);
+					
+                break;
+                
+                case 18:
+				selectionArchitecture(&nb_place_cours_algo, &nb_place_file_poste, &nb_place_epilation_cheveux, &nb_place_marseillais, &temps_torture_cours_dalgo, &temps_torture_file_poste, &temps_torture_epilation_cheveux, &temps_torture_marseilllais);
+                break;
+                
+                case 19:
+				printf("\nCombien d'âmnes damnées souhaitez-vous créer pour lancer la simulation ?\n");	
+				scanf("%d",&nbr_ames_initial);
+				
+				for ( int j = 0;  j < nbr_ames_initial;  j = j+1)
+				{
+					nouveau = CreerMaillonAvecIDDamnes(j+1);////test unitaire fonction ajoutete
+					InsererMaillonEnQueueDamnes(pt_tete,nouveau);
+				}
+				
+                break;
                 
             default:
                 break;
@@ -166,6 +197,21 @@ PPF* CreerMaillonDamnes()
     return pt_maillon;
 }
 
+PPF* CreerMaillonAvecIDDamnes(int identifiant_damne)
+{
+    PPF *pt_maillon = NULL;
+    pt_maillon = (PPF*)malloc(sizeof(PPF));
+    pt_maillon->id = identifiant_damne;
+    printf("Donner un nom a votre PFF: \n");
+    scanf("%s",pt_maillon->name);
+    pt_maillon->cpt = 0;
+    printf("Entrer le score de depravation de votre PPF:\n\n");
+    scanf("%d",&(*pt_maillon).score);
+    pt_maillon->suiv=NULL;
+
+    return pt_maillon;
+}
+
 void InsererMaillonEnQueueDamnes(PPF **pt_tete,PPF *nouveau)
 
 {
@@ -183,19 +229,18 @@ void InsererMaillonEnQueueDamnes(PPF **pt_tete,PPF *nouveau)
     }
 }
 
-PPF* InsererMaillonEnQueuesimpleDamnes(PPF *pt_tete, PPF *nouveau)
-{
-    PPF *temp=pt_tete;
-    //cas de la liste vide
-    if(pt_tete == NULL)
-        return nouveau;
-    while(temp->suiv != NULL)
-        {
-            temp=temp->suiv;
-        }
-    temp->suiv=nouveau;
-    return temp;
-}
+//~ PPF* InsererMaillonEnQueuesimpleDamnes(PPF *pt_tete, PPF *nouveau)  // UTILE CE TRUC ???
+    //~ PPF *temp=pt_tete;
+    //~ //cas de la liste vide
+    //~ if(pt_tete == NULL)
+        //~ return nouveau;
+    //~ while(temp->suiv != NULL)
+        //~ {
+            //~ temp=temp->suiv;
+        //~ }
+    //~ temp->suiv=nouveau;
+    //~ return temp;
+//~ }
 
 void AfficherMaillonDamnes(PPF *pt_tete)
 {
@@ -362,36 +407,45 @@ void SupprimerMaillonIDDamnes(PPF **pt_tete,int nombrerech)
     //~ fclose(database_PFF);
     //~ return pt_tete;
 //~ }
-/*void DemandeUtilisateur(int *nb_place_cours_algo, int *nb_place_file_poste, int *nb_place_epilation_cheveux, int *nb_place_marseillais,int *temps_torture_cours_dalgo, int *temps_torture_file_poste, int *temps_torture_epilation_cheveux, int *temps_torture_marseilllais)
-{
 
-    printf("Combien de place voulez-vous affecter à la torture Cours Algo :");    
+void selectionArchitecture(int *nb_place_cours_algo, int *nb_place_file_poste, int *nb_place_epilation_cheveux, int *nb_place_marseillais,int *temps_torture_cours_dalgo, int *temps_torture_file_poste, int *temps_torture_epilation_cheveux, int *temps_torture_marseilllais)
+{
+	
+	 printf("\nQuelques explications s'imposent...'\n\nLes enfers sont divisés en 4 différentes sections chargées de torturer les damnés en fonction de leur niveau de dépravation.\nLes voici de la plus dure à la plus douce: un cours d'algorithme, une file de poste sans fin, une épilation totale et brutale et enfin un visionnage forcée du meilleur des \"Marseillais\" \n\
+	 Les âmes les plus pêcheresses devront passer par les 4 sections afin d'être purifiées et de pouvoir rejoindre le paradis.\n\
+	 \nChaque section comporte un nombre fini de salles et est plus ou moins efficace quant à la réduction du niveau de dépravation.\nUne salle ne pourra torturer qu'une seule âme damnée à la fois. L'efficacité d'un type de torture définit le nombre de points de dépravation enlevés pour chaque coup d'horloge\n");    
+	 
+	 printf("\nAppuyer sur ENTREE pour commencer la saisie des informations."); 
+	while ((getchar())!= '\n');
+		getchar();
+
+    printf("\n\nCombien de salles voulez-vous affecter à la section de torture par cours d'algorithmique ?\t");    
     scanf ("%d",nb_place_cours_algo);
 
-    printf("Combien de temps voulez-vous affecter à la torture Cours Algo :");
+    printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge pour cette section ?\t");
     scanf("%d",temps_torture_cours_dalgo);
 
 
-    printf("Combien de place voulez-vous affecter à la torture File Poste :");        
+    printf("\n\nCombien de salles voulez-vous affecter à la section de torture par file de poste?\t");    
     scanf("%d",nb_place_file_poste);
 
-    printf("Combien de temps voulez-vous affecter à la torture File Poste :");
+    printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge pour cette section ?\t");
     scanf("%d",temps_torture_file_poste);
 
 
-    printf("Combien de place voulez-vous affecter à la torture Epilation Cheveux :");    
+    printf("\n\nCombien de salles voulez-vous affecter à la section de torture par épilation intégrale (et oui, même le maillot) ?\t");    
     scanf("%d",nb_place_epilation_cheveux);
 
-    printf("Combien de temps voulez-vous affecter à la torture Epilation Cheveux :");
+    printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge pour cette section ?\t");   
     scanf("%d",temps_torture_epilation_cheveux);
 
 
-    printf("Combien de place voulez-vous affecter à la torture Marseillais :");    
+    printf("\n\nCombien de salles voulez-vous affecter à la section de torture par visionnage intensif des \"Marseillais\" ?\t");      
     scanf("%d",nb_place_marseillais);
 
-    printf("Combien de temps voulez-vous affecter à la torture Marseillais :");
+    printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge pour cette section ?\t");
     scanf("%d",temps_torture_marseilllais);
-}*/
+}
 
 
 // FIFO à priorité pour les évènements 
@@ -508,3 +562,9 @@ void afficherFileEvenement(ECH*F)
 				cour = cour->suiv;
 			}
 }
+
+void selectionTempsArret(int * tps)
+{
+	printf("\nVeuillez sélectionner le temps d'arrêt de la simulation: ");
+		scanf("%d",tps);
+}		
