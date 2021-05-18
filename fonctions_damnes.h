@@ -77,15 +77,16 @@ typedef struct ech{
 void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *,MARSEILLAIS **,MARSEILLAIS *,int, int, int, int, int, int, int, int, int,ECH*);
 
 //fonction de base de liste chainer
-PPF* CreerMaillon();
-void InsererMaillonEnQueue(PPF **,PPF *);
-PPF* InsererMaillonEnQueuesimple(PPF *, PPF *);
+PPF* CreerMaillonDamnes();
+void InsererMaillonEnQueueDamnes(PPF **,PPF *);
+PPF* InsererMaillonEnQueuesimpleDamnes(PPF *, PPF *);
 void InsererMaillonBonneplace(PPF **,PPF *); //fonction pour inserer les ppf à la bonne place dans le purgatoire
-void AfficherMaillon(PPF *);
-void RechercherMaillon(PPF *,char *);
-PPF* RechercherMaillonNombre(PPF *,int);
-void SupprimerMaillon(PPF **,char *);
-void SupprimerMaillonID(PPF **,int);
+void AfficherMaillonDamnes(PPF *);
+void RechercherMaillonDamnes(PPF *,char *);
+PPF* RechercherMaillonNombreDamnes(PPF *,int);
+void SupprimerMaillonDamnes(PPF **,char *);
+void SupprimerMaillonIDDamnes(PPF **,int);
+
 //fonction pour aller écrire et lire sans les fichiers
 void EcrireFichier (FILE *,PPF *,int);
 PPF* LireFichier(FILE *, int);
