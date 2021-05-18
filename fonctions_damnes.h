@@ -52,12 +52,6 @@ typedef struct marseillais {
 
 }MARSEILLAIS;
 
-typedef struct evt{
-    int id_ppf;               // je sais pas trop ce que c'est
-    int id_score;            // identifiant du damné affecté
-    int type_evt;            // Ils peuvent prendre les valeurs définies par les define plus haut, ARRIVE ATTENTE DEBUT_TORTURE et FIN_TORTURE
-    int t_evt;               // temps auquel on devra sauter pour exécuter cette évènement, cet entier fait office de priorité. Le tps le plus faible est prioritaire dans la liste.
-    int type_torture;        // Algo = 4, Poste = 3, Epilation = 2, Marseillais = 1 et Paradis = 0
 
 //Mettre le code ici
 typedef struct evt{
