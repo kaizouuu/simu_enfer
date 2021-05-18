@@ -332,6 +332,7 @@ void AiguillagePurgatoireSed(PPF *pt_tete,ECH *pt_tete_enchancier, EVT *pt_tete_
     int id_tempo;
     int score_tempo;
     int type_evt_tempo;
+    int duree_torture_tempo = 10;
     int t_evt_tempo;
     int type_toture_tempo;
 
@@ -351,7 +352,7 @@ void AiguillagePurgatoireSed(PPF *pt_tete,ECH *pt_tete_enchancier, EVT *pt_tete_
         t_evt_tempo = pt_tete->score/10;
         type_evt_tempo = 0;
 
-        ajouterAvecPriorite(pt_tete_enchancier,id_tempo,score_tempo,type_evt_tempo,t_evt_tempo,type_toture_tempo);
+      ajouterAvecPrioriteFileEvenement(pt_tete_enchancier,id_tempo,score_tempo,type_evt_tempo, duree_torture_tempo, t_evt_tempo,type_toture_tempo);
     }
 }
 
