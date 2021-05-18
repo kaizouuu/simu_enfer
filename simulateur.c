@@ -326,6 +326,7 @@ void Affichageapresupdate(COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_fil
 //~ {
 	//~ int temps_traite;
 	//~ int type_traite; //ARR ou ATT ou Debut ou Fin
+	//~ int valeur;
 	
 	//~ EVT *Evt_cree=NULL;
 	//~ int etat = 1;
@@ -334,7 +335,7 @@ void Affichageapresupdate(COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_fil
 		//~ etat = 0;
 	//~ else
 	//~ {
-		//~ retirer(A, int *id_retire);            // On traite le premier élèment de liste à évènements
+		//~ retirer(A, &valeur);            // On traite le premier élèment de liste à évènements, avec les pointeurs on a mis un truc intéressant dans valeur
 		//~ A->t_cour	= temps_traite;                  // C'est ici que le temps de la simulation saute à celui de l'événement en cours de traitement 
 		//~ // 
 		//~ switch (type_traite)
@@ -362,116 +363,4 @@ void Affichageapresupdate(COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_fil
 //~ }
 
 
-// FIFO à priorité pour les évènements 
-void initFile(ECH *F)
-{
-	F->debut = NULL;
-
-}
-
-int filevide(ECH *F)		/* retourne 1 si la file est vide, 0 sinon*/
-{	if (F->debut == NULL)
-		return 1;
-	else
-		return 0;
-}
-
-int filepleine(ECH*F)	/* retourne 1 si la file est pleine SIZEMAX, 0 sinon*/
-{
-	int iNb = 0;
-	EVT *cour;	
-	for(cour = F->debut; cour != NULL; cour = cour->suiv)
-		iNb++;
-	if (iNb >= SIZEMAX)
-		return 1;
-	else 	
-		return 0;
-}
-
-int retirer(ECH *F, int *id_retire)
-{	EVT *aSupp;
-	if(filevide(F)==1)
-	{	printf("\nFile vide\n");
-		return 0;
-	}
-	else
-	{	aSupp = F->debut;
-		*id_retire = aSupp->id_pff;
-		F->debut = aSupp->suiv; 
-		//~ if (F->premier == NULL) //Inutile avec priorité ?
-			//~ F->dernier = NULL;
-		free(aSupp);
-		return 1;
-	}
-}
-
-//~ int ajouter(ECH *F, int id_ajout)
-//~ {	EVT *E;
-	//~ if (filepleine(F) ==1)
-	//~ {	printf("\ntaille maximale de la file atteinte, ajout interdit\n");
-		//~ return 0;
-	//~ }	
-	//~ E = (PPF*) malloc(sizeof(PPF));
-	//~ if (E == NULL) 
-	//~ {	printf("\nAjout impossible !\n");
-		//~ return 0;
-	//~ }
-	//~ else
-	//~ {	E->id = id_ajout;
-		//~ E->suiv = NULL;
-		//~ if (filevide(F)==1)
-			//~ F->premier = E;
-		//~ else
-			//~ F->dernier->suiv = E;
-		//~ F->dernier = E;
-		//~ return 1;
-	//~ }
-//~ }
-
-// Function to Create A New Node
-EVT* nouveauMaillonPriorite( int id_pff, int id_score, int type_evt, int t_evt, int type_torture)
-{
-	EVT* temp = (EVT*)malloc(sizeof(EVT));
-	temp->id_pff = id_pff;
-	temp->id_score = id_score;
-	temp->type_evt= type_evt;
-	temp->t_evt = t_evt;
-	temp->type_torture = type_torture;
-	
-	temp->suiv = NULL;
-
-	return temp;
-}
-	
-void ajouterAvecPriorite(ECH* debut_ech, int id_pff, int id_score, int type_evt, int t_evt, int type_torture)
-{
-	EVT* start = debut_ech->debut;
-
-	// Create new Node
-	EVT* temp = nouveauMaillonPriorite(id_pff,  id_score,  type_evt,  t_evt,  type_torture);
-
-	// Special Case: The head of list has lesser
-	// priority than new node. So insert new
-	// node before head node and change head node.
-	if (debut_ech->debut->t_evt > t_evt) {
-
-		// Insert New Node before head
-		temp->suiv = debut_ech->debut;
-		debut_ech->debut = temp;
-	}
-	else {
-
-		// Traverse the list and find a
-		// position to insert new node
-		while (start->suiv != NULL &&
-			start->suiv->t_evt < t_evt) {
-			start = start->suiv;
-		}
-
-		// Either at the ends of the list
-		// or at required position
-		temp->suiv = start->suiv;
-		start->suiv = temp;
-	}
-}
 

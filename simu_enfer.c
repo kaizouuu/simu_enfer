@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "fonctions_damnes.h"
-#include "torture.h"
 #include "simulateur.h"
+#include "torture.h"
+
 
 int main()
 {
@@ -22,8 +23,8 @@ int main()
     MARSEILLAIS *nouveau_marseillais = NULL;
 
 	ECH File;
-	EVT *cour = NULL;
-	initFile(&File);
+	//~ EVT *cour = NULL;
+	initFileEvenement(&File);
 	
     char nomrech[TCHAINE];
     int nombrerech = 0;
@@ -37,7 +38,7 @@ int main()
     int temps_torture_marseilllais = 8;
 
 
-    menu(&pt_tete,nouveau,nomrech,database_PPF,&pt_tete_cours_algo,nouveau_cour_algo,&pt_tete_file_poste,nouveau_file_poste,&pt_tete_epilation_cheveux,nouveau_epilation_cheveux,&pt_tete_marseillais,nouveau_marseillais,nombrerech, nb_place_cours_algo, nb_place_file_poste, nb_place_epilation_cheveux, nb_place_marseillais, temps_torture_cours_dalgo, temps_torture_file_poste, temps_torture_epilation_cheveux, temps_torture_marseilllais);
+    menu(&pt_tete,nouveau,nomrech,database_PPF,&pt_tete_cours_algo,nouveau_cour_algo,&pt_tete_file_poste,nouveau_file_poste,&pt_tete_epilation_cheveux,nouveau_epilation_cheveux,&pt_tete_marseillais,nouveau_marseillais,nombrerech, nb_place_cours_algo, nb_place_file_poste, nb_place_epilation_cheveux, nb_place_marseillais, temps_torture_cours_dalgo, temps_torture_file_poste, temps_torture_epilation_cheveux, temps_torture_marseilllais, &File);
 
     fclose(database_PPF);
     return 0;
