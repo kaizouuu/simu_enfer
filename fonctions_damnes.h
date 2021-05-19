@@ -69,14 +69,13 @@ typedef struct ech{
 	int t_cour;                          //garde en tête l'horloge (ou compteur)
 	int nb_evt;                        // Nombre d'évènement dans l'échéancier
 	EVT *debut;                     // Pointe vers le début de la liste chaînée des EVT
-	int salle_torture_libre_algo;
-	int salle_torture_libre_mars;
-	int salle_torture_libre_poste;
-	int salle_torture_libre_epil;
+	int nb_place_cours_algo;
+	int nb_pers_cours_algo;
+	int nbr_ames_pardonnees;
 } ECH;
 
 //menu
-void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *,MARSEILLAIS **,MARSEILLAIS *,int, int, int, int, int, int, int, int, int,ECH*,int);
+void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *,MARSEILLAIS **,MARSEILLAIS *,int, int, int, int, int, int, int, int, int,ECH*);
 //void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais,int nombrerech, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais,int *efficacite_algo, int* efficacite_poste, int* efficacite_epil, int* efficacite_mars,ECH* echeancier, int nbr_ames_pardonnee);
 //fonction de base de liste chainer
 PPF* CreerMaillonDamnes();
@@ -122,11 +121,11 @@ int filevideEvenement(ECH *F);
 void initFileEvenement(ECH *F);
 void afficherFileEvenement(ECH*F);
 
-int moteurSimulation(ECH *A); //Essai FLORENT
+int moteurSimulation(ECH *A,  COURS_ALGO **pt_tete_cours_algo); //Essai FLORENT
 EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt);
 
 void selectionTempsArret(int * tps);
 //void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,int* type_torture, int*duree_torture,  int *identifiant, int *efficacite_algo, int* efficacite_poste, int* efficacite_epil, int* efficacite_mars);
-void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant, int *efficacite_algo, int* efficacite_poste, int* efficacite_epil, int* efficacite_mars, int*nbr_ames_pardonnee);
+void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant, int *efficacite_algo, int* efficacite_poste, int* efficacite_epil, int* efficacite_mars);
 #endif
 

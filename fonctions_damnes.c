@@ -7,7 +7,7 @@
 #include "simulateur.h"
 #include "time.h"
 
-void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais,int nombrerech, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais,int efficacite_algo, int efficacite_poste, int efficacite_epil, int efficacite_mars,ECH* echeancier, int nbr_ames_pardonnees)
+void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais,int nombrerech, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais,int efficacite_algo, int efficacite_poste, int efficacite_epil, int efficacite_mars,ECH* echeancier)
 {
     int i = 0 ;
     int l = 0, m = 0, n = 0, o = 0, p = 0, p2 =0 ;  // utilisé en test 14 pour entrer dans la structure évènement
@@ -167,12 +167,12 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 break;
                 
                 case 18:
-					selectionArchitecture(&nb_place_cours_algo, &nb_place_file_poste, &nb_place_epilation_cheveux, &nb_place_marseillais, &efficacite_algo, &efficacite_poste, &efficacite_epil, &efficacite_mars, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais, nouveau_marseillais);
-					//void selectionArchitecture(int *nb_place_cours_algo, int *nb_place_file_poste, int *nb_place_epilation_cheveux, int *nb_place_marseillais,int *temps_torture_cours_dalgo, int *temps_torture_file_poste, int *temps_torture_epilation_cheveux, int *temps_torture_marseilllais,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais)
-					echeancier->salle_torture_libre_algo = nb_place_cours_algo;
-					echeancier->salle_torture_libre_poste = nb_place_file_poste;
-					echeancier->salle_torture_libre_epil= nb_place_epilation_cheveux;
-					echeancier->salle_torture_libre_mars = nb_place_marseillais;
+					 selectionArchitecture(&nb_place_cours_algo, &nb_place_file_poste, &nb_place_epilation_cheveux, &nb_place_marseillais, &efficacite_algo, &efficacite_poste, &efficacite_epil, &efficacite_mars, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais, nouveau_marseillais);
+					//~ //void selectionArchitecture(int *nb_place_cours_algo, int *nb_place_file_poste, int *nb_place_epilation_cheveux, int *nb_place_marseillais,int *temps_torture_cours_dalgo, int *temps_torture_file_poste, int *temps_torture_epilation_cheveux, int *temps_torture_marseilllais,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais)
+					//~ echeancier->salle_torture_libre_algo = nb_place_cours_algo;
+					//~ echeancier->salle_torture_libre_poste = nb_place_file_poste;
+					//~ echeancier->salle_torture_libre_epil= nb_place_epilation_cheveux;
+					//~ echeancier->salle_torture_libre_mars = nb_place_marseillais;
 					
                 break;
                 
@@ -197,18 +197,19 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
 					while (ppf_cour != NULL)
 					{	
 						//aiguillageDamnesArrivants( * echeancier,  * pt_tete,* type_torture, *duree_torture,   *identifiant,  *efficacite_algo, * efficacite_poste, * efficacite_epil, * efficacite_mars);
-						aiguillageDamnesArrivants( echeancier, * pt_tete,  &ppf_cour->id, &efficacite_algo, &efficacite_poste,  &efficacite_epil, &efficacite_mars, &nbr_ames_pardonnees);
+						aiguillageDamnesArrivants( echeancier, * pt_tete,  &ppf_cour->id, &efficacite_algo, &efficacite_poste,  &efficacite_epil, &efficacite_mars);
 						
 						ppf_cour = ppf_cour->suiv;
                      }
 
 
-                    AiguillagePurgatoireSed(*pt_tete,echeancier);
+                 //   AiguillagePurgatoireSed(*pt_tete,echeancier);
                 break;
                 case 21:
 				while (simu_en_marche)
+				printf("\nSimulation début"); 
 				{
-					simu_en_marche = moteurSimulation(echeancier);
+					simu_en_marche = moteurSimulation(echeancier, pt_tete_cours_algo);
 					printf("\nAppuyer sur ENTREE pour sauter au prochain évènement"); 
 						while ((getchar())!= '\n');
 							getchar();
@@ -466,54 +467,34 @@ void selectionArchitecture(int *nb_place_cours_algo, int *nb_place_file_poste, i
 
     printf("\n\nCombien de salles voulez-vous affecter à la section de torture par cours d'algorithmique ?\t");    
     scanf ("%d",nb_place_cours_algo);
-	
-	for ( int j = 0;  j < *nb_place_cours_algo;  j = j+1)
-		{
-			nouveau_cour_algo = CreerMaillonTortureCoursAlgo(*pt_tete_cours_algo);
-            InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo,nouveau_cour_algo);
-		}
+
 
     printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge pour cette section ?\t");
     scanf("%d",temps_torture_cours_dalgo);
 
 
-    printf("\n\nCombien de salles voulez-vous affecter à la section de torture par file de poste?\t");    
-    scanf("%d",nb_place_file_poste);
+    //~ printf("\n\nCombien de salles voulez-vous affecter à la section de torture par file de poste?\t");    
+    //~ scanf("%d",nb_place_file_poste);
     
-    for ( int j = 0;  j < *nb_place_file_poste;  j = j+1)
-		{
-			nouveau_file_poste = CreerMaillonTortureFilePoste(*pt_tete_file_poste);
-            InsererMaillonEnQueueTortureFilePoste(pt_tete_file_poste,nouveau_file_poste);
-		}
 
-    printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge pour cette section ?\t");
-    scanf("%d",temps_torture_file_poste);
+    //~ printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge pour cette section ?\t");
+    //~ scanf("%d",temps_torture_file_poste);
 
 
-    printf("\n\nCombien de salles voulez-vous affecter à la section de torture par épilation intégrale (et oui, même le maillot) ?\t");    
-    scanf("%d",nb_place_epilation_cheveux);
+    //~ printf("\n\nCombien de salles voulez-vous affecter à la section de torture par épilation intégrale (et oui, même le maillot) ?\t");    
+    //~ scanf("%d",nb_place_epilation_cheveux);
     
-    for ( int j = 0;  j < *nb_place_epilation_cheveux;  j = j+1)
-		{
-			nouveau_epilation_cheveux = CreerMaillonTortureEpilationCheveux(*pt_tete_epilation_cheveux);
-            InsererMaillonEnQueueTortureEpilationCheveux(pt_tete_epilation_cheveux,nouveau_epilation_cheveux);
-		}
 
-    printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge pour cette section ?\t");   
-    scanf("%d",temps_torture_epilation_cheveux);
+    //~ printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge pour cette section ?\t");   
+    //~ scanf("%d",temps_torture_epilation_cheveux);
 
 
-    printf("\n\nCombien de salles voulez-vous affecter à la section de torture par visionnage intensif des \"Marseillais\" ?\t");      
-    scanf("%d",nb_place_marseillais);
+    //~ printf("\n\nCombien de salles voulez-vous affecter à la section de torture par visionnage intensif des \"Marseillais\" ?\t");      
+    //~ scanf("%d",nb_place_marseillais);
     
-    for ( int j = 0;  j < *nb_place_marseillais;  j = j+1)
-		{
-			nouveau_marseillais= CreerMaillonTortureMarseillais(*pt_tete_file_poste);
-            InsererMaillonEnQueueTortureMarseillais(pt_tete_marseillais,nouveau_marseillais);
-		}
 
-    printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge pour cette section ?\t");
-    scanf("%d",temps_torture_marseilllais);
+    //~ printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge pour cette section ?\t");
+    //~ scanf("%d",temps_torture_marseilllais);
 }
 
 // FIFO à priorité pour les évènements 
@@ -642,69 +623,39 @@ void selectionTempsArret(int * tps)
 }		
 
 
-int moteurSimulation(ECH *A)
+int moteurSimulation(ECH *A, COURS_ALGO **pt_tete_cours_algo)
 {
-	int temps_traite;
-	int type_traite; //ARR ou ATT ou Debut ou Fin
-	int valeur;
+	//~ int temps_traite;
+	//~ int type_traite; //ARR ou ATT ou Debut ou Fin
+	//~ int valeur;
 	
 	EVT Evt_a_traiter; //Nous servira à garder les informations de ce qu'on retire de la file
 	EVT *Evt_cree=NULL; //Pointera vers le nouvelle évènement qu'on génére
+	COURS_ALGO *nouveau_cour_algo;
+	
 	int etat = 1;
+	printf("\nDébut moteur simulation"); 
+	A->nb_pers_cours_algo = CompteurCoursAlgo(*pt_tete_cours_algo);
 	
 	if (filevideEvenement(A) == 1) // Si la file de l'échéancier est vide, on arrête la simulation  
 		etat = 0;
 	else
 	{
+		printf("\nElse dans la simulation"); 
 		retirerFileEvenement(A, &Evt_a_traiter.id_ppf, &Evt_a_traiter.id_score, &Evt_a_traiter.type_evt, &Evt_a_traiter.duree_torture, &Evt_a_traiter.t_evt, &Evt_a_traiter.type_torture );            // On traite le premier élèment de liste à évènements, avec les pointeurs on a mis un truc intéressant dans valeur
 		A->t_cour = Evt_a_traiter.t_evt;                  // C'est ici que le temps de la simulation saute à celui de l'événement en cours de traitement ?
 		// 
 		switch (Evt_a_traiter.type_evt)
 		{
 			case ARRIVEE :
-				if (Evt_a_traiter.type_torture == 4)
+				if (Evt_a_traiter.type_torture == 1)
 				{
-					if (A->salle_torture_libre_algo > 0)
+					if (A->nb_pers_cours_algo < A->nb_place_cours_algo)
 					{
-						A->salle_torture_libre_algo = A->salle_torture_libre_algo - 1;
-						Evt_cree = creerEvenement(&Evt_a_traiter, DEBUT_TORTURE, A->t_cour+1);
-						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt, Evt_a_traiter.duree_torture, Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
-					}
-					else //cas ou il n'y a plus de place
-					{
-						Evt_cree = creerEvenement(&Evt_a_traiter, ATTENTE, A->t_cour+1);
-						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt, Evt_a_traiter.duree_torture, Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
-					}
-				}
-				
-				else if (Evt_a_traiter.type_torture == 3)
-				{
-					if (A->salle_torture_libre_poste > 0)
-					{
-						A->salle_torture_libre_poste = A->salle_torture_libre_poste - 1;
-						Evt_cree = creerEvenement(&Evt_a_traiter, DEBUT_TORTURE, A->t_cour+1);
-						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt, Evt_a_traiter.duree_torture, Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
-					}
-					else
-					{
-						Evt_cree = creerEvenement(&Evt_a_traiter, ATTENTE, A->t_cour+1);
-						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt, Evt_a_traiter.duree_torture, Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
-					}
-					
-				}
-				
-				else if (Evt_a_traiter.type_torture == 2)
-				{
-					if (A->salle_torture_libre_epil > 0)
-					{
-						A->salle_torture_libre_epil = A->salle_torture_libre_epil - 1;
+						A-> nb_pers_cours_algo ++;
 						Evt_cree = creerEvenement(&Evt_a_traiter, DEBUT_TORTURE, A->t_cour+1);
 						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt,Evt_a_traiter.duree_torture,  Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
+
 					}
 					else
 					{
@@ -713,89 +664,19 @@ int moteurSimulation(ECH *A)
 						
 					}
 				}
-				
-				else if (Evt_a_traiter.type_torture == 1)
-				{
-					if (A->salle_torture_libre_mars > 0)
-					{
-						A->salle_torture_libre_mars = A->salle_torture_libre_mars - 1;
-						Evt_cree = creerEvenement(&Evt_a_traiter, DEBUT_TORTURE, A->t_cour+1);
-						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt,Evt_a_traiter.duree_torture,  Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
-					}
-					else
-					{
-						Evt_cree = creerEvenement(&Evt_a_traiter, ATTENTE, A->t_cour+1);
-						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt, Evt_a_traiter.duree_torture, Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
-					}
-				}
-				
 				else
 					printf("\n\nERREUR DANS LA FONCTION MOTEUR SIMULATION ARRIVE\n");
 			break;
 			
 			case ATTENTE :
-				if (Evt_a_traiter.type_torture == 4)
+				if (Evt_a_traiter.type_torture == 1)
 				{
-					if (A->salle_torture_libre_algo > 0)
+					if (A->nb_pers_cours_algo < A->nb_place_cours_algo)
 					{
-						A->salle_torture_libre_algo = A->salle_torture_libre_algo - 1;
-						Evt_cree = creerEvenement(&Evt_a_traiter, DEBUT_TORTURE, A->t_cour+1);
-						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt, Evt_a_traiter.duree_torture, Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
-					}
-					else //cas ou il n'y a plus de place
-					{
-						Evt_cree = creerEvenement(&Evt_a_traiter, ATTENTE, A->t_cour+1);
-						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt, Evt_a_traiter.duree_torture, Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
-					}
-				}
-				
-				else if (Evt_a_traiter.type_torture == 3)
-				{
-					if (A->salle_torture_libre_poste > 0)
-					{
-						A->salle_torture_libre_poste = A->salle_torture_libre_poste - 1;
-						Evt_cree = creerEvenement(&Evt_a_traiter, DEBUT_TORTURE, A->t_cour+1);
-						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt, Evt_a_traiter.duree_torture, Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
-					}
-					else
-					{
-						Evt_cree = creerEvenement(&Evt_a_traiter, ATTENTE, A->t_cour+1);
-						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt, Evt_a_traiter.duree_torture, Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
-					}
-					
-				}
-				
-				else if (Evt_a_traiter.type_torture == 2)
-				{
-					if (A->salle_torture_libre_epil > 0)
-					{
-						A->salle_torture_libre_epil = A->salle_torture_libre_epil - 1;
+						A-> nb_pers_cours_algo ++;
 						Evt_cree = creerEvenement(&Evt_a_traiter, DEBUT_TORTURE, A->t_cour+1);
 						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt,Evt_a_traiter.duree_torture,  Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
-					}
-					else
-					{
-						Evt_cree = creerEvenement(&Evt_a_traiter, ATTENTE, A->t_cour+1);
-						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt, Evt_a_traiter.duree_torture, Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
-					}
-				}
-				
-				else if (Evt_a_traiter.type_torture == 1)
-				{
-					if (A->salle_torture_libre_mars > 0)
-					{
-						A->salle_torture_libre_mars = A->salle_torture_libre_mars - 1;
-						Evt_cree = creerEvenement(&Evt_a_traiter, DEBUT_TORTURE, A->t_cour+1);
-						ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt,Evt_a_traiter.duree_torture,  Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
-						
+
 					}
 					else
 					{
@@ -810,48 +691,29 @@ int moteurSimulation(ECH *A)
 			
 			break;
 			
-			case DEBUT_TORTURE :
-				Evt_cree = creerEvenement(&Evt_a_traiter, FIN_TORTURE, A->t_cour+20); //LE PLUS 20 EST A MODIFIER EN FONCTION DU TEMPS QUE PREND LA TORTURE
+			case DEBUT_TORTURE : //Faut il rajouter un while (pt_tete !=NULL) pour faire boucler les damnes
+			//CREER UNE SALLE DE TORTURE POUR MON DAMNE		
+				if(Evt_a_traiter.type_torture == 1)
+				{
+					nouveau_cour_algo = CreerMaillonTortureCoursAlgo(*pt_tete_cours_algo);
+					InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo,nouveau_cour_algo);
+				}
+			
+				Evt_cree = creerEvenement(&Evt_a_traiter, FIN_TORTURE, A->t_cour+20); //LE PLUS 20 EST A MODIFIER EN FONCTION DU TEMPS QUE PREND LA TORTURE -> duree_torture
 				ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt, Evt_a_traiter.duree_torture, Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
+
+					
 			break;
 			
 			case FIN_TORTURE : 
-				if (Evt_a_traiter.type_torture == 4)
+				if (Evt_a_traiter.type_torture == 1)
 				{
-					if (A->salle_torture_libre_algo > 0)
-					{
-						A->salle_torture_libre_algo = A->salle_torture_libre_algo + 1;
-						
-					}
+						A-> nb_pers_cours_algo --;
+						//SUPPRIMER LA SALLE DE TORTURE DU DAMNE					
+						SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo, Evt_a_traiter.id_ppf);		
 				}
-				
-				else if (Evt_a_traiter.type_torture == 3)
-				{
-					if (A->salle_torture_libre_poste > 0)
-					{
-						A->salle_torture_libre_poste = A->salle_torture_libre_poste + 1;
-						
-					}
-					
-				}
-				
-				else if (Evt_a_traiter.type_torture == 2)
-				{
-					if (A->salle_torture_libre_epil > 0)
-					{
-						A->salle_torture_libre_epil = A->salle_torture_libre_epil +1;
-
-					}
-				}
-				
-				else if (Evt_a_traiter.type_torture == 1)
-				{
-					if (A->salle_torture_libre_mars > 0)
-					{
-						A->salle_torture_libre_mars = A->salle_torture_libre_mars +1;						
-					}
-				}
-				
+				else
+					printf("\n\nERREUR DANS LA FONCTION MOTEUR SIMULATION ATTENTE\n");
 				
 			break;
 			
@@ -901,7 +763,10 @@ EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt)
 	{
 		//Génération Evt Attente
 		E->id_ppf = Evt_a_traiter->id_ppf;
-		E->id_score = Evt_a_traiter->id_score;
+		if (Evt_a_traiter->type_torture == 1)
+		{//E->id_score = Evt_a_traiter->id_score; //Dans le cas des 4 tortures on met 4 if qui teste le type de torture
+			E->id_score = 0;
+		}
 		E->type_evt = type_evt;
 		E->duree_torture = Evt_a_traiter->duree_torture;
 		E->t_evt = t_evt;
@@ -916,7 +781,7 @@ EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt)
 		return E;
 }
 
-void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant, int *efficacite_algo, int* efficacite_poste, int* efficacite_epil, int* efficacite_mars, int*nbr_ames_pardonnees)
+void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant, int *efficacite_algo, int* efficacite_poste, int* efficacite_epil, int* efficacite_mars)
 {
 	printf("\n\nAiguillageDamnesArrivants\n");
 	
@@ -931,16 +796,26 @@ void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifian
 		printf("\n\nAiguillageDamnesArrivantsBOUCLE\n");
 		pt_damne_a_traiter = pt_damne_a_traiter->suiv;
 	}
+	
 	printf("\n%d\n", pt_damne_a_traiter->id);
 		printf("\n%d\n", pt_damne_a_traiter->score);
 		
-	if (pt_damne_a_traiter->score == 0)
+	if (pt_damne_a_traiter->score <= 0)
 	{
 		printf("\n\nPARADIS\n");
 		SupprimerMaillonIDDamnes(&pt_tete, *identifiant);
-		nbr_ames_pardonnees = nbr_ames_pardonnees + 1;
+		A->nbr_ames_pardonnees ++;
+	}
+	else 
+	{
+		printf("\n\nBLABLA\n");
+		type_torture =1;
+		duree_torture = pt_damne_a_traiter->score / *efficacite_mars;
+		
 	}
 	
+	
+/*	
 	else if ((pt_damne_a_traiter->score > 0 ) && (pt_damne_a_traiter->score <= 250))
 	{
 		
@@ -949,7 +824,8 @@ void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifian
 		
 		duree_torture = pt_damne_a_traiter->score / *efficacite_mars;
 	}
-	
+/*
+/*	
 	else if ((pt_damne_a_traiter->score > 250  ) && (pt_damne_a_traiter->score <= 500))
 	{
 		printf("\n\nCas où Epilation\n");
@@ -973,7 +849,8 @@ void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifian
 		printf("\n\nCas où Cours Algo\n");
 		duree_torture = ((pt_damne_a_traiter->score) - 750)/ *efficacite_algo;
 	}
-	
+*/
+
 	printf("\n\nAjout\n");
-	ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+1, type_torture );
+	ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+1, type_torture ); // génére des évènements arrivee
 }
