@@ -55,6 +55,8 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
         printf ("| 20 | FONCTION EVENEMENT : Création des évènements ARRIVEE\n");
         printf ("| 21 | FONCTION EVENEMENT : Aiguillage et Création des évènements ATTENTE et DEBUT_TORTURE\n");
         printf ("| 22 | FONCTION EVENEMENT : Séléction du nombre de damnés original à générer\n\n");
+
+        printf("| 23 | Fonction EVENEMENT : Creation des évenements ARRIVEE (Aiguillage de la liste à similer)\n ");
         
         
         printf("\n********** Configuration de la Simulation **********\n");
@@ -199,6 +201,9 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
 						
 						ppf_cour = ppf_cour->suiv;
                      }
+
+
+                    AiguillagePurgatoireSed(*pt_tete,echeancier);
                 break;
                 case 21:
 				while (simu_en_marche)
@@ -208,6 +213,11 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
 						while ((getchar())!= '\n');
 							getchar();
                 }
+                break;
+            case 22:
+                break;
+            case 23:
+                AiguillagePurgatoireSed(*pt_tete, echeancier);
                 break;
                 
             default:
@@ -556,7 +566,8 @@ int retirerFileEvenement(ECH *F, int *id_ppf, int *id_score, int *type_evt, int 
 }
 
 void ajouterAvecPrioriteFileEvenement(ECH *F, int id_ppf, int id_score, int type_evt, int duree_torture, int t_evt, int type_torture)
-{	EVT*E;
+{
+    EVT*E;
 	EVT*E_cour;
 	
 	if (filepleineEvenement(F) ==1)
