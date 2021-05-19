@@ -74,6 +74,10 @@ void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_te
     int nb_pers_file_poste = 0 ;
     int nb_pers_epilation_cheveux = 0 ;
     int nb_pers_marseillais = 0 ;
+    nb_place_marseillais = 10;
+    nb_place_epilation_cheveux = 10;
+    nb_place_file_poste = 10;
+    nb_place_cours_algo = 10;
 
     while (*pt_tete != NULL)
     {
@@ -135,6 +139,10 @@ void update(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_f
 
     //DEfine dans le main par utilisateur
     int nombrerech;
+    temps_torture_marseilllais = 4;
+    temps_torture_epilation_cheveux = 4;
+    temps_torture_file_poste = 4;
+    temps_torture_cours_dalgo = 4;
 
     // Boucle qui vient update tout les temps de torture des chambres pour pouvoir ensuite les suprimer et les replacer dans le purgatoire
     while (pt_courant_cours_algo != NULL)
@@ -324,10 +332,10 @@ void Affichageapresupdate(COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_fil
 void simulationSed(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais,ECH *pt_tete_enchancier, EVT *pt_tete_evenement)
 {
     int nb_pers_cours_algo = 3;
-    AiguillagePurgatoireSed(*pt_tete, pt_tete_enchancier,pt_tete_evenement,nb_pers_cours_algo);
+    AiguillagePurgatoireSed(*pt_tete, pt_tete_enchancier);
 }
 
-void AiguillagePurgatoireSed(PPF *pt_tete,ECH *pt_tete_enchancier, EVT *pt_tete_evenement, int nb_pers_cours_algo)
+void AiguillagePurgatoireSed(PPF *pt_tete,ECH *pt_tete_enchancier)
 {
     int id_tempo;
     int score_tempo;
@@ -341,18 +349,35 @@ void AiguillagePurgatoireSed(PPF *pt_tete,ECH *pt_tete_enchancier, EVT *pt_tete_
         id_tempo = pt_tete->id;
         score_tempo = pt_tete->score;
         if (pt_tete->score >750)
+        {
             type_toture_tempo = 4;
-        if (pt_tete->score > 500)
+            duree_torture_tempo = ((pt_tete->score) - 750);
+        }
+        if (pt_tete->score > 500 && pt_tete->score <= 750)
+        {
             type_toture_tempo = 3;
-        if (pt_tete->score > 250)
+            duree_torture_tempo = ((pt_tete->score) - 500);
+        }
+        if (pt_tete->score > 250 && pt_tete->score <= 500)
+        {
             type_toture_tempo = 2;
-        if (pt_tete->score > 0)
+            duree_torture_tempo = ((pt_tete->score) - 250);
+        }
+        if (pt_tete->score > 0 && pt_tete->score <= 250)
+        {
             type_toture_tempo = 1;
+            duree_torture_tempo = (pt_tete->score);//RAJOUTER DUREER EVENEMENT DE L'ECHANCIER
+
+        }
+        if (pt_tete->score < 0)
+            type_toture_tempo = 0;
+
 
         t_evt_tempo = pt_tete->score/10;
         type_evt_tempo = 0;
 
       ajouterAvecPrioriteFileEvenement(pt_tete_enchancier,id_tempo,score_tempo,type_evt_tempo, duree_torture_tempo, t_evt_tempo,type_toture_tempo);
+      pt_tete =pt_tete->suiv;
     }
 }
 
