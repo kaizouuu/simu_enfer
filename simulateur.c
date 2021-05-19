@@ -8,318 +8,318 @@
 
 
 //*******************************Fonction Pour L'Aiguillage***************************************************
-//~ void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo, FILE_POSTE **pt_tete_file_poste, FILE_POSTE*nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux, EPILATION_CHEVEUX *nouveau_epilation_cheveux, MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais, int nb_pers_cours_algo, int nb_pers_file_poste, int nb_pers_epilation_cheveux, int nb_pers_marseillais, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais)
-//~ {
-    //~ int id_tempo;
-    //~ while (pt_tete != NULL)
-    //~ {
-        //~ if (pt_tete->cpt == 0)
-        //~ {
-            //~ // Verifier la taille des listes des chambre  dans cette section
-            //~ pt_tete->cpt = 1;
-            //~ if (nb_pers_cours_algo < nb_place_cours_algo)
-            //~ {
-                //~ if(pt_tete->score >= 750)
-                //~ {
-                    //~ id_tempo = pt_tete->id;
-                    //~ nouveau_cour_algo = CreerMaillonTortureCoursAlgoID(id_tempo);
-                    //~ InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo, nouveau_cour_algo);
-                    //~ id_tempo = 0;
-                    //~ nb_pers_cours_algo++;
-                //~ }
-            //~ }
-            //~ if (nb_pers_file_poste < nb_place_file_poste)
-            //~ {
-                //~ if((pt_tete->score < 750) && (pt_tete->score >= 500))
-                //~ {
-                    //~ id_tempo = pt_tete->id;
-                    //~ nouveau_file_poste = CreerMaillonTortureFilePosteID(id_tempo);
-                    //~ InsererMaillonEnQueueTortureFilePoste(pt_tete_file_poste, nouveau_file_poste);
-                    //~ id_tempo = 0;
-                //~ }
-            //~ }
-            //~ if (nb_pers_epilation_cheveux < nb_place_epilation_cheveux)
-            //~ {
-                //~ if((pt_tete->score < 500) && (pt_tete->score >= 250))
-                //~ {
-                    //~ id_tempo = pt_tete->id;
-                    //~ nouveau_epilation_cheveux = CreerMaillonTortureEpilationCheveuxID(id_tempo);
-                    //~ InsererMaillonEnQueueTortureEpilationCheveux(pt_tete_epilation_cheveux, nouveau_epilation_cheveux);
-                    //~ id_tempo = 0;
+void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo, FILE_POSTE **pt_tete_file_poste, FILE_POSTE*nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux, EPILATION_CHEVEUX *nouveau_epilation_cheveux, MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais, int nb_pers_cours_algo, int nb_pers_file_poste, int nb_pers_epilation_cheveux, int nb_pers_marseillais, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais)
+{
+    int id_tempo;
+    while (pt_tete != NULL)
+    {
+        if (pt_tete->cpt == 0)
+        {
+            // Verifier la taille des listes des chambre  dans cette section
+            pt_tete->cpt = 1;
+            if (nb_pers_cours_algo < nb_place_cours_algo)
+            {
+                if(pt_tete->score >= 750)
+                {
+                    id_tempo = pt_tete->id;
+                    nouveau_cour_algo = CreerMaillonTortureCoursAlgoID(id_tempo);
+                    InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo, nouveau_cour_algo);
+                    id_tempo = 0;
+                    nb_pers_cours_algo++;
+                }
+            }
+            if (nb_pers_file_poste < nb_place_file_poste)
+            {
+                if((pt_tete->score < 750) && (pt_tete->score >= 500))
+                {
+                    id_tempo = pt_tete->id;
+                    nouveau_file_poste = CreerMaillonTortureFilePosteID(id_tempo);
+                    InsererMaillonEnQueueTortureFilePoste(pt_tete_file_poste, nouveau_file_poste);
+                    id_tempo = 0;
+                }
+            }
+            if (nb_pers_epilation_cheveux < nb_place_epilation_cheveux)
+            {
+                if((pt_tete->score < 500) && (pt_tete->score >= 250))
+                {
+                    id_tempo = pt_tete->id;
+                    nouveau_epilation_cheveux = CreerMaillonTortureEpilationCheveuxID(id_tempo);
+                    InsererMaillonEnQueueTortureEpilationCheveux(pt_tete_epilation_cheveux, nouveau_epilation_cheveux);
+                    id_tempo = 0;
 
-                //~ }
-            //~ }
-            //~ if (nb_pers_marseillais < nb_place_marseillais)
-            //~ {
-                //~ if((pt_tete->score < 250) && (pt_tete->score >= 0))
-                //~ {
-                    //~ id_tempo = pt_tete->id;
-                    //~ nouveau_marseillais = CreerMaillonTortureMarseillaisID(id_tempo);
-                    //~ InsererMaillonEnQueueTortureMarseillais(pt_tete_marseillais, nouveau_marseillais);
-                    //~ id_tempo = 0;
-                //~ }
-            //~ }
-            //~ pt_tete = pt_tete->suiv;
-        //~ }
-        //~ else
-        //~ {
-            //~ pt_tete = pt_tete->suiv;
-        //~ }
-    //~ }
-//~ }
+                }
+            }
+            if (nb_pers_marseillais < nb_place_marseillais)
+            {
+                if((pt_tete->score < 250) && (pt_tete->score >= 0))
+                {
+                    id_tempo = pt_tete->id;
+                    nouveau_marseillais = CreerMaillonTortureMarseillaisID(id_tempo);
+                    InsererMaillonEnQueueTortureMarseillais(pt_tete_marseillais, nouveau_marseillais);
+                    id_tempo = 0;
+                }
+            }
+            pt_tete = pt_tete->suiv;
+        }
+        else
+        {
+            pt_tete = pt_tete->suiv;
+        }
+    }
+}
 
-//~ void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais, int temps_torture_cours_dalgo, int temps_torture_file_poste, int temps_torture_epilation_cheveux, int temps_torture_marseilllais)
-//~ {
-    //~ int nb_pers_cours_algo = 0 ;
-    //~ int nb_pers_file_poste = 0 ;
-    //~ int nb_pers_epilation_cheveux = 0 ;
-    //~ int nb_pers_marseillais = 0 ;
+void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais, int temps_torture_cours_dalgo, int temps_torture_file_poste, int temps_torture_epilation_cheveux, int temps_torture_marseilllais)
+{
+    int nb_pers_cours_algo = 0 ;
+    int nb_pers_file_poste = 0 ;
+    int nb_pers_epilation_cheveux = 0 ;
+    int nb_pers_marseillais = 0 ;
 
-    //~ while (*pt_tete != NULL)
-    //~ {
+    while (*pt_tete != NULL)
+    {
 
-        //~ AiguillagePurgatoire(*pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais,nb_pers_cours_algo, nb_pers_file_poste, nb_pers_epilation_cheveux, nb_pers_marseillais, nb_place_cours_algo, nb_place_file_poste, nb_place_epilation_cheveux, nb_place_marseillais);
-        //~ unsigned long secondes = 0;
-        //~ time_t begin = time( NULL );
-        //~ // Boucle du temps pour sequencer la simulation creer un tableau pour avoir des valeurs pret remplie
-        //~ while (secondes<2)
-        //~ {
-            //~ time_t end = time( NULL);
-            //~ secondes = (unsigned long) difftime( end, begin );
-        //~ }
-        //~ nb_pers_cours_algo = CompteurCoursAlgo(*pt_tete_cours_algo);
-        //~ nb_pers_file_poste = CompteurFilePoste(*pt_tete_file_poste);
-        //~ nb_pers_epilation_cheveux = CompteurEpilationCheveux(*pt_tete_epilation_cheveux);
-        //~ nb_pers_marseillais = CompteurMarseillais(*pt_tete_marseillais);
-        //~ printf( "\n\n******************* Mise à jour apres %ld ans **********************\n", secondes );
-        //~ update(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais, temps_torture_cours_dalgo, temps_torture_file_poste, temps_torture_epilation_cheveux, temps_torture_marseilllais);
-        //~ Affichageapresupdate(*pt_tete_cours_algo, *pt_tete_file_poste, *pt_tete_epilation_cheveux, *pt_tete_marseillais);
-    //~ }
-//~ }
+        AiguillagePurgatoire(*pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais,nb_pers_cours_algo, nb_pers_file_poste, nb_pers_epilation_cheveux, nb_pers_marseillais, nb_place_cours_algo, nb_place_file_poste, nb_place_epilation_cheveux, nb_place_marseillais);
+        unsigned long secondes = 0;
+        time_t begin = time( NULL );
+        // Boucle du temps pour sequencer la simulation creer un tableau pour avoir des valeurs pret remplie
+        while (secondes<2)
+        {
+            time_t end = time( NULL);
+            secondes = (unsigned long) difftime( end, begin );
+        }
+        nb_pers_cours_algo = CompteurCoursAlgo(*pt_tete_cours_algo);
+        nb_pers_file_poste = CompteurFilePoste(*pt_tete_file_poste);
+        nb_pers_epilation_cheveux = CompteurEpilationCheveux(*pt_tete_epilation_cheveux);
+        nb_pers_marseillais = CompteurMarseillais(*pt_tete_marseillais);
+        printf( "\n\n******************* Mise à jour apres %ld ans **********************\n", secondes );
+        update(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais, temps_torture_cours_dalgo, temps_torture_file_poste, temps_torture_epilation_cheveux, temps_torture_marseilllais);
+        Affichageapresupdate(*pt_tete_cours_algo, *pt_tete_file_poste, *pt_tete_epilation_cheveux, *pt_tete_marseillais);
+    }
+}
 
-//~ void update(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais, int temps_torture_cours_dalgo, int temps_torture_file_poste, int temps_torture_epilation_cheveux, int temps_torture_marseilllais)
-//~ {
-    //~ int flag =1;
-    //~ // Faire une fonction qui augmente le compteur de toutes les chambre
-    //~ updatecompteur(*pt_tete_cours_algo,*pt_tete_file_poste,*pt_tete_epilation_cheveux,*pt_tete_marseillais);
-    //~ // Duplication des listes chaines pour pouvoir les utiliser et les metre à jour en meme temps.
+void update(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais, int temps_torture_cours_dalgo, int temps_torture_file_poste, int temps_torture_epilation_cheveux, int temps_torture_marseilllais)
+{
+    int flag =1;
+    // Faire une fonction qui augmente le compteur de toutes les chambre
+    updatecompteur(*pt_tete_cours_algo,*pt_tete_file_poste,*pt_tete_epilation_cheveux,*pt_tete_marseillais);
+    // Duplication des listes chaines pour pouvoir les utiliser et les metre à jour en meme temps.
 
-    //~ FILE * database_PFF_SIMU = NULL;
-    //~ FILE * database_COURS_ALGO = NULL;
-    //~ FILE * database_FILE_POSTE = NULL;
-    //~ FILE * database_EPILATION_CHEVEUX = NULL;
-    //~ FILE * database_MARSEILLAIS = NULL;
+    FILE * database_PFF_SIMU = NULL;
+    FILE * database_COURS_ALGO = NULL;
+    FILE * database_FILE_POSTE = NULL;
+    FILE * database_EPILATION_CHEVEUX = NULL;
+    FILE * database_MARSEILLAIS = NULL;
 
-    //~ PPF *pt_courant = NULL;
-    //~ COURS_ALGO *pt_courant_cours_algo = NULL;
-    //~ FILE_POSTE *pt_courant_file_poste = NULL;
-    //~ EPILATION_CHEVEUX *pt_courant_epilation_cheveux = NULL;
-    //~ MARSEILLAIS *pt_courant_marseillais = NULL;
+    PPF *pt_courant = NULL;
+    COURS_ALGO *pt_courant_cours_algo = NULL;
+    FILE_POSTE *pt_courant_file_poste = NULL;
+    EPILATION_CHEVEUX *pt_courant_epilation_cheveux = NULL;
+    MARSEILLAIS *pt_courant_marseillais = NULL;
 
-    //~ EcrireFichier(database_PFF_SIMU,*pt_tete,flag);
-    //~ pt_courant = LireFichier(database_PFF_SIMU,flag);
-    //~ EcrireFichierCoursAlgo(database_COURS_ALGO,*pt_tete_cours_algo);
-    //~ pt_courant_cours_algo = LireFichierCoursAlgo(database_COURS_ALGO);
-
-
-    //~ EcrireFichierFilePoste(database_FILE_POSTE,*pt_tete_file_poste);
-    //~ pt_courant_file_poste = LireFichierFilePoste(database_FILE_POSTE);
+    EcrireFichier(database_PFF_SIMU,*pt_tete,flag);
+    pt_courant = LireFichier(database_PFF_SIMU,flag);
+    EcrireFichierCoursAlgo(database_COURS_ALGO,*pt_tete_cours_algo);
+    pt_courant_cours_algo = LireFichierCoursAlgo(database_COURS_ALGO);
 
 
-    //~ EcrireFichierEpilationCheveux(database_EPILATION_CHEVEUX,*pt_tete_epilation_cheveux);
-    //~ pt_courant_epilation_cheveux = LireFichierEpilationCheveux(database_EPILATION_CHEVEUX);
+    EcrireFichierFilePoste(database_FILE_POSTE,*pt_tete_file_poste);
+    pt_courant_file_poste = LireFichierFilePoste(database_FILE_POSTE);
 
 
-    //~ EcrireFichierMarseillais(database_MARSEILLAIS,*pt_tete_marseillais);
-    //~ pt_courant_marseillais = LireFichierMarseillais(database_MARSEILLAIS);
+    EcrireFichierEpilationCheveux(database_EPILATION_CHEVEUX,*pt_tete_epilation_cheveux);
+    pt_courant_epilation_cheveux = LireFichierEpilationCheveux(database_EPILATION_CHEVEUX);
 
-    //~ //DEfine dans le main par utilisateur
-    //~ int nombrerech;
 
-    //~ // Boucle qui vient update tout les temps de torture des chambres pour pouvoir ensuite les suprimer et les replacer dans le purgatoire
-    //~ while (pt_courant_cours_algo != NULL)
-    //~ {
-        //~ if(pt_courant_cours_algo->cpt >= temps_torture_cours_dalgo)
-        //~ {
-            //~ nombrerech = pt_courant_cours_algo->id;
-            //~ nouveau = RechercherMaillonNombre(pt_courant,nombrerech);
-            //~ if (nouveau != NULL)
-            //~ {
-                //~ SupprimerMaillonID(pt_tete,nombrerech);
-                //~ InsererMaillonEnQueue(pt_tete,nouveau);
-                //~ SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo,nombrerech);
-            //~ }
-        //~ }
-        //~ pt_courant_cours_algo = pt_courant_cours_algo->suiv;
-    //~ }
-    //~ free(pt_courant_cours_algo);
+    EcrireFichierMarseillais(database_MARSEILLAIS,*pt_tete_marseillais);
+    pt_courant_marseillais = LireFichierMarseillais(database_MARSEILLAIS);
 
-    //~ while (pt_courant_file_poste != NULL)
-    //~ {
-        //~ if(pt_courant_file_poste->cpt >= temps_torture_file_poste)
-        //~ {
-            //~ nombrerech = pt_courant_file_poste->id;
-            //~ nouveau = RechercherMaillonNombre(pt_courant,nombrerech);
-            //~ if (nouveau != NULL)
-            //~ {
-                //~ SupprimerMaillonID(pt_tete,nombrerech);
-                //~ InsererMaillonEnQueue(pt_tete,nouveau);
-                //~ SupprimerMaillonTortureFilePoste(pt_tete_file_poste,nombrerech);
-            //~ }
-        //~ }
-        //~ pt_courant_file_poste = pt_courant_file_poste->suiv;
-    //~ }
-    //~ free(pt_courant_file_poste);
+    //DEfine dans le main par utilisateur
+    int nombrerech;
 
-    //~ while (pt_courant_epilation_cheveux != NULL)
-    //~ {
-        //~ if(pt_courant_epilation_cheveux->cpt >= temps_torture_epilation_cheveux)
-        //~ {
-            //~ nombrerech = pt_courant_epilation_cheveux->id;
-            //~ nouveau = RechercherMaillonNombre(pt_courant,nombrerech);
-            //~ if (nouveau != NULL)
-            //~ {
-                //~ SupprimerMaillonID(pt_tete,nombrerech);
-                //~ InsererMaillonEnQueue(pt_tete,nouveau);
-                //~ SupprimerMaillonTortureEpilationCheveux(pt_tete_epilation_cheveux,nombrerech);
-            //~ }
-        //~ }
-        //~ pt_courant_epilation_cheveux = pt_courant_epilation_cheveux->suiv;
-    //~ }
-    //~ free(pt_courant_epilation_cheveux);
-    //~ while (pt_courant_marseillais != NULL)
-    //~ {
-        //~ if(pt_courant_marseillais->cpt >= temps_torture_marseilllais)
-        //~ {
-            //~ nombrerech = pt_courant_marseillais->id;
-            //~ nouveau = RechercherMaillonNombre(pt_courant,nombrerech);
-            //~ if (nouveau != NULL)
-            //~ {
-                //~ SupprimerMaillonID(pt_tete,nombrerech);
-                //~ if (nouveau->cpt > 0)
-                    //~ InsererMaillonEnQueue(pt_tete,nouveau);
-                //~ SupprimerMaillonTortureMarseillais(pt_tete_marseillais,nombrerech);
-            //~ }
-        //~ }
-        //~ pt_courant_marseillais = pt_courant_marseillais->suiv;
-    //~ }
-    //~ free(pt_courant_marseillais);
-//~ }
+    // Boucle qui vient update tout les temps de torture des chambres pour pouvoir ensuite les suprimer et les replacer dans le purgatoire
+    while (pt_courant_cours_algo != NULL)
+    {
+        if(pt_courant_cours_algo->cpt >= temps_torture_cours_dalgo)
+        {
+            nombrerech = pt_courant_cours_algo->id;
+            nouveau = RechercherMaillonNombreDamnes(pt_courant,nombrerech);
+            if (nouveau != NULL)
+            {
+                SupprimerMaillonIDDamnes(pt_tete,nombrerech);
+                InsererMaillonEnQueueDamnes(pt_tete,nouveau);
+                SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo,nombrerech);
+            }
+        }
+        pt_courant_cours_algo = pt_courant_cours_algo->suiv;
+    }
+    free(pt_courant_cours_algo);
 
-//~ void updatecompteur(COURS_ALGO *pt_tete_cours_algo, FILE_POSTE *pt_tete_file_poste,EPILATION_CHEVEUX *pt_tete_epilation_cheveux,MARSEILLAIS *pt_tete_marseillais)
-//~ {
-    //~ while(pt_tete_cours_algo != NULL)
-    //~ {
-        //~ pt_tete_cours_algo->cpt = pt_tete_cours_algo->cpt +2;
-        //~ pt_tete_cours_algo = pt_tete_cours_algo->suiv;
-    //~ }
-    //~ while (pt_tete_file_poste != NULL)
-    //~ {
-        //~ pt_tete_file_poste->cpt = pt_tete_file_poste->cpt +2;
-        //~ pt_tete_file_poste = pt_tete_file_poste->suiv;
-    //~ }
-    //~ while (pt_tete_epilation_cheveux != NULL)
-    //~ {
-        //~ pt_tete_epilation_cheveux->cpt = pt_tete_epilation_cheveux->cpt +2;
-        //~ pt_tete_epilation_cheveux = pt_tete_epilation_cheveux->suiv;
-    //~ }
-    //~ while (pt_tete_marseillais != NULL)
-    //~ {
-        //~ pt_tete_marseillais->cpt = pt_tete_marseillais->cpt +2;
-        //~ pt_tete_marseillais = pt_tete_marseillais->suiv;
-    //~ }
-//~ }
+    while (pt_courant_file_poste != NULL)
+    {
+        if(pt_courant_file_poste->cpt >= temps_torture_file_poste)
+        {
+            nombrerech = pt_courant_file_poste->id;
+            nouveau = RechercherMaillonNombreDamnes(pt_courant,nombrerech);
+            if (nouveau != NULL)
+            {
+                SupprimerMaillonIDDamnes(pt_tete,nombrerech);
+                InsererMaillonEnQueueDamnes(pt_tete,nouveau);
+                SupprimerMaillonTortureFilePoste(pt_tete_file_poste,nombrerech);
+            }
+        }
+        pt_courant_file_poste = pt_courant_file_poste->suiv;
+    }
+    free(pt_courant_file_poste);
 
-//~ COURS_ALGO* copieListeFrag(COURS_ALGO *S) {
-    //~ COURS_ALGO *copie = NULL;
-    //~ if (S != NULL) {
-        //~ while (S ->suiv != NULL) {
-            //~ copie = malloc(sizeof(COURS_ALGO));
-            //~ copie -> id = S -> id;
-            //~ copie -> cpt = copie -> cpt;
-            //~ copie -> suiv = S -> suiv;
-            //~ S = S -> suiv;
-            //~ copieListeFrag(S);
-        //~ }
-    //~ }
-    //~ return copie;
-//~ }
+    while (pt_courant_epilation_cheveux != NULL)
+    {
+        if(pt_courant_epilation_cheveux->cpt >= temps_torture_epilation_cheveux)
+        {
+            nombrerech = pt_courant_epilation_cheveux->id;
+            nouveau = RechercherMaillonNombreDamnes(pt_courant,nombrerech);
+            if (nouveau != NULL)
+            {
+                SupprimerMaillonIDDamnes(pt_tete,nombrerech);
+                InsererMaillonEnQueueDamnes(pt_tete,nouveau);
+                SupprimerMaillonTortureEpilationCheveux(pt_tete_epilation_cheveux,nombrerech);
+            }
+        }
+        pt_courant_epilation_cheveux = pt_courant_epilation_cheveux->suiv;
+    }
+    free(pt_courant_epilation_cheveux);
+    while (pt_courant_marseillais != NULL)
+    {
+        if(pt_courant_marseillais->cpt >= temps_torture_marseilllais)
+        {
+            nombrerech = pt_courant_marseillais->id;
+            nouveau = RechercherMaillonNombreDamnes(pt_courant,nombrerech);
+            if (nouveau != NULL)
+            {
+                SupprimerMaillonIDDamnes(pt_tete,nombrerech);
+                if (nouveau->cpt > 0)
+                    InsererMaillonEnQueueDamnes(pt_tete,nouveau);
+                SupprimerMaillonTortureMarseillais(pt_tete_marseillais,nombrerech);
+            }
+        }
+        pt_courant_marseillais = pt_courant_marseillais->suiv;
+    }
+    free(pt_courant_marseillais);
+}
 
-//~ void Affichageapresupdate(COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_file_poste,EPILATION_CHEVEUX *pt_tete_epilation_cheveux,MARSEILLAIS *pt_tete_marseillais)
-//~ {
-    //~ int tableau_affichage_cours_algo_id[TAFFICHAGE];
-    //~ int tableau_affichage_cours_algo_cpt[TAFFICHAGE];
-    //~ int i = 0;
-    //~ int nbdanne = 3 ;
-    //~ printf ("\n\n Affichage des dannées en cours d'algo ci dessous: \n");
-    //~ {
-        //~ if(pt_tete_cours_algo == NULL)
-            //~ printf("Les salles de cette torture sont vides, les diables ont pris leurs pause.");
-        //~ while (pt_tete_cours_algo != NULL && i < nbdanne)
-        //~ {
-            //~ tableau_affichage_cours_algo_id[i] = pt_tete_cours_algo->id;
-            //~ tableau_affichage_cours_algo_cpt[i] = pt_tete_cours_algo->cpt;
-            //~ pt_tete_cours_algo = pt_tete_cours_algo->suiv;
-            //~ i++;
-        //~ }
-        //~ for (i=0; i<nbdanne; i++)
-            //~ printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_cours_algo_id[i],tableau_affichage_cours_algo_cpt[i]);
-    //~ }
+void updatecompteur(COURS_ALGO *pt_tete_cours_algo, FILE_POSTE *pt_tete_file_poste,EPILATION_CHEVEUX *pt_tete_epilation_cheveux,MARSEILLAIS *pt_tete_marseillais)
+{
+    while(pt_tete_cours_algo != NULL)
+    {
+        pt_tete_cours_algo->cpt = pt_tete_cours_algo->cpt +2;
+        pt_tete_cours_algo = pt_tete_cours_algo->suiv;
+    }
+    while (pt_tete_file_poste != NULL)
+    {
+        pt_tete_file_poste->cpt = pt_tete_file_poste->cpt +2;
+        pt_tete_file_poste = pt_tete_file_poste->suiv;
+    }
+    while (pt_tete_epilation_cheveux != NULL)
+    {
+        pt_tete_epilation_cheveux->cpt = pt_tete_epilation_cheveux->cpt +2;
+        pt_tete_epilation_cheveux = pt_tete_epilation_cheveux->suiv;
+    }
+    while (pt_tete_marseillais != NULL)
+    {
+        pt_tete_marseillais->cpt = pt_tete_marseillais->cpt +2;
+        pt_tete_marseillais = pt_tete_marseillais->suiv;
+    }
+}
 
-    //~ int tableau_affichage_file_poste_id[TAFFICHAGE];
-    //~ int tableau_affichage_file_poste_cpt[TAFFICHAGE];
-    //~ i=0;
-    //~ printf ("\n\n Affichage des dannées qui font la queue à la poste ci dessous: \n");
-    //~ {
-        //~ if(pt_tete_file_poste == NULL)
-            //~ printf("Les salles de cette torture sont vides, les diables ont pris leurs pause.");
-        //~ while (pt_tete_file_poste != NULL && i < nbdanne)
-        //~ {
-            //~ tableau_affichage_file_poste_id[i] = pt_tete_file_poste->id;
-            //~ tableau_affichage_file_poste_cpt[i] = pt_tete_file_poste->cpt;
-            //~ pt_tete_file_poste = pt_tete_file_poste->suiv;
-            //~ i++;
-        //~ }
-        //~ for (i=0; i<nbdanne; i++)
-            //~ printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_file_poste_id[i],tableau_affichage_file_poste_cpt[i]);
-    //~ }
+COURS_ALGO* copieListeFrag(COURS_ALGO *S) {
+    COURS_ALGO *copie = NULL;
+    if (S != NULL) {
+        while (S ->suiv != NULL) {
+            copie = malloc(sizeof(COURS_ALGO));
+            copie -> id = S -> id;
+            copie -> cpt = copie -> cpt;
+            copie -> suiv = S -> suiv;
+            S = S -> suiv;
+            copieListeFrag(S);
+        }
+    }
+    return copie;
+}
 
-    //~ int tableau_affichage_epilation_cheveux_id[TAFFICHAGE];
-    //~ int tableau_affichage_epilation_cheveux_cpt[TAFFICHAGE];
-    //~ i = 0;
-    //~ printf ("\n\n Affichage des dannées qui se font épiller un par un leurs cheveux ci dessous: \n");
-    //~ {
-        //~ if(pt_tete_epilation_cheveux == NULL)
-            //~ printf("Les salles de cette torture sont vides, les diables ont pris leurs pause.");
-        //~ while (pt_tete_epilation_cheveux != NULL && i < nbdanne)
-        //~ {
-            //~ tableau_affichage_epilation_cheveux_id[i] = pt_tete_epilation_cheveux->id;
-            //~ tableau_affichage_epilation_cheveux_cpt[i] = pt_tete_epilation_cheveux->cpt;
-            //~ pt_tete_epilation_cheveux = pt_tete_epilation_cheveux->suiv;
-            //~ i++;
-        //~ }
-        //~ for (i=0; i<nbdanne; i++)
-            //~ printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_epilation_cheveux_id[i],tableau_affichage_epilation_cheveux_cpt[i]);
-    //~ }
+void Affichageapresupdate(COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_file_poste,EPILATION_CHEVEUX *pt_tete_epilation_cheveux,MARSEILLAIS *pt_tete_marseillais)
+{
+    int tableau_affichage_cours_algo_id[TAFFICHAGE];
+    int tableau_affichage_cours_algo_cpt[TAFFICHAGE];
+    int i = 0;
+    int nbdanne = 3 ;
+    printf ("\n\n Affichage des dannées en cours d'algo ci dessous: \n");
+    {
+        if(pt_tete_cours_algo == NULL)
+            printf("Les salles de cette torture sont vides, les diables ont pris leurs pause.");
+        while (pt_tete_cours_algo != NULL && i < nbdanne)
+        {
+            tableau_affichage_cours_algo_id[i] = pt_tete_cours_algo->id;
+            tableau_affichage_cours_algo_cpt[i] = pt_tete_cours_algo->cpt;
+            pt_tete_cours_algo = pt_tete_cours_algo->suiv;
+            i++;
+        }
+        for (i=0; i<nbdanne; i++)
+            printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_cours_algo_id[i],tableau_affichage_cours_algo_cpt[i]);
+    }
 
-    //~ int tableau_affichage_marseillais_id[TAFFICHAGE];
-    //~ int tableau_affichage_marseillais_cpt[TAFFICHAGE];
-    //~ i = 0;
-    //~ printf ("\n\n Affichage des dannées qui visionnent les maisaillais en boucle ci dessous: \n");
-    //~ {
-        //~ if(pt_tete_marseillais == NULL)
-            //~ printf("Les salles de cette torture sont vides, les diables ont pris leurs pause.");
-        //~ while (pt_tete_marseillais != NULL && i < nbdanne)
-        //~ {
-            //~ tableau_affichage_marseillais_id[i] = pt_tete_marseillais->id;
-            //~ tableau_affichage_marseillais_cpt[i] = pt_tete_marseillais->cpt;
-            //~ pt_tete_marseillais = pt_tete_marseillais->suiv;
-            //~ i++;
-        //~ }
-        //~ for (i=0; i<nbdanne; i++)
-            //~ printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_marseillais_id[i],tableau_affichage_marseillais_cpt[i]);
-    //~ }
-//~ }
+    int tableau_affichage_file_poste_id[TAFFICHAGE];
+    int tableau_affichage_file_poste_cpt[TAFFICHAGE];
+    i=0;
+    printf ("\n\n Affichage des dannées qui font la queue à la poste ci dessous: \n");
+    {
+        if(pt_tete_file_poste == NULL)
+            printf("Les salles de cette torture sont vides, les diables ont pris leurs pause.");
+        while (pt_tete_file_poste != NULL && i < nbdanne)
+        {
+            tableau_affichage_file_poste_id[i] = pt_tete_file_poste->id;
+            tableau_affichage_file_poste_cpt[i] = pt_tete_file_poste->cpt;
+            pt_tete_file_poste = pt_tete_file_poste->suiv;
+            i++;
+        }
+        for (i=0; i<nbdanne; i++)
+            printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_file_poste_id[i],tableau_affichage_file_poste_cpt[i]);
+    }
+
+    int tableau_affichage_epilation_cheveux_id[TAFFICHAGE];
+    int tableau_affichage_epilation_cheveux_cpt[TAFFICHAGE];
+    i = 0;
+    printf ("\n\n Affichage des dannées qui se font épiller un par un leurs cheveux ci dessous: \n");
+    {
+        if(pt_tete_epilation_cheveux == NULL)
+            printf("Les salles de cette torture sont vides, les diables ont pris leurs pause.");
+        while (pt_tete_epilation_cheveux != NULL && i < nbdanne)
+        {
+            tableau_affichage_epilation_cheveux_id[i] = pt_tete_epilation_cheveux->id;
+            tableau_affichage_epilation_cheveux_cpt[i] = pt_tete_epilation_cheveux->cpt;
+            pt_tete_epilation_cheveux = pt_tete_epilation_cheveux->suiv;
+            i++;
+        }
+        for (i=0; i<nbdanne; i++)
+            printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_epilation_cheveux_id[i],tableau_affichage_epilation_cheveux_cpt[i]);
+    }
+
+    int tableau_affichage_marseillais_id[TAFFICHAGE];
+    int tableau_affichage_marseillais_cpt[TAFFICHAGE];
+    i = 0;
+    printf ("\n\n Affichage des dannées qui visionnent les maisaillais en boucle ci dessous: \n");
+    {
+        if(pt_tete_marseillais == NULL)
+            printf("Les salles de cette torture sont vides, les diables ont pris leurs pause.");
+        while (pt_tete_marseillais != NULL && i < nbdanne)
+        {
+            tableau_affichage_marseillais_id[i] = pt_tete_marseillais->id;
+            tableau_affichage_marseillais_cpt[i] = pt_tete_marseillais->cpt;
+            pt_tete_marseillais = pt_tete_marseillais->suiv;
+            i++;
+        }
+        for (i=0; i<nbdanne; i++)
+            printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_marseillais_id[i],tableau_affichage_marseillais_cpt[i]);
+    }
+}
 
 void simulationSed(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais,ECH *pt_tete_enchancier, EVT *pt_tete_evenement)
 {
@@ -356,45 +356,6 @@ void AiguillagePurgatoireSed(PPF *pt_tete,ECH *pt_tete_enchancier, EVT *pt_tete_
     }
 }
 
-//~ int moteurSimulation(ECH *A)
-//~ {
-	//~ int temps_traite;
-	//~ int type_traite; //ARR ou ATT ou Debut ou Fin
-	//~ int valeur;
-	
-	//~ EVT *Evt_cree=NULL;
-	//~ int etat = 1;
-	
-	//~ if (filevide(A) == 1) // Si la file de l'échéancier est vide 
-		//~ etat = 0;
-	//~ else
-	//~ {
-		//~ retirer(A, &valeur);            // On traite le premier élèment de liste à évènements, avec les pointeurs on a mis un truc intéressant dans valeur
-		//~ A->t_cour	= temps_traite;                  // C'est ici que le temps de la simulation saute à celui de l'événement en cours de traitement 
-		//~ // 
-		//~ switch (type_traite)
-		//~ {
-			//~ case ARRIVEE :
-			
-			//~ case ATTENTE :
-			
-			
-			//~ case DEBUT_TORTURE :
-			
-			//~ case FIN_TORTURE : 
-			
-			//~ default :
-				//~ etat = -1;
-		//~ }
-		//~ //affichage aff_type(type_traite, st_type_trait)
-		//~ if (type_traite != FIN_TORTURE)
-			//~ //affichage aff_type(Evt_cree->type_evt, st_type_chg);
-		//~ else strcpy(st_type_chg, "VIDE");
-			//~ fprintf
-			//~ st_type_trait, st_type_chg, temps_traite, A->Laveurs);
-	//~ }
-	//~ return etat;
-//~ }
 
 
 
