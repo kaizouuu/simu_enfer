@@ -71,11 +71,12 @@ typedef struct ech{
 	EVT *debut;                     // Pointe vers le début de la liste chaînée des EVT
 	int nb_place_cours_algo;
 	int nb_pers_cours_algo;
+	int efficacite_algo;
 	int nbr_ames_pardonnees;
 } ECH;
 
 //menu
-void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *,MARSEILLAIS **,MARSEILLAIS *,int, int, int, int, int, int, int, int, int,ECH*);
+void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *,MARSEILLAIS **,MARSEILLAIS *,int, ECH*);
 //void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais,int nombrerech, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais,int *efficacite_algo, int* efficacite_poste, int* efficacite_epil, int* efficacite_mars,ECH* echeancier, int nbr_ames_pardonnee);
 //fonction de base de liste chainer
 PPF* CreerMaillonDamnes();
@@ -110,7 +111,7 @@ void SupprimerMaillonTortureCoursAlgo(COURS_ALGO **,int);
 
 
 
-void selectionArchitecture(int *nb_place_cours_algo, int *nb_place_file_poste, int *nb_place_epilation_cheveux, int *nb_place_marseillais,int *temps_torture_cours_dalgo, int *temps_torture_file_poste, int *temps_torture_epilation_cheveux, int *temps_torture_marseilllais,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais);
+void selectionArchitecture(ECH *);
 //Fonction pour traitement de la liste à priorité des évènements
 void ajouterAvecPrioriteFileEvenement(ECH* debut, int id_pff, int id_score, int type_evt, int duree_torture, int t_evt, int type_torture);
 //EVT* nouveauMaillonPriorite( int id_pff, int id_score, int type_evt, int t_evt, int type_torture);
@@ -126,6 +127,7 @@ EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt);
 
 void selectionTempsArret(int * tps);
 //void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,int* type_torture, int*duree_torture,  int *identifiant, int *efficacite_algo, int* efficacite_poste, int* efficacite_epil, int* efficacite_mars);
-void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant, int *efficacite_algo, int* efficacite_poste, int* efficacite_epil, int* efficacite_mars);
+void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant
+);
 #endif
 

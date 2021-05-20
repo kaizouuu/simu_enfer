@@ -68,6 +68,7 @@ void AiguillagePurgatoire(PPF *pt_tete,COURS_ALGO **pt_tete_cours_algo,COURS_ALG
     }
 }
 
+/*
 void simulation(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais, int temps_torture_cours_dalgo, int temps_torture_file_poste, int temps_torture_epilation_cheveux, int temps_torture_marseilllais)
 {
     int nb_pers_cours_algo = 0 ;
@@ -213,6 +214,8 @@ void update(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_f
     }
     free(pt_courant_marseillais);
 }
+*/
+
 
 void updatecompteur(COURS_ALGO *pt_tete_cours_algo, FILE_POSTE *pt_tete_file_poste,EPILATION_CHEVEUX *pt_tete_epilation_cheveux,MARSEILLAIS *pt_tete_marseillais)
 {
@@ -328,7 +331,7 @@ void Affichageapresupdate(COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_fil
             printf("[ID :%d Nombre d'annee : %d]",tableau_affichage_marseillais_id[i],tableau_affichage_marseillais_cpt[i]);
     }
 }
-
+/*
 void simulationSed(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais,ECH *pt_tete_enchancier, EVT *pt_tete_evenement)
 {
     int nb_pers_cours_algo = 3;
@@ -380,7 +383,7 @@ void AiguillagePurgatoireSed(PPF *pt_tete,ECH *pt_tete_enchancier)
       pt_tete =pt_tete->suiv;
     }
 }
-
+*/
 
 
 

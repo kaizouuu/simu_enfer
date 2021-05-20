@@ -7,7 +7,7 @@
 #include "simulateur.h"
 #include "time.h"
 
-void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais,int nombrerech, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais,int efficacite_algo, int efficacite_poste, int efficacite_epil, int efficacite_mars,ECH* echeancier)
+void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais,int nombrerech,ECH* echeancier)
 {
     int i = 0 ;
     int l = 0, m = 0, n = 0, o = 0, p = 0, p2 =0 ;  // utilisé en test 14 pour entrer dans la structure évènement
@@ -54,7 +54,7 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
         
         printf ("| 20 | FONCTION EVENEMENT : Création des évènements ARRIVEE\n");
         printf ("| 21 | FONCTION EVENEMENT : Aiguillage et Création des évènements ATTENTE et DEBUT_TORTURE\n");
-        printf ("| 22 | FONCTION EVENEMENT : Séléction du nombre de damnés original à générer\n\n");
+        printf ("| 22 | -- \n\n");
 
         printf("| 23 | Fonction EVENEMENT : Creation des évenements ARRIVEE (Aiguillage de la liste à similer)\n ");
         
@@ -118,7 +118,7 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo,nombrerech);
                 break;
             case 13:
-                simulation(pt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais,nb_place_cours_algo, nb_place_file_poste,nb_place_epilation_cheveux, nb_place_marseillais, efficacite_algo, efficacite_poste, efficacite_epil, efficacite_mars);
+                //simulation(echeancierpt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais,nb_place_cours_algo, nb_place_file_poste,nb_place_epilation_cheveux, nb_place_marseillais, efficacite_algo, efficacite_poste, efficacite_epil, efficacite_mars);
                 break;
             case 14 :
                 //AiguillagePurgatoire(pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais);
@@ -167,7 +167,7 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 break;
                 
                 case 18:
-					 selectionArchitecture(&nb_place_cours_algo, &nb_place_file_poste, &nb_place_epilation_cheveux, &nb_place_marseillais, &efficacite_algo, &efficacite_poste, &efficacite_epil, &efficacite_mars, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais, nouveau_marseillais);
+					 selectionArchitecture(echeancier);
 					//~ //void selectionArchitecture(int *nb_place_cours_algo, int *nb_place_file_poste, int *nb_place_epilation_cheveux, int *nb_place_marseillais,int *temps_torture_cours_dalgo, int *temps_torture_file_poste, int *temps_torture_epilation_cheveux, int *temps_torture_marseilllais,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais)
 					//~ echeancier->salle_torture_libre_algo = nb_place_cours_algo;
 					//~ echeancier->salle_torture_libre_poste = nb_place_file_poste;
@@ -197,7 +197,7 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
 					while (ppf_cour != NULL)
 					{	
 						//aiguillageDamnesArrivants( * echeancier,  * pt_tete,* type_torture, *duree_torture,   *identifiant,  *efficacite_algo, * efficacite_poste, * efficacite_epil, * efficacite_mars);
-						aiguillageDamnesArrivants( echeancier, * pt_tete,  &ppf_cour->id, &efficacite_algo, &efficacite_poste,  &efficacite_epil, &efficacite_mars);
+						aiguillageDamnesArrivants(echeancier, * pt_tete,  &ppf_cour->id);
 						
 						ppf_cour = ppf_cour->suiv;
                      }
@@ -206,19 +206,19 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                  //   AiguillagePurgatoireSed(*pt_tete,echeancier);
                 break;
                 case 21:
-				while (simu_en_marche)
-				printf("\nSimulation début"); 
-				{
-					simu_en_marche = moteurSimulation(echeancier, pt_tete_cours_algo);
-					printf("\nAppuyer sur ENTREE pour sauter au prochain évènement"); 
-						while ((getchar())!= '\n');
-							getchar();
-                }
+					while (simu_en_marche == 1)
+					{
+						printf("\nSimulation début"); 
+						simu_en_marche = moteurSimulation(echeancier, pt_tete_cours_algo);
+						printf("\nAppuyer sur ENTREE pour sauter au prochain évènement"); 
+							while ((getchar())!= '\n');
+								getchar();
+					}
                 break;
             case 22:
                 break;
             case 23:
-                AiguillagePurgatoireSed(*pt_tete, echeancier);
+              //  AiguillagePurgatoireSed(*pt_tete, echeancier);
                 break;
                 
             default:
@@ -454,23 +454,19 @@ PPF* LireFichier(FILE *database_PFF, int flag)
     return pt_tete;
 }
 
-void selectionArchitecture(int *nb_place_cours_algo, int *nb_place_file_poste, int *nb_place_epilation_cheveux, int *nb_place_marseillais,int *temps_torture_cours_dalgo, int *temps_torture_file_poste, int *temps_torture_epilation_cheveux, int *temps_torture_marseilllais,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais)
+void selectionArchitecture(ECH *A)
 {
-	
-	 printf("\nQuelques explications s'imposent...'\n\nLes enfers sont divisés en 4 différentes sections chargées de torturer les damnés en fonction de leur niveau de dépravation.\nLes voici de la plus dure à la plus douce: un cours d'algorithme, une file de poste sans fin, une épilation totale et brutale et enfin un visionnage forcée du meilleur des \"Marseillais\" \n\
-	 Les âmes les plus pêcheresses devront passer par les 4 sections afin d'être purifiées et de pouvoir rejoindre le paradis.\n\
-	 \nChaque section comporte un nombre fini de salles et est plus ou moins efficace quant à la réduction du niveau de dépravation.\nUne salle ne pourra torturer qu'une seule âme damnée à la fois. L'efficacité d'un type de torture définit le nombre de points de dépravation enlevés pour chaque coup d'horloge\n");    
-	 
+
 	 printf("\nAppuyer sur ENTREE pour commencer la saisie des informations."); 
 	while ((getchar())!= '\n');
 		getchar();
 
     printf("\n\nCombien de salles voulez-vous affecter à la section de torture par cours d'algorithmique ?\t");    
-    scanf ("%d",nb_place_cours_algo);
+    scanf ("%d", &A->nb_place_cours_algo);
 
 
     printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge pour cette section ?\t");
-    scanf("%d",temps_torture_cours_dalgo);
+    scanf("%d", &A->efficacite_algo);
 
 
     //~ printf("\n\nCombien de salles voulez-vous affecter à la section de torture par file de poste?\t");    
@@ -500,6 +496,12 @@ void selectionArchitecture(int *nb_place_cours_algo, int *nb_place_file_poste, i
 // FIFO à priorité pour les évènements 
 void initFileEvenement(ECH *F)
 {
+	F->t_cour = 0;                       
+	F->nb_evt = 0;                        
+	F->efficacite_algo = 10;
+	F->nb_place_cours_algo=4; //à remettre à zéro une fis les tests fini
+	F->nb_pers_cours_algo=0;
+	F->nbr_ames_pardonnees=0;
 	F->debut = NULL;
 
 }
@@ -537,6 +539,7 @@ int retirerFileEvenement(ECH *F, int *id_ppf, int *id_score, int *type_evt, int 
 		*duree_torture = aSupp->duree_torture;
 		*t_evt = aSupp->t_evt;
 		*type_torture = aSupp->type_torture;
+		
 		
 		
 		F->debut = aSupp->suiv; 
@@ -638,7 +641,9 @@ int moteurSimulation(ECH *A, COURS_ALGO **pt_tete_cours_algo)
 	A->nb_pers_cours_algo = CompteurCoursAlgo(*pt_tete_cours_algo);
 	
 	if (filevideEvenement(A) == 1) // Si la file de l'échéancier est vide, on arrête la simulation  
-		etat = 0;
+	{	etat = 0;
+		printf("\nArrêt SImulation"); 
+	}
 	else
 	{
 		printf("\nElse dans la simulation"); 
@@ -781,7 +786,7 @@ EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt)
 		return E;
 }
 
-void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant, int *efficacite_algo, int* efficacite_poste, int* efficacite_epil, int* efficacite_mars)
+void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant)
 {
 	printf("\n\nAiguillageDamnesArrivants\n");
 	
@@ -810,7 +815,7 @@ void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifian
 	{
 		printf("\n\nBLABLA\n");
 		type_torture =1;
-		duree_torture = pt_damne_a_traiter->score / *efficacite_mars;
+		duree_torture = pt_damne_a_traiter->score / A->efficacite_algo;
 		
 	}
 	
