@@ -192,7 +192,7 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
 					while (ppf_cour != NULL)
 					{	
 						//aiguillageDamnesArrivants( * echeancier,  * pt_tete,* type_torture, *duree_torture,   *identifiant,  *efficacite_algo, * efficacite_poste, * efficacite_epil, * efficacite_mars);
-						aiguillageDamnesArrivants(echeancier, * pt_tete,  &ppf_cour->id);
+						aiguillageDamnesArrivants(echeancier, * pt_tete,  &ppf_cour->id,0);
 						
 						ppf_cour = ppf_cour->suiv;
                      }
@@ -742,7 +742,8 @@ EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt)
 {
 	EVT *E = NULL;
 	E = (EVT*) malloc(sizeof(EVT));
-
+	int t_aleatoire = 0;
+	
 	if (type_evt == ATTENTE)
 	{
 		//Génération Evt Attente
@@ -790,12 +791,13 @@ EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt)
 		return E;
 }
 
-void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant)
+void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant, int *aleatoire_bool)
 {
 	printf("\n\nAiguillageDamnesArrivants\n");
 	
 	int type_torture = 0; 
 	int duree_torture = 0;
+	int t_aleatoire = 0;
 	
 	ECH *A = echeancier;
 	PPF *pt_damne_a_traiter = pt_tete;
@@ -822,8 +824,6 @@ void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifian
 		duree_torture = pt_damne_a_traiter->score / A->efficacite_algo;
 		
 	}
-	
-	
 /*	
 	else if ((pt_damne_a_traiter->score > 0 ) && (pt_damne_a_traiter->score <= 250))
 	{
@@ -861,5 +861,12 @@ void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifian
 */
 
 	printf("\n\nAjout\n");
-	ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+1, type_torture ); // génére des évènements arrivee
+	if (*aleatoire_bool != 1)
+		ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+1, type_torture ); // génére des évènements arrivee
+	else
+	{
+		srand(time(NULL));
+		t_aleatoire = rand() % 50;
+		ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+t_aleatoire, type_torture ); // génére des évènements arrivee
+	}
 }
