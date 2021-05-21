@@ -5,15 +5,10 @@
 #define ATTENTE 2
 #define DEBUT_TORTURE 3
 #define FIN_TORTURE 4
-#define SIZEMAX 10
+#define SIZEMAX 50
 
 #define TCHAINE 600
 #define TAFFICHAGE 20
-#define ARRIVEE 1
-#define ATTENTE 2
-#define DEBUT_TORTURE 3
-#define FIN_TORTURE 4
-#define SIZEMAX 10
 
 extern int timer;
 
@@ -116,7 +111,7 @@ void selectionArchitecture(ECH *);
 void ajouterAvecPrioriteFileEvenement(ECH* debut, int id_pff, int id_score, int type_evt, int duree_torture, int t_evt, int type_torture);
 //EVT* nouveauMaillonPriorite( int id_pff, int id_score, int type_evt, int t_evt, int type_torture);
 //int ajouter(ECH *F, int id_ajout);
-int retirerFileEvenement(ECH *F, int *id_ppf, int *id_score, int *type_evt, int*duree_torture, int *t_evt, int *type_torture);
+int retirerFileEvenement(ECH *F, int *id_ppf, int *id_score, int *type_evt, int * duree_torture, int *t_evt, int *type_torture) ;
 int filepleineEvenement(ECH*F);
 int filevideEvenement(ECH *F);
 void initFileEvenement(ECH *F);

@@ -11,7 +11,7 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
 {
     int i = 0 ;
     int l = 0, m = 0, n = 0, o = 0, p = 0, p2 =0 ;  // utilisé en test 14 pour entrer dans la structure évènement
-    int q = 0, r=0, s=0, t=0, u=0, v=0 ; //utilisé en test 15 pour retirer dans la structure évènement
+    int q = 0, r=0, s=0, t=0, u=0, v=0 ; ; //utilisé en test 15 pour retirer dans la structure évènement
     int simu_en_marche = 1 ;
     int flag ;
     int t_final_arret = 0;
@@ -121,9 +121,6 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 //simulation(echeancierpt_tete,pt_tete_cours_algo,pt_tete_file_poste,pt_tete_epilation_cheveux,pt_tete_marseillais,nouveau,nouveau_cour_algo,nouveau_file_poste,nouveau_epilation_cheveux,nouveau_marseillais,nb_place_cours_algo, nb_place_file_poste,nb_place_epilation_cheveux, nb_place_marseillais, efficacite_algo, efficacite_poste, efficacite_epil, efficacite_mars);
                 break;
             case 14 :
-                //AiguillagePurgatoire(pt_tete, pt_tete_cours_algo, nouveau_cour_algo, pt_tete_file_poste, nouveau_file_poste, pt_tete_epilation_cheveux, nouveau_epilation_cheveux, pt_tete_marseillais,nouveau_marseillais);
-                 //DemandeUtilisateur(nb_place_cours_algo, nb_place_file_poste, nb_place_epilation_cheveux, nb_place_marseillais,temps_torture_cours_dalgo, temps_torture_file_poste, temps_torture_epilation_cheveux, temps_torture_marseilllais);
-			
 				printf("Entrerle id_ppf:\n");
                 scanf("%d",&l);
                 printf("Entrer le id_score:\n");
@@ -136,7 +133,6 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 scanf("%d",&p);
                 printf("Entrer le type_torture:\n");
                 scanf("%d",&p2);
-				//ajouterAvecPriorite(ECH* debut_ech, int id_pff, int id_score, int type_evt, int t_evt, int type_torture);
 				ajouterAvecPrioriteFileEvenement(echeancier, l, m, n, o, p, p2);
                 break;
                 
@@ -145,18 +141,17 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 break;
                 
                 case 16:
-			
-				if (retirerFileEvenement(echeancier, &q, &r, &s, &t, &u, &v)== 1)	
+				if (retirerFileEvenement(echeancier, &q, &r, &s, &t, &u, &v)== 1)
 				{
 					printf("\nIdentifiant du damné: %d", q);
 					printf("\nScore du damné: %d", r);
 					printf("\nType de l'évènement (1 pour ARRIVEE, 2 pour ATTENTE, 3 pour DEBUT_TORTURE et 4 pour FIN_TORTURE): %d", s); //faire un truc pour ne pas afficher le nombre mais le string
-					printf("\nTemps déroulement de l'évènement: %d", t);
 					printf("\nTemps déroulement de l'évènement: %d", u);
+					printf("\nDuree Torture: %d", t);
 					printf("\nType de torture (Algo = 4, Poste = 3, Epilation = 2, Marseillais = 1 et Paradis = 0): %d\n", v);
 				}
 				else
-					printf("\nFile vide aucune valeur récupérée\n");	
+					printf("\nFile vide aucune valeur récupérée\n");
 				break;
              
 				case 17:
@@ -525,6 +520,7 @@ int filepleineEvenement(ECH*F)	/* retourne 1 si la file est pleine SIZEMAX, 0 si
 		return 0;
 }
 
+
 int retirerFileEvenement(ECH *F, int *id_ppf, int *id_score, int *type_evt, int * duree_torture, int *t_evt, int *type_torture) //On envoie Id_retire en pointeur, donc on l'a quand même à la fin de la simulation
 {	EVT *aSupp;
 	if(filevideEvenement(F)==1)
@@ -541,7 +537,6 @@ int retirerFileEvenement(ECH *F, int *id_ppf, int *id_score, int *type_evt, int 
 		*type_torture = aSupp->type_torture;
 		
 		
-		
 		F->debut = aSupp->suiv; 
 		
 		free(aSupp);
@@ -549,10 +544,64 @@ int retirerFileEvenement(ECH *F, int *id_ppf, int *id_score, int *type_evt, int 
 	}
 }
 
+//~ void ajouterAvecPrioriteFileEvenement(ECH *F, int id_ppf, int id_score, int type_evt, int duree_torture, int t_evt, int type_torture)
+//~ {
+    //~ EVT*E_a_inserer = NULL;
+	//~ EVT*E_temp_prec = NULL;
+	//~ EVT*E_temp_cour = F->debut;
+	//~ E_a_inserer = (EVT*) malloc(sizeof(EVT));
+	
+	//~ if (filepleineEvenement(F) ==1)
+	//~ {	printf("\nTaille maximale de la file atteinte, ajout interdit\n");
+		//~ return;
+	//~ }	
+	
+	//~ if (E_a_inserer == NULL) 
+	//~ {	
+		//~ printf("\nAjout impossible !\n");
+		//~ return;
+	//~ }
+	
+	//~ E_a_inserer ->id_ppf = id_ppf;
+	//~ E_a_inserer ->id_score = id_score;
+	//~ E_a_inserer ->type_evt = type_evt;
+	//~ E_a_inserer ->duree_torture = duree_torture;
+	//~ E_a_inserer ->t_evt = t_evt;
+	//~ E_a_inserer ->type_torture = type_torture;
+	//~ E_a_inserer ->suiv = NULL;
+	
+	//~ if (filevideEvenement(F)==1)
+	//~ {
+		//~ printf("\n\nInsertion FIle Vide!");
+		//~ F->debut = E_a_inserer;
+		//~ return;
+	//~ }
+	
+	//~ while(E_temp_cour != NULL  && (E_temp_cour->suiv->t_evt >= t_evt))
+		//~ {
+			//~ E_temp_prec=E_temp_cour;
+			//~ E_temp_cour = E_temp_cour->suiv;
+		//~ }	
+	
+	//~ if(E_temp_cour == F->debut ) //Cas où le premier élèment de la file à un t_evt plus éloigné, notre évènement passe donc en tête de file
+	 //~ {
+		//~ printf("\n\nInsertion en tête dans le cas d'une  FIle déjà rempli!");
+		//~ E_a_inserer->suiv = E_temp_cour;
+		//~ F->debut = E_a_inserer;
+		//~ return;
+	 //~ }
+	//~ else 
+	//~ {		
+		//~ E_a_inserer->suiv = E_temp_cour;
+		//~ E_temp_prec->suiv = E_a_inserer;
+		//~ return;
+	//~ }
+//~ }
+
 void ajouterAvecPrioriteFileEvenement(ECH *F, int id_ppf, int id_score, int type_evt, int duree_torture, int t_evt, int type_torture)
-{
-    EVT*E;
-	EVT*E_cour;
+{	EVT*E = NULL;
+	EVT*E_cour = F->debut; 
+	EVT*E_prec = NULL; 
 	
 	if (filepleineEvenement(F) ==1)
 	{	printf("\nTaille maximale de la file atteinte, ajout interdit\n");
@@ -560,12 +609,10 @@ void ajouterAvecPrioriteFileEvenement(ECH *F, int id_ppf, int id_score, int type
 	}	
 	
 	E = (EVT*) malloc(sizeof(EVT));
-	E_cour =  (EVT*) malloc(sizeof(EVT));
 	
 	if (E == NULL) 
 	{	
 		printf("\nAjout impossible !\n");
-
 	}
 	else
 	{	
@@ -578,28 +625,30 @@ void ajouterAvecPrioriteFileEvenement(ECH *F, int id_ppf, int id_score, int type
 		E->suiv = NULL;
 		
 		if (filevideEvenement(F)==1)
+		{
 			F->debut = E;
-			
-		else if(( F->debut->t_evt) > t_evt ) //Cas où le premier élèment de la file à un t_evt plus éloigné, notre évènement passe donc en tête de file
+			return;
+		}
+		
+		else if(( F->debut->t_evt) >= t_evt ) //Cas où le premier élèment de la file à un t_evt plus éloigné, notre évènement passe donc en tête de file
 		 {
-			E_cour = F->debut;
 			F->debut = E;
 		    F->debut->suiv = E_cour;
 		 }
 		else 
-		{
-			E_cour = F->debut;
-			while(E_cour != NULL  && E_cour->t_evt > t_evt)
+		{			
+			while(E_cour != NULL  && (E_cour->t_evt < t_evt))
 			{
+				E_prec = E_cour;
 				E_cour = E_cour->suiv;
-			}	
-			
-		E->suiv = E_cour->suiv;;
-		E_cour->suiv = E;
+			}				
+			E->suiv = E_cour;
+			E_prec->suiv = E;
 		
 		}
 	}
 }
+
 
 void afficherFileEvenement(ECH*F)
 {
@@ -613,6 +662,7 @@ void afficherFileEvenement(ECH*F)
 				printf("\nScore du damné: %d", cour->id_score);
 				printf("\nType de l'évènement (1 pour ARRIVEE, 2 pour ATTENTE, 3 pour DEBUT_TORTURE et 4 pour FIN_TORTURE): %d", cour->type_evt); //faire un truc pour ne pas afficher le nombre mais le string
 				printf("\nTemps déroulement de l'évènement: %d", cour->t_evt);
+				printf("\nDuree Torture: %d", cour->duree_torture);
 				printf("\nType de torture (Algo = 4, Poste = 3, Epilation = 2, Marseillais = 1 et Paradis = 0): %d\n", cour->type_torture);
 				cour = cour->suiv;
 			}
@@ -647,7 +697,7 @@ int moteurSimulation(ECH *A, COURS_ALGO **pt_tete_cours_algo)
 	else
 	{
 		printf("\nElse dans la simulation"); 
-		retirerFileEvenement(A, &Evt_a_traiter.id_ppf, &Evt_a_traiter.id_score, &Evt_a_traiter.type_evt, &Evt_a_traiter.duree_torture, &Evt_a_traiter.t_evt, &Evt_a_traiter.type_torture );            // On traite le premier élèment de liste à évènements, avec les pointeurs on a mis un truc intéressant dans valeur
+		retirerFileEvenement(A, &Evt_a_traiter.id_ppf, &Evt_a_traiter.id_score, &Evt_a_traiter.type_evt, &Evt_a_traiter.duree_torture, &Evt_a_traiter.t_evt, &Evt_a_traiter.type_torture );        // On traite le premier élèment de liste à évènements, avec les pointeurs on a mis un truc intéressant dans valeur
 		A->t_cour = Evt_a_traiter.t_evt;                  // C'est ici que le temps de la simulation saute à celui de l'événement en cours de traitement ?
 		// 
 		switch (Evt_a_traiter.type_evt)
@@ -704,7 +754,7 @@ int moteurSimulation(ECH *A, COURS_ALGO **pt_tete_cours_algo)
 					InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo,nouveau_cour_algo);
 				}
 			
-				Evt_cree = creerEvenement(&Evt_a_traiter, FIN_TORTURE, A->t_cour+20); //LE PLUS 20 EST A MODIFIER EN FONCTION DU TEMPS QUE PREND LA TORTURE -> duree_torture
+				Evt_cree = creerEvenement(&Evt_a_traiter, FIN_TORTURE, A->t_cour+Evt_a_traiter.duree_torture); //LE PLUS 20 EST A MODIFIER EN FONCTION DU TEMPS QUE PREND LA TORTURE -> duree_torture
 				ajouterAvecPrioriteFileEvenement(A,  Evt_a_traiter.id_ppf, Evt_a_traiter.id_score, Evt_a_traiter.type_evt, Evt_a_traiter.duree_torture, Evt_a_traiter.t_evt, Evt_a_traiter.type_torture );
 
 					
