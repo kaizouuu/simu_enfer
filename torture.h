@@ -12,6 +12,8 @@ void EcrireFichierCoursAlgo(FILE *,COURS_ALGO *);
 COURS_ALGO* LireFichierCoursAlgo (FILE *);
 int CompteurCoursAlgo (COURS_ALGO *);
 
+COURS_ALGO* CreerMaillonTortureCoursAlgoSimulation(int id_ppf);
+
 FILE_POSTE* CreerMaillonTortureFilePoste(FILE_POSTE *);
 void InsererMaillonEnQueueTortureFilePoste(FILE_POSTE **,FILE_POSTE *);
 void AfficherMaillonTortureFilePoste(FILE_POSTE *);

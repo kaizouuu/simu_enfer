@@ -31,6 +31,19 @@ COURS_ALGO* CreerMaillonTortureCoursAlgo(COURS_ALGO *pt_tete_cours_algo)
     return pt_maillon;
 }
 
+COURS_ALGO* CreerMaillonTortureCoursAlgoSimulation(int id_ppf)
+{
+    COURS_ALGO *pt_maillon = NULL;
+    pt_maillon = (COURS_ALGO*)malloc(sizeof(COURS_ALGO));
+ 
+
+    pt_maillon->id = id_ppf;
+    pt_maillon->cpt = 0;  //à voir si c'est utile
+    pt_maillon->suiv=NULL;
+
+    return pt_maillon;
+}
+
 COURS_ALGO* CreerMaillonTortureCoursAlgoID(int idtempo)
 {
     COURS_ALGO *pt_maillon = NULL;

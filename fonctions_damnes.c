@@ -497,7 +497,7 @@ void initFileEvenement(ECH *F)
 	F->t_cour = 0;                       
 	F->nb_evt = 0;                        
 	F->efficacite_algo = 10;
-	F->nb_place_cours_algo=4; //à remettre à zéro une fis les tests fini
+	F->nb_place_cours_algo=1; //à remettre à zéro une fis les tests fini
 	F->nb_pers_cours_algo=0;
 	F->nbr_ames_pardonnees=0;
 	F->debut = NULL;
@@ -547,59 +547,6 @@ int retirerFileEvenement(ECH *F, int *id_ppf, int *id_score, int *type_evt, int 
 	}
 }
 
-//~ void ajouterAvecPrioriteFileEvenement(ECH *F, int id_ppf, int id_score, int type_evt, int duree_torture, int t_evt, int type_torture)
-//~ {
-    //~ EVT*E_a_inserer = NULL;
-	//~ EVT*E_temp_prec = NULL;
-	//~ EVT*E_temp_cour = F->debut;
-	//~ E_a_inserer = (EVT*) malloc(sizeof(EVT));
-	
-	//~ if (filepleineEvenement(F) ==1)
-	//~ {	printf("\nTaille maximale de la file atteinte, ajout interdit\n");
-		//~ return;
-	//~ }	
-	
-	//~ if (E_a_inserer == NULL) 
-	//~ {	
-		//~ printf("\nAjout impossible !\n");
-		//~ return;
-	//~ }
-	
-	//~ E_a_inserer ->id_ppf = id_ppf;
-	//~ E_a_inserer ->id_score = id_score;
-	//~ E_a_inserer ->type_evt = type_evt;
-	//~ E_a_inserer ->duree_torture = duree_torture;
-	//~ E_a_inserer ->t_evt = t_evt;
-	//~ E_a_inserer ->type_torture = type_torture;
-	//~ E_a_inserer ->suiv = NULL;
-	
-	//~ if (filevideEvenement(F)==1)
-	//~ {
-		//~ printf("\n\nInsertion FIle Vide!");
-		//~ F->debut = E_a_inserer;
-		//~ return;
-	//~ }
-	
-	//~ while(E_temp_cour != NULL  && (E_temp_cour->suiv->t_evt >= t_evt))
-		//~ {
-			//~ E_temp_prec=E_temp_cour;
-			//~ E_temp_cour = E_temp_cour->suiv;
-		//~ }	
-	
-	//~ if(E_temp_cour == F->debut ) //Cas où le premier élèment de la file à un t_evt plus éloigné, notre évènement passe donc en tête de file
-	 //~ {
-		//~ printf("\n\nInsertion en tête dans le cas d'une  FIle déjà rempli!");
-		//~ E_a_inserer->suiv = E_temp_cour;
-		//~ F->debut = E_a_inserer;
-		//~ return;
-	 //~ }
-	//~ else 
-	//~ {		
-		//~ E_a_inserer->suiv = E_temp_cour;
-		//~ E_temp_prec->suiv = E_a_inserer;
-		//~ return;
-	//~ }
-//~ }
 
 void ajouterAvecPrioriteFileEvenement(ECH *F, int id_ppf, int id_score, int type_evt, int duree_torture, int t_evt, int type_torture)
 {	EVT*E = NULL;
@@ -689,7 +636,7 @@ int moteurSimulation(ECH *A, COURS_ALGO **pt_tete_cours_algo)
 	
 	int etat = 1;
 	printf("\nDébut moteur simulation"); 
-	A->nb_pers_cours_algo = CompteurCoursAlgo(*pt_tete_cours_algo);
+	//A->nb_pers_cours_algo = CompteurCoursAlgo(*pt_tete_cours_algo);
 	
 	if (filevideEvenement(A) == 1) // Si la file de l'échéancier est vide, on arrête la simulation  
 	{	etat = 0;
@@ -708,7 +655,9 @@ int moteurSimulation(ECH *A, COURS_ALGO **pt_tete_cours_algo)
 				{
 					if (A->nb_pers_cours_algo < A->nb_place_cours_algo)
 					{
-						A-> nb_pers_cours_algo ++;
+						printf("\nNb pers cours algo %d", A->nb_pers_cours_algo); 
+						printf("\nNb place cours algo %d", A->nb_place_cours_algo); 
+						A-> nb_pers_cours_algo = A-> nb_pers_cours_algo + 1;
 						Evt_cree = creerEvenement(Evt_a_traiter, DEBUT_TORTURE, A->t_cour+1);
 						ajouterAvecPrioriteFileEvenement(A,  Evt_cree->id_ppf, Evt_cree->id_score, Evt_cree->type_evt,Evt_cree->duree_torture,  Evt_cree->t_evt, Evt_cree->type_torture );
 
@@ -751,10 +700,10 @@ int moteurSimulation(ECH *A, COURS_ALGO **pt_tete_cours_algo)
 			//CREER UNE SALLE DE TORTURE POUR MON DAMNE		
 				if(Evt_a_traiter->type_torture == 1)
 				{
-					nouveau_cour_algo = CreerMaillonTortureCoursAlgo(*pt_tete_cours_algo);
+					nouveau_cour_algo = CreerMaillonTortureCoursAlgoSimulation(Evt_a_traiter->id_ppf);
 					InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo,nouveau_cour_algo);
 				}
-			
+				//int a = Evt_a_traiter->duree_torture;
 				Evt_cree = creerEvenement(Evt_a_traiter, FIN_TORTURE, A->t_cour+Evt_a_traiter->duree_torture); //LE PLUS 20 EST A MODIFIER EN FONCTION DU TEMPS QUE PREND LA TORTURE -> duree_torture
 				ajouterAvecPrioriteFileEvenement(A,  Evt_cree->id_ppf, Evt_cree->id_score, Evt_cree->type_evt,Evt_cree->duree_torture,  Evt_cree->t_evt, Evt_cree->type_torture);
 
@@ -784,6 +733,7 @@ int moteurSimulation(ECH *A, COURS_ALGO **pt_tete_cours_algo)
 			//~ fprintf
 			//~ st_type_trait, st_type_chg, temps_traite, A->Laveurs);
 	}
+	free(Evt_a_traiter);
 	return etat;
 }
 
@@ -806,7 +756,7 @@ EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt)
 	}	
 	else if (type_evt == DEBUT_TORTURE)
 	{
-		//Génération Evt Attente
+		//Génération Evt Debut_Torture
 		E->id_ppf = Evt_a_traiter->id_ppf;
 		E->id_score = Evt_a_traiter->id_score;
 		E->type_evt = type_evt;
@@ -818,7 +768,7 @@ EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt)
 	
 	else if (type_evt == FIN_TORTURE)
 	{
-		//Génération Evt Attente
+		//Génération Evt Fin_Torture
 		E->id_ppf = Evt_a_traiter->id_ppf;
 		if (Evt_a_traiter->type_torture == 1)
 		{//E->id_score = Evt_a_traiter->id_score; //Dans le cas des 4 tortures on met 4 if qui teste le type de torture
@@ -830,6 +780,7 @@ EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt)
 		E->type_torture = Evt_a_traiter->type_torture;
 		E->suiv = NULL;
 	}
+	
 	
 	else
 	{
