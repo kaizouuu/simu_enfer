@@ -78,6 +78,7 @@ PPF* CreerMaillonDamnes();
 PPF* CreerMaillonAvecIDDamnes(int identifiant_damne);
 
 PPF* CreerMaillonAvecIDDamnesAleatoire(int identifiant_damne);
+void supprimerDamnes_DoublePointeur(PPF **pt_tete, int *qui);
 
 void InsererMaillonEnQueueDamnes(PPF **,PPF *);
 PPF* InsererMaillonEnQueuesimpleDamnes(PPF *, PPF *);

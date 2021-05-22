@@ -17,6 +17,7 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
     int t_final_arret = 0;
     int nbr_ames_a_cree=0;
 	int dernier_id_ppf = 0;
+	int id_suppr = 0;
 	
 	int a_test =0;
   
@@ -82,10 +83,10 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 scanf("%d",&nombrerech);
                 nouveau= RechercherMaillonNombreDamnes(*pt_tete,nombrerech);
                 break;
-            case 4:
-                printf("Saisissez le nom du damné a supprimer\n");
-                scanf("%s",nomrech);
-                SupprimerMaillonDamnes(pt_tete,nomrech);
+            case 4:                
+                printf("Saisisser l'identifiant de l'âme damnée à supprimer\n");
+				scanf("%d", &id_suppr);
+				supprimerDamnes_DoublePointeur(pt_tete,  &id_suppr);
                 break;
             case 5:
                 flag = 0;
@@ -910,4 +911,42 @@ void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifian
 		ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+t_aleatoire, type_torture ); // génére des évènements arrivee
 		printf("\n\ncouille\n");
 	}
+}
+
+
+void supprimerDamnes_DoublePointeur(PPF **pt_tete, int *qui)
+{
+    PPF *pt_prec = *pt_tete;
+    PPF *pt_courant = *pt_tete;
+    
+    //Cas de la liste vide
+    if(*pt_tete == NULL)
+        printf("La liste est vide");
+    else
+    {
+        //Parcours de la liste jusqu'à trouver l'élément à supprimer ou atteindre la fin de la liste
+        while((pt_courant != NULL) && ((&pt_courant->id) == qui))
+        {
+			//~ if ((&pt_courant->id) != qui)
+			pt_prec=pt_courant;
+            pt_courant=pt_courant->suiv;
+        }
+        // Cas où la suppression est faite en tête
+        if(pt_courant == pt_prec)
+            *pt_tete = pt_courant->suiv;
+        //sinon suppression de l'élément
+        else
+        {
+            if(pt_courant == NULL)
+			{
+                printf("\n%d n'est pas dans la liste", *qui);
+			}
+            else
+			{
+                pt_prec->suiv=pt_courant->suiv;
+			}
+		}
+        free(pt_courant);
+        pt_courant=NULL;
+    }
 }
