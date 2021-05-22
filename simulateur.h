@@ -13,6 +13,6 @@ int moteurSimulation(struct ech *A, struct ppf * pt_tete , struct cours_algo **p
 void selectionTempsArret(int * tps);
 void aiguillageDamnesArrivants( struct ech* echeancier,struct ppf* pt_tete,  int *identifiant, int aleatoire_bool, int t_final_arret);
 
-
+void affichageInfoSimulation (struct ech *A);
 
 #endif
