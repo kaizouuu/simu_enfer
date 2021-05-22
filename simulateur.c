@@ -227,6 +227,13 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 			
 			case FIN_TORTURE : 
 				--A->nbr_evt_fin_torture;
+				while(&pt_tete_ppf->id != &Evt_a_traiter->id_ppf )
+				{
+					pt_tete_ppf = pt_tete_ppf->suiv;
+				}
+				//~ pt_tete_ppf->score = Evt_a_traiter->id_score;
+				printf("pt_tete_ppf->score: %d et  Evt_a_traiter->id_score :%d",  pt_tete_ppf->score, Evt_a_traiter->id_score);
+				
 				if (Evt_a_traiter->type_torture == 4)
 				{
 						--A-> nb_pers_cours_algo;
@@ -257,6 +264,7 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 						++A->nbr_ames_pardonnees;
 
 				}
+
 				else
 					printf("\n\nERREUR DANS LA FONCTION MOTEUR SIMULATION ATTENTE\n");
 				
@@ -279,12 +287,14 @@ void aiguillageDamnesArrivants(struct ech* echeancier, struct ppf * pt_tete,  in
 	int t_aleatoire = 0;
 	
 	struct ech *A = echeancier;
+	//struct evt *E = A->debut;
 	struct ppf *pt_damne_a_traiter = pt_tete;
 	
 	while(pt_damne_a_traiter->id != *identifiant)
 	{
 		pt_damne_a_traiter = pt_damne_a_traiter->suiv;
 	}
+
 			
 	if ((pt_damne_a_traiter->score > 0 ) && (pt_damne_a_traiter->score <= 250))
 	{
@@ -295,7 +305,7 @@ void aiguillageDamnesArrivants(struct ech* echeancier, struct ppf * pt_tete,  in
 	else if ((pt_damne_a_traiter->score > 250  ) && (pt_damne_a_traiter->score <= 500))
 	{
 		type_torture = 2;
-		duree_torture = (pt_damne_a_traiter->score - 250)/ A->nb_place_epilation_cheveux;
+		duree_torture = (pt_damne_a_traiter->score - 250)/ A->efficacite_epilation_cheveux;
 		++echeancier->nbr_evt_arrivee;
 	}
 	
@@ -356,7 +366,6 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
     
     do{
 		//system("clear");
-		system("printf '\e[3;0;0t'");
         printf("\n********** Configuration de la Simulation **********\n");
         printf ("|  0 | Quitter le programme\n");
 
@@ -365,8 +374,6 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
         printf ("|  4 | Test unitaire damnés: Supprimer un damné\n");
         
         printf( "|  8 | Test unitaire torture : Afficher la liste des maillon dans ma chaine ALGO\n");
-
-        
 
         printf ("| 15 | Test unitaire évènement : Afficher la file des évènements\n");
         printf ("| 16 | Test unitaire évènement : Retirer évènement (avec t_evt le plus petit)\n\n");
@@ -520,7 +527,7 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
 						
 					//printf("\nHorloge interne simulation:%d", echeancier->t_cour );
 					//afficherFileEvenement(echeancier);
-					printf("\nAppuyer sur ENTREE pour continuer:"); 
+					//printf("\nAppuyer sur ENTREE pour continuer:"); 
 					while ((getchar())!= '\n');
 					getchar();
 					
@@ -559,11 +566,11 @@ void affichageInfoSimulation (struct ech *A)
 	while(cour!=NULL)
 	{	
 		
-		printf("\n\rIdentifiant du damné: %d ", cour->id_ppf);
-		printf("Score du damné: %d ", cour->id_score);
-		printf("Type de l'évènement : %d ", cour->type_evt); //faire un truc pour ne pas afficher le nombre mais le string
-		printf("Temps évènement: %d ", cour->t_evt);
-		printf("Duree Torture: %d ", cour->duree_torture);
+		printf("\n\rIdentifiant du damné: %d |", cour->id_ppf);
+		printf("Score du damné: %d |", cour->id_score);
+		printf("Type de l'évènement : %d |", cour->type_evt); //faire un truc pour ne pas afficher le nombre mais le string
+		printf("Temps évènement: %d |", cour->t_evt);
+		printf("Duree Torture: %d |", cour->duree_torture);
 		printf("Type Torture %d\n ", cour->type_torture);
 		cour = cour->suiv;
 	}
