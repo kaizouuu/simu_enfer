@@ -26,8 +26,20 @@ struct ech{
 	int nb_evt;                        // Nombre d'évènement dans l'échéancier
 	struct evt *debut;                     // Pointe vers le début de la liste chaînée des EVT
 	int nb_place_cours_algo;
+	int nb_place_epilation_cheveux;
+	int nb_place_marseillais;
+	int nb_place_file_poste;
+
 	int nb_pers_cours_algo;
+	int nb_pers_epilation_cheveux;
+	int nb_pers_marseillais;
+	int nb_pers_file_poste;
+
 	int efficacite_algo;
+	int efficacite_epilation_cheveux;
+	int efficacite_file_poste;
+	int efficacite_marseillais;
+
 	int nbr_evt_arrivee;
 	int nbr_evt_attente;
 	int nbr_evt_debut_torture;

@@ -87,7 +87,14 @@ void initFileEvenement(struct ech *F)
 	F->nb_evt = 0;                        
 	F->efficacite_algo = 0;
 	F->nb_place_cours_algo=0; //à remettre à zéro une fis les tests fini
+	F->nb_place_epilation_cheveux=0;
+	F->nb_place_file_poste=0;
+	F->nb_place_marseillais=0;
 	F->nb_pers_cours_algo=0;
+	F->nb_pers_marseillais=0;
+	F->nb_pers_epilation_cheveux=0;
+	F->nb_pers_file_poste=0;
+
 	F->nbr_ames_pardonnees=0;
 	F->nbr_evt_arrivee=0;
 	F->nbr_evt_attente=0;
@@ -198,11 +205,26 @@ void selectionArchitecture(struct ech *A)
 {
     printf("\n\nCombien de salles voulez-vous affecter à la section de torture par cours d'algorithmique ?\t");    
     scanf ("%d", &A->nb_place_cours_algo);
-
-
     printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge ?\t");
     scanf("%d", &A->efficacite_algo);
 
+
+    printf("\n\nCombien de salles voulez-vous affecter à la section de torture epilation cheveux ?\t");    
+    scanf ("%d", &A->nb_place_epilation_cheveux);
+    printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge ?\t");
+    scanf("%d", &A->efficacite_epilation_cheveux);
+
+
+	printf("\n\nCombien de salles voulez-vous affecter à la section de torture file poste ?\t");    
+    scanf ("%d", &A->nb_place_file_poste);
+    printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge ?\t");
+    scanf("%d", &A->efficacite_file_poste);    
+	
+	
+	printf("\n\nCombien de salles voulez-vous affecter à la section de torture marseillais ?\t");    
+    scanf ("%d", &A->nb_place_marseillais);
+    printf("\nCombien de points de dépravation sont éliminés tous les coups d'horloge ?\t");
+    scanf("%d", &A->efficacite_marseillais);
 
 }
 
