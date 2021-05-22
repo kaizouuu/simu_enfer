@@ -2,26 +2,31 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "fonctions_damnes.h"
+#include "evenements.h"
 #include "simulateur.h"
+#include "fonctions_damnes.h"
 #include "torture.h"
 
+//~ struct cours_algo;
+//~ struct evt;
+//~ struct ech;
+//~ struct ppf;
 
 
 int main()
 {
 	srand(time(NULL));
 
-    PPF *nouveau = NULL;
-    PPF *pt_tete = NULL;
+    struct ppf *nouveau = NULL;
+    struct ppf *pt_tete = NULL;
 
-    COURS_ALGO *pt_tete_cours_algo = NULL;
-    COURS_ALGO *nouveau_cour_algo = NULL;
+    struct cours_algo*pt_tete_cours_algo = NULL;
+	struct cours_algo*nouveau_cour_algo = NULL;
 
-	ECH File;
-	initFileEvenement(&File);
+	struct ech echeancier;
+	initFileEvenement(&echeancier);
 
-    menu(&pt_tete,nouveau ,&pt_tete_cours_algo,nouveau_cour_algo, &File);
+    menu(&pt_tete,nouveau ,&pt_tete_cours_algo,nouveau_cour_algo, &echeancier);
 
     
     return 0;

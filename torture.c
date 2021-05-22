@@ -1,40 +1,20 @@
+#include "torture.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "fonctions_damnes.h"
 #include "simulateur.h"
-#include "torture.h"
-#include "time.h"
+#include "evenements.h"
+
 
 //fonction pour creer les totures
 //********************************FONCTION LISTE TORTURE COURS D'ALGO**********************************************************//
 
-COURS_ALGO* CreerMaillonTortureCoursAlgo(COURS_ALGO *pt_tete_cours_algo)
+struct cours_algo* CreerMaillonTortureCoursAlgoSimulation(int id_ppf)
 {
-    COURS_ALGO *pt_maillon = NULL;
-    pt_maillon = (COURS_ALGO*)malloc(sizeof(COURS_ALGO));
-    int i = 0;
-    if(pt_tete_cours_algo == NULL)
-        pt_maillon->id = 0;
-    else
-    {
-        while(pt_tete_cours_algo != NULL)
-        {
-            pt_tete_cours_algo = pt_tete_cours_algo->suiv;
-            i ++;
-        }
-    }
-    pt_maillon->id = i;
-    pt_maillon->cpt = 0;
-    pt_maillon->suiv=NULL;
-
-    return pt_maillon;
-}
-
-COURS_ALGO* CreerMaillonTortureCoursAlgoSimulation(int id_ppf)
-{
-    COURS_ALGO *pt_maillon = NULL;
-    pt_maillon = (COURS_ALGO*)malloc(sizeof(COURS_ALGO));
+    struct cours_algo*pt_maillon = NULL;
+    pt_maillon = (struct cours_algo*)malloc(sizeof(struct cours_algo));
  
 
     pt_maillon->id = id_ppf;
@@ -44,21 +24,10 @@ COURS_ALGO* CreerMaillonTortureCoursAlgoSimulation(int id_ppf)
     return pt_maillon;
 }
 
-COURS_ALGO* CreerMaillonTortureCoursAlgoID(int idtempo)
+void InsererMaillonEnQueueTortureCoursAlgo(struct cours_algo **pt_tete_cours_algo , struct cours_algo *nouveau_cour_algo)
 {
-    COURS_ALGO *pt_maillon = NULL;
-    pt_maillon = (COURS_ALGO*)malloc(sizeof(COURS_ALGO));
-    pt_maillon->id = idtempo;
-    pt_maillon->cpt = 0;
-    pt_maillon->suiv=NULL;
-
-    return pt_maillon;
-}
-
-void InsererMaillonEnQueueTortureCoursAlgo(COURS_ALGO **pt_tete_cours_algo ,COURS_ALGO *nouveau_cour_algo)
-{
-    COURS_ALGO *pt_courant = *pt_tete_cours_algo;
-    COURS_ALGO *pt_precedent = *pt_tete_cours_algo;
+    struct cours_algo *pt_courant = *pt_tete_cours_algo;
+    struct cours_algo *pt_precedent = *pt_tete_cours_algo;
 
     if (*pt_tete_cours_algo == NULL)
         *pt_tete_cours_algo = nouveau_cour_algo;
@@ -82,7 +51,7 @@ void InsererMaillonEnQueueTortureCoursAlgo(COURS_ALGO **pt_tete_cours_algo ,COUR
     }
 }
 
-void AfficherMaillonTortureCoursAlgo(COURS_ALGO *pt_tete_cours_algo)
+void AfficherMaillonTortureCoursAlgo(struct cours_algo *pt_tete_cours_algo)
 {
     {
         if(pt_tete_cours_algo == NULL)
@@ -96,7 +65,7 @@ void AfficherMaillonTortureCoursAlgo(COURS_ALGO *pt_tete_cours_algo)
     }
 }
 
-void RechercherMaillonTortureCoursAlgo(COURS_ALGO *pt_tete_cours_algo,int nombrerech)
+void RechercherMaillonTortureCoursAlgo(struct cours_algo *pt_tete_cours_algo,int nombrerech)
 {
     if (pt_tete_cours_algo == NULL)
         printf ("\nLa liste est vide");
@@ -116,10 +85,10 @@ void RechercherMaillonTortureCoursAlgo(COURS_ALGO *pt_tete_cours_algo,int nombre
     }
 }
 
-void SupprimerMaillonTortureCoursAlgo(COURS_ALGO **pt_tete_cours_algo,int nombrerech)
+void SupprimerMaillonTortureCoursAlgo(struct cours_algo **pt_tete_cours_algo,int nombrerech)
 {
-    COURS_ALGO *pt_courant = *pt_tete_cours_algo;
-    COURS_ALGO *pt_precedent = *pt_tete_cours_algo;
+    struct cours_algo *pt_courant = *pt_tete_cours_algo;
+    struct cours_algo *pt_precedent = *pt_tete_cours_algo;
     if (*pt_tete_cours_algo == NULL)
         printf ("\nLa liste est vide");
     else

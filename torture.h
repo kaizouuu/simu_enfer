@@ -1,18 +1,23 @@
-#ifndef TORTURE
-#define TORTURE
+#ifndef TORTURE_H
+#define TORTURE_H
 
 //Mettre le code ici
 //Creer maillon pour toute les sales de l'enfer
-COURS_ALGO* CreerMaillonTortureCoursAlgo(COURS_ALGO *);
-void InsererMaillonEnQueueTortureCoursAlgo(COURS_ALGO **,COURS_ALGO *);
-void AfficherMaillonTortureCoursAlgo(COURS_ALGO *);
-void RechercherMaillonTortureCoursAlgo(COURS_ALGO *,int);
-void SupprimerMaillonTortureCoursAlgo(COURS_ALGO **,int);
-void EcrireFichierCoursAlgo(FILE *,COURS_ALGO *);
-COURS_ALGO* LireFichierCoursAlgo (FILE *);
-int CompteurCoursAlgo (COURS_ALGO *);
 
-COURS_ALGO* CreerMaillonTortureCoursAlgoSimulation(int id_ppf);
+
+
+struct cours_algo{
+    int id;
+    int cpt;
+    struct cours_algo *suiv;
+
+};
+
+void InsererMaillonEnQueueTortureCoursAlgo(struct cours_algo **,struct cours_algo*);
+void AfficherMaillonTortureCoursAlgo(struct cours_algo *);
+void RechercherMaillonTortureCoursAlgo(struct cours_algo *,int);
+void SupprimerMaillonTortureCoursAlgo(struct cours_algo **,int);
+struct cours_algo* CreerMaillonTortureCoursAlgoSimulation(int id_ppf);
 
 
 
