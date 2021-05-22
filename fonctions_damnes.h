@@ -14,8 +14,6 @@ extern int timer;
 
 typedef struct ppf{
     int id;
-    char name[TCHAINE];
-    int cpt;
     int score;
     struct ppf *suiv;
 }PPF;
@@ -26,26 +24,6 @@ typedef struct cours_algo{
     struct cours_algo *suiv;
 
 }COURS_ALGO;
-
-typedef struct file_poste{
-    int id;
-    int cpt;
-    struct file_poste *suiv;
-}FILE_POSTE;
-
-typedef struct epilation_cheveux{
-    int id;
-    int cpt;
-    struct epilation_cheveux *suiv;
-
-}EPILATION_CHEVEUX;
-
-typedef struct marseillais {
-    int id;
-    int cpt;
-    struct marseillais *suiv;
-
-}MARSEILLAIS;
 
 
 //Mettre le code ici
@@ -71,7 +49,7 @@ typedef struct ech{
 } ECH;
 
 //menu
-void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FILE_POSTE*,EPILATION_CHEVEUX **,EPILATION_CHEVEUX *,MARSEILLAIS **,MARSEILLAIS *,int, ECH*);
+void menu(PPF **,PPF *,COURS_ALGO **, COURS_ALGO *, ECH*);
 //void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO **pt_tete_cours_algo,COURS_ALGO *nouveau_cour_algo,FILE_POSTE **pt_tete_file_poste,FILE_POSTE *nouveau_file_poste, EPILATION_CHEVEUX **pt_tete_epilation_cheveux,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,MARSEILLAIS *nouveau_marseillais,int nombrerech, int nb_place_cours_algo, int nb_place_file_poste, int nb_place_epilation_cheveux, int nb_place_marseillais,int *efficacite_algo, int* efficacite_poste, int* efficacite_epil, int* efficacite_mars,ECH* echeancier, int nbr_ames_pardonnee);
 //fonction de base de liste chainer
 PPF* CreerMaillonDamnes();
@@ -96,25 +74,23 @@ PPF* LireFichier(FILE *, int);
 
 
 //Creer maillon pour toute les sales de l'enfer
-COURS_ALGO* CreerMaillonTortureCoursAlgo(COURS_ALGO *);
-COURS_ALGO * CreerMaillonTortureCoursAlgoID(int);
-MARSEILLAIS* CreerMaillonTortureMarseillaisID(int);
-EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveuxID(int);
-FILE_POSTE* CreerMaillonTortureFilePosteID(int);
+//~ COURS_ALGO* CreerMaillonTortureCoursAlgo(COURS_ALGO *);
+//~ COURS_ALGO * CreerMaillonTortureCoursAlgoID(int);
+//~ MARSEILLAIS* CreerMaillonTortureMarseillaisID(int);
+//~ EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveuxID(int);
+//~ FILE_POSTE* CreerMaillonTortureFilePosteID(int);
 
 
-void InsererMaillonEnQueueTortureCoursAlgo(COURS_ALGO **,COURS_ALGO *);
-void AfficherMaillonTortureCoursAlgo(COURS_ALGO *);
-void RechercherMaillonTortureCoursAlgo(COURS_ALGO *,int);
-void SupprimerMaillonTortureCoursAlgo(COURS_ALGO **,int);
+//~ void InsererMaillonEnQueueTortureCoursAlgo(COURS_ALGO **,COURS_ALGO *);
+//~ void AfficherMaillonTortureCoursAlgo(COURS_ALGO *);
+//~ void RechercherMaillonTortureCoursAlgo(COURS_ALGO *,int);
+//~ void SupprimerMaillonTortureCoursAlgo(COURS_ALGO **,int);
 
 
 
 void selectionArchitecture(ECH *);
-//Fonction pour traitement de la liste à priorité des évènements
+
 void ajouterAvecPrioriteFileEvenement(ECH* debut, int id_pff, int id_score, int type_evt, int duree_torture, int t_evt, int type_torture);
-//EVT* nouveauMaillonPriorite( int id_pff, int id_score, int type_evt, int t_evt, int type_torture);
-//int ajouter(ECH *F, int id_ajout);
 int retirerFileEvenement(ECH *F, int *id_ppf, int *id_score, int *type_evt, int * duree_torture, int *t_evt, int *type_torture) ;
 int filepleineEvenement(ECH*F);
 int filevideEvenement(ECH *F);
@@ -126,5 +102,6 @@ EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt);
 
 void selectionTempsArret(int * tps);
 void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant, int aleatoire_bool, int t_final_arret);
+
 #endif
 

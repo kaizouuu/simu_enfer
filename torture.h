@@ -14,33 +14,6 @@ int CompteurCoursAlgo (COURS_ALGO *);
 
 COURS_ALGO* CreerMaillonTortureCoursAlgoSimulation(int id_ppf);
 
-FILE_POSTE* CreerMaillonTortureFilePoste(FILE_POSTE *);
-void InsererMaillonEnQueueTortureFilePoste(FILE_POSTE **,FILE_POSTE *);
-void AfficherMaillonTortureFilePoste(FILE_POSTE *);
-void RechercherMaillonTortureFilePoste(FILE_POSTE *,int);
-void SupprimerMaillonTortureFilePoste(FILE_POSTE **,int);
-void EcrireFichierFilePoste(FILE *,FILE_POSTE *);
-FILE_POSTE* LireFichierFilePoste(FILE *);
-int CompteurFilePoste (FILE_POSTE *);
 
-
-EPILATION_CHEVEUX* CreerMaillonTortureEpilationCheveux();
-void InsererMaillonEnQueueTortureEpilationCheveux(EPILATION_CHEVEUX **,EPILATION_CHEVEUX *);
-void AfficherMaillonTortureEpilationCheveux(EPILATION_CHEVEUX *);
-void RechercherMaillonTortureEpillationCheveux(EPILATION_CHEVEUX *,int);
-void SupprimerMaillonTortureEpilationCheveux(EPILATION_CHEVEUX **,int);
-void EcrireFichierEpilationCheveux(FILE *,EPILATION_CHEVEUX *);
-EPILATION_CHEVEUX* LireFichierEpilationCheveux(FILE *);
-int CompteurEpilationCheveux (EPILATION_CHEVEUX *);
-
-
-MARSEILLAIS* CreerMaillonTortureMarseillais();
-void InsererMaillonEnQueueTortureMarseillais(MARSEILLAIS **,MARSEILLAIS *);
-void AfficherMaillonTortureMarseillais(MARSEILLAIS *);
-void RechercherMaillonTortureMarseillais(MARSEILLAIS *,int);
-void SupprimerMaillonTortureMarseillais(MARSEILLAIS **,int);
-void EcrireFichierMarseillais(FILE *,MARSEILLAIS *);
-MARSEILLAIS* LireFichierMarseillais(FILE *);
-int CompteurMarseillais (MARSEILLAIS *);
 
 #endif
