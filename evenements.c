@@ -39,8 +39,20 @@ struct evt* creerEvenement(struct evt* Evt_a_traiter, int type_evt, int t_evt)
 	{
 		//Génération Evt Fin_Torture
 		E->id_ppf = Evt_a_traiter->id_ppf;
-		if (Evt_a_traiter->type_torture == 1)
-		{//E->id_score = Evt_a_traiter->id_score; //Dans le cas des 4 tortures on met 4 if qui teste le type de torture
+		if (Evt_a_traiter->type_torture == 4)
+		{
+			E->id_score = 749;
+		}
+		else if (Evt_a_traiter->type_torture == 3)
+		{
+			E->id_score = 499;
+		}
+		else if (Evt_a_traiter->type_torture == 2)
+		{
+			E->id_score = 249;
+		}
+		else if (Evt_a_traiter->type_torture == 1)
+		{
 			E->id_score = 0;
 		}
 		E->type_evt = type_evt;
