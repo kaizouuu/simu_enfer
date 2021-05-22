@@ -1,10 +1,6 @@
 #ifndef TORTURE_H
 #define TORTURE_H
 
-//Mettre le code ici
-//Creer maillon pour toute les sales de l'enfer
-
-
 
 struct cours_algo{
     int id;

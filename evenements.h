@@ -7,8 +7,7 @@
 #define FIN_TORTURE 4
 #define SIZEMAX 50
 
-#define TCHAINE 600
-#define TAFFICHAGE 20
+
 
 
 struct evt{
@@ -29,6 +28,10 @@ struct ech{
 	int nb_place_cours_algo;
 	int nb_pers_cours_algo;
 	int efficacite_algo;
+	int nbr_evt_arrivee;
+	int nbr_evt_attente;
+	int nbr_evt_debut_torture;
+	int nbr_evt_fin_torture;
 	int nbr_ames_pardonnees;
 } ;
 

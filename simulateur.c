@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 #include "fonctions_damnes.h"
 #include "torture.h"
 
@@ -19,7 +20,7 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 	struct cours_algo*nouveau_cour_algo;
 	
 	int etat = 1;
-	printf("\nDébut moteur simulation"); 
+
 	//A->nb_pers_cours_algo = CompteurCoursAlgo(*pt_tete_cours_algo);
 	
 	if (filevideEvenement(A) == 1) // Si la file de l'échéancier est vide, on arrête la simulation  
@@ -28,36 +29,37 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 	}
 	else
 	{
-		printf("\nElse dans la simulation"); 
+
 		retirerFileEvenement(A, &Evt_a_traiter->id_ppf, &Evt_a_traiter->id_score, &Evt_a_traiter->type_evt, &Evt_a_traiter->duree_torture, &Evt_a_traiter->t_evt, &Evt_a_traiter->type_torture );        // On traite le premier élèment de liste à évènements, avec les pointeurs on a mis un truc intéressant dans valeur
 		A->t_cour = Evt_a_traiter->t_evt;                  // C'est ici que le temps de la simulation saute à celui de l'événement en cours de traitement ?
 		// 
 		switch (Evt_a_traiter->type_evt)
 		{
 			case ARRIVEE :
+				A->nbr_evt_arrivee --;
 				if (Evt_a_traiter->type_torture == 1)
 				{
 					if (A->nb_pers_cours_algo < A->nb_place_cours_algo)
 					{
-						printf("\nNb pers cours algo %d", A->nb_pers_cours_algo); 
-						printf("\nNb place cours algo %d", A->nb_place_cours_algo); 
 						A-> nb_pers_cours_algo = A-> nb_pers_cours_algo + 1;
 						Evt_cree = creerEvenement(Evt_a_traiter, DEBUT_TORTURE, A->t_cour+1);
 						ajouterAvecPrioriteFileEvenement(A,  Evt_cree->id_ppf, Evt_cree->id_score, Evt_cree->type_evt,Evt_cree->duree_torture,  Evt_cree->t_evt, Evt_cree->type_torture );
+						A->nbr_evt_debut_torture ++;
 
 					}
 					else
 					{
 						Evt_cree = creerEvenement(Evt_a_traiter, ATTENTE, A->t_cour+1);
 						ajouterAvecPrioriteFileEvenement(A,  Evt_cree->id_ppf, Evt_cree->id_score, Evt_cree->type_evt,Evt_cree->duree_torture,  Evt_cree->t_evt, Evt_cree->type_torture );
-						
+						A->nbr_evt_attente ++;
 					}
 				}
 				else
-					printf("\n\nERREUR DANS LA FONCTION MOTEUR SIMULATION ARRIVE\n");
+					printf("\n\nERREUR DANS LA FONCTION MOTEUR SIMULATION ATTENTE\n");
 			break;
 			
 			case ATTENTE :
+				A->nbr_evt_attente =A->nbr_evt_attente - 1;
 				if (Evt_a_traiter->type_torture == 1)
 				{
 					if (A->nb_pers_cours_algo < A->nb_place_cours_algo)
@@ -65,13 +67,13 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 						A-> nb_pers_cours_algo ++;
 						Evt_cree = creerEvenement(Evt_a_traiter, DEBUT_TORTURE, A->t_cour+1);
 						ajouterAvecPrioriteFileEvenement(A,  Evt_cree->id_ppf, Evt_cree->id_score, Evt_cree->type_evt,Evt_cree->duree_torture,  Evt_cree->t_evt, Evt_cree->type_torture );
-
+						A->nbr_evt_debut_torture ++;
 					}
 					else
 					{
 						Evt_cree = creerEvenement(Evt_a_traiter, ATTENTE, A->t_cour+1);
 						ajouterAvecPrioriteFileEvenement(A,  Evt_cree->id_ppf, Evt_cree->id_score, Evt_cree->type_evt,Evt_cree->duree_torture,  Evt_cree->t_evt, Evt_cree->type_torture );
-						
+						A->nbr_evt_attente = A->nbr_evt_attente + 1;
 					}
 				}
 				
@@ -81,6 +83,7 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 			break;
 			
 			case DEBUT_TORTURE : //Faut il rajouter un while (pt_tete !=NULL) pour faire boucler les damnes
+				A->nbr_evt_debut_torture --;
 			//CREER UNE SALLE DE TORTURE POUR MON DAMNE		
 				if(Evt_a_traiter->type_torture == 1)
 				{
@@ -90,16 +93,18 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 				//int a = Evt_a_traiter->duree_torture;
 				Evt_cree = creerEvenement(Evt_a_traiter, FIN_TORTURE, A->t_cour+Evt_a_traiter->duree_torture); //LE PLUS 20 EST A MODIFIER EN FONCTION DU TEMPS QUE PREND LA TORTURE -> duree_torture
 				ajouterAvecPrioriteFileEvenement(A,  Evt_cree->id_ppf, Evt_cree->id_score, Evt_cree->type_evt,Evt_cree->duree_torture,  Evt_cree->t_evt, Evt_cree->type_torture);
-
+				A->nbr_evt_fin_torture ++;
 					
 			break;
 			
 			case FIN_TORTURE : 
+				A->nbr_evt_fin_torture --;
 				if (Evt_a_traiter->type_torture == 1)
 				{
 						A-> nb_pers_cours_algo --;
 						//SUPPRIMER LA SALLE DE TORTURE DU DAMNE					
-						SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo, Evt_a_traiter->id_ppf);		
+						SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo, Evt_a_traiter->id_ppf);	
+						A->nbr_ames_pardonnees ++;	
 				}
 				else
 					printf("\n\nERREUR DANS LA FONCTION MOTEUR SIMULATION ATTENTE\n");
@@ -153,6 +158,7 @@ void aiguillageDamnesArrivants(struct ech* echeancier, struct ppf * pt_tete,  in
 		printf("\n\nBLABLA\n");
 		type_torture =1;
 		duree_torture = pt_damne_a_traiter->score / A->efficacite_algo;
+		echeancier->nbr_evt_arrivee ++;
 		
 	}
 /*	
@@ -217,10 +223,8 @@ void selectionTempsArret(int * tps)
 void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_cours_algo, struct cours_algo *nouveau_cour_algo, struct ech* echeancier)
 {
     int i = 0 ;
-   // int l = 0, m = 0, n = 0, o = 0, p = 0, p2 =0 ;  // utilisé en test 14 pour entrer dans la structure évènement
     int q = 0, r=0, s=0, t=0, u=0, v=0 ; ; //utilisé en test 15 pour retirer dans la structure évènement
     int simu_en_marche = 1 ;
-//    int flag ;
     int t_final_arret = 0;
     int nbr_ames_a_cree=0;
 	int dernier_id_ppf = 0;
@@ -228,12 +232,17 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
 	
 	int a_test =0;
 	
+	int t_cour_prec = 0;
+	int t_cour_suiv = 0;
+	int t_diff = 0;
+	
 	
 	//struct evt *evt_cour = NULL;
-	struct ppf *ppf_cour = NULL;
+	//struct ppf *ppf_cour = NULL;
     
     do{
-		system("clear");
+		//system("clear");
+		system("printf '\e[3;0;0t'");
         printf("\n********** Configuration de la Simulation **********\n");
         printf ("|  0 | Quitter le programme\n");
 
@@ -373,35 +382,28 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
 					getchar();
 					
                 break;
-                
-            
-            case 20:
-				system("clear");
-				printf("\nOn prend les âmes damnées créer dans la configuration initial et on en fait des évènements ARRIVEE:\n");	
-				
-				ppf_cour =  *pt_tete;
-				
-				while (ppf_cour != NULL)
-				{	
-					aiguillageDamnesArrivants(echeancier, * pt_tete,  &ppf_cour->id,0, t_final_arret);
-					
-					ppf_cour = ppf_cour->suiv;
-				 }
-				printf("\nAppuyer sur ENTREE pour continuer:"); 
-					while ((getchar())!= '\n');
-					getchar();
-					
 
-                break;
             case 21:
 				system("clear");
-				while (simu_en_marche == 1)
-				{
-					printf("\nSimulation début"); 
+				printf("\n*************Simulation début*************"); 
+				while (simu_en_marche == 1 && echeancier->t_cour < t_final_arret)
+				{					
+					t_cour_prec = echeancier->t_cour;
+					t_cour_suiv = echeancier->t_cour;
 					simu_en_marche = moteurSimulation(echeancier, pt_tete_cours_algo);
-					printf("\nAppuyer sur ENTREE pour continuer:"); 
-					while ((getchar())!= '\n');
-					getchar();
+					
+					t_cour_suiv = echeancier->t_cour;
+					//calcul
+					t_diff = t_cour_suiv - t_cour_prec;
+					
+					sleep(t_diff);
+					
+					//system("clear");
+					printf("\rHorloge interne simulation:%d, Nbr Personne Cours Algo = %d, Arrivee = %d, Attente = %d, Début Torture = %d et Fin Torture = %d. Ames Pardonnees = %d", echeancier->t_cour, echeancier-> nb_pers_cours_algo, echeancier->nbr_evt_arrivee, echeancier->nbr_evt_attente, echeancier->nbr_evt_debut_torture, echeancier->nbr_evt_fin_torture, echeancier->nbr_ames_pardonnees);
+					fflush(stdout);
+					//printf("\nHorloge interne simulation:%d", echeancier->t_cour );
+					//afficherFileEvenement(echeancier);
+
 					
 				}
                 break;
@@ -420,3 +422,21 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
         }
     }while (i != 0);
 }
+
+
+//~ void affichageInfoSimulation (struct ech *A)
+//~ {
+	//~ //printf("\rHorloge interne simulation:%d, Nbr Personne Cours Algo = %d, Arrivee = %d, Attente = %d, Début Torture = %d et Fin Torture = %d. Ames Pardonnees = %d", echeancier->t_cour, echeancier-> nb_pers_cours_algo, echeancier->nbr_evt_arrivee, echeancier->nbr_evt_attente, echeancier->nbr_evt_debut_torture, echeancier->nbr_evt_fin_torture, echeancier->nbr_ames_pardonnees);
+	//~ printf("| DAMNES | STATUT |            \n");
+	//~ printf("|                                                                               ");
+
+	//~ printf("| Horloge : %d |", A->t_cour);
+	//~ printf("| Horloge : %d |", A->t_cour);
+	//~ printf("| DAMNES | STATUT |            \n");
+	//~ printf("|                                                                               ");
+	
+	
+	
+	
+	
+//~ }

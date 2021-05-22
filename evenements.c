@@ -83,12 +83,16 @@ void afficherFileEvenement(struct ech*F)
 
 void initFileEvenement(struct ech *F)
 {
-	F->t_cour = 0;                       
+	F->t_cour = 0;                  
 	F->nb_evt = 0;                        
-	F->efficacite_algo = 10;
-	F->nb_place_cours_algo=1; //à remettre à zéro une fis les tests fini
+	F->efficacite_algo = 0;
+	F->nb_place_cours_algo=0; //à remettre à zéro une fis les tests fini
 	F->nb_pers_cours_algo=0;
 	F->nbr_ames_pardonnees=0;
+	F->nbr_evt_arrivee=0;
+	F->nbr_evt_attente=0;
+	F->nbr_evt_debut_torture=0;
+	F->nbr_evt_fin_torture=0;
 	F->debut = NULL;
 
 }

@@ -1,18 +1,6 @@
 #ifndef FCT_DAMNES
 #define FCT_DAMNES
 
-#define ARRIVEE 1
-#define ATTENTE 2
-#define DEBUT_TORTURE 3
-#define FIN_TORTURE 4
-#define SIZEMAX 50
-
-#define TCHAINE 600
-#define TAFFICHAGE 20
-
-//~ extern int timer;
-
-
 struct ppf{
     int id;
     int score;
