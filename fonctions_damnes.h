@@ -121,6 +121,6 @@ int moteurSimulation(ECH *A,  COURS_ALGO **pt_tete_cours_algo); //Essai FLORENT
 EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt);
 
 void selectionTempsArret(int * tps);
-void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant, int *aleatoire_bool);
+void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant, int aleatoire_bool, int t_final_arret);
 #endif
 

@@ -15,8 +15,10 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
     int simu_en_marche = 1 ;
     int flag ;
     int t_final_arret = 0;
-    int nbr_ames_initial=0;
-    int nbr_ames_actuel=0;
+    int nbr_ames_a_cree=0;
+	int dernier_id_ppf = 0;
+	
+	int a_test =0;
   
 	EVT *evt_cour = NULL;
 	PPF *ppf_cour = NULL;
@@ -173,14 +175,28 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
                 
                 case 19:
 					printf("\nCombien d'âmnes damnées souhaitez-vous créer pour lancer la simulation ?\n");	
-					scanf("%d",&nbr_ames_initial);
-					nbr_ames_actuel=nbr_ames_initial;
+					scanf("%d",&nbr_ames_a_cree);
 					
-					for ( int j = 0;  j < nbr_ames_initial;  j = j+1)
+					for ( int j = 0;  j < nbr_ames_a_cree;  j = j+1)
 					{
-						nouveau = CreerMaillonAvecIDDamnes(j+1);////test unitaire fonction ajoutete
+						nouveau = CreerMaillonAvecIDDamnes(dernier_id_ppf+j+1);////test unitaire fonction ajoutete
 						InsererMaillonEnQueueDamnes(pt_tete,nouveau);
+						a_test = dernier_id_ppf+j+1;
+						aiguillageDamnesArrivants(echeancier, * pt_tete,  &a_test, 0, t_final_arret);
 					}
+					dernier_id_ppf = nbr_ames_a_cree + dernier_id_ppf;
+					
+					printf("\nCombien d'âmnes damnées souhaitez-vous créer pour lancer la simulation ?\n");	
+					scanf("%d",&nbr_ames_a_cree);
+					
+					for ( int j = 0;  j < nbr_ames_a_cree;  j = j+1)
+					{
+						nouveau = CreerMaillonAvecIDDamnes(dernier_id_ppf+j+1);////test unitaire fonction ajoutete
+						InsererMaillonEnQueueDamnes(pt_tete,nouveau);
+						a_test = dernier_id_ppf+j+1;
+						aiguillageDamnesArrivants(echeancier, * pt_tete,  &a_test, 1, t_final_arret);
+					}
+					dernier_id_ppf = nbr_ames_a_cree + dernier_id_ppf;
 					
                 break;
                 
@@ -191,14 +207,12 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
 					
 					while (ppf_cour != NULL)
 					{	
-						//aiguillageDamnesArrivants( * echeancier,  * pt_tete,* type_torture, *duree_torture,   *identifiant,  *efficacite_algo, * efficacite_poste, * efficacite_epil, * efficacite_mars);
-						aiguillageDamnesArrivants(echeancier, * pt_tete,  &ppf_cour->id,0);
+						aiguillageDamnesArrivants(echeancier, * pt_tete,  &ppf_cour->id,0, t_final_arret);
 						
 						ppf_cour = ppf_cour->suiv;
                      }
 
 
-                 //   AiguillagePurgatoireSed(*pt_tete,echeancier);
                 break;
                 case 21:
 					while (simu_en_marche == 1)
@@ -246,10 +260,11 @@ PPF* CreerMaillonAvecIDDamnes(int identifiant_damne)
     PPF *pt_maillon = NULL;
     pt_maillon = (PPF*)malloc(sizeof(PPF));
     pt_maillon->id = identifiant_damne;
-    printf("Donner un nom a votre PFF: \n");
+    
+    printf("\n\nDonner un nom a votre PFF: \n");
     scanf("%s",pt_maillon->name);
     pt_maillon->cpt = 0;
-    printf("Entrer le score de depravation de votre PPF:\n\n");
+    printf("Entrer le score de depravation de votre PPF:\n");
     scanf("%d",&(*pt_maillon).score);
     pt_maillon->suiv=NULL;
 
@@ -791,7 +806,7 @@ EVT* creerEvenement(EVT* Evt_a_traiter, int type_evt, int t_evt)
 		return E;
 }
 
-void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant, int *aleatoire_bool)
+void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifiant, int aleatoire_bool, int t_final_arret)
 {
 	printf("\n\nAiguillageDamnesArrivants\n");
 	
@@ -802,20 +817,24 @@ void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifian
 	ECH *A = echeancier;
 	PPF *pt_damne_a_traiter = pt_tete;
 	printf("\n\nAiguillageDamnesArrivants\n");
-	while(&pt_damne_a_traiter->id != identifiant)
+	printf("\n\nPT TETE VALEUR %d", pt_damne_a_traiter->id);
+	
+	while(pt_damne_a_traiter->id != *identifiant)
 	{
 		printf("\n\nAiguillageDamnesArrivantsBOUCLE\n");
 		pt_damne_a_traiter = pt_damne_a_traiter->suiv;
+		printf("\n\nAiguillageDamnesArrivantsBOUCLE\n");
 	}
 	
 	printf("\n%d\n", pt_damne_a_traiter->id);
-		printf("\n%d\n", pt_damne_a_traiter->score);
+	printf("\n%d\n", pt_damne_a_traiter->score);
 		
 	if (pt_damne_a_traiter->score <= 0)
 	{
-		printf("\n\nPARADIS\n");
-		SupprimerMaillonIDDamnes(&pt_tete, *identifiant);
-		A->nbr_ames_pardonnees ++;
+		//~ printf("\n\nPARADIS\n");
+		//~ SupprimerMaillonIDDamnes(&pt_tete, *identifiant);
+		//~ A->nbr_ames_pardonnees ++;
+		//PARTIE CODE POUR UTILISATION DE PLUSIEURS TORTURES EVENTUELLES
 	}
 	else 
 	{
@@ -861,12 +880,18 @@ void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifian
 */
 
 	printf("\n\nAjout\n");
-	if (*aleatoire_bool != 1)
+	printf("\n\nBOOLEEN %d\n", aleatoire_bool);
+	
+	//ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+1, type_torture ); 
+	if (aleatoire_bool != 1)
 		ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+1, type_torture ); // génére des évènements arrivee
 	else
 	{
 		srand(time(NULL));
-		t_aleatoire = rand() % 50;
+		printf("\n\nOK SRAND\n");
+		t_aleatoire = rand() % t_final_arret;
+		printf("\n\nOK RAND\n");
 		ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+t_aleatoire, type_torture ); // génére des évènements arrivee
+		printf("\n\ncouille\n");
 	}
 }
