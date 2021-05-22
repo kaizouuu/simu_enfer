@@ -179,7 +179,8 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
 					
 					for ( int j = 0;  j < nbr_ames_a_cree;  j = j+1)
 					{
-						nouveau = CreerMaillonAvecIDDamnes(dernier_id_ppf+j+1);////test unitaire fonction ajoutete
+						// srand(time(NULL));    
+						nouveau = CreerMaillonAvecIDDamnesAleatoire(dernier_id_ppf+j+1);////test unitaire fonction ajoutete
 						InsererMaillonEnQueueDamnes(pt_tete,nouveau);
 						a_test = dernier_id_ppf+j+1;
 						aiguillageDamnesArrivants(echeancier, * pt_tete,  &a_test, 0, t_final_arret);
@@ -191,7 +192,8 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
 					
 					for ( int j = 0;  j < nbr_ames_a_cree;  j = j+1)
 					{
-						nouveau = CreerMaillonAvecIDDamnes(dernier_id_ppf+j+1);////test unitaire fonction ajoutete
+						// srand(time(NULL));    
+						nouveau = CreerMaillonAvecIDDamnesAleatoire(dernier_id_ppf+j+1);////test unitaire fonction ajoutete
 						InsererMaillonEnQueueDamnes(pt_tete,nouveau);
 						a_test = dernier_id_ppf+j+1;
 						aiguillageDamnesArrivants(echeancier, * pt_tete,  &a_test, 1, t_final_arret);
@@ -266,6 +268,20 @@ PPF* CreerMaillonAvecIDDamnes(int identifiant_damne)
     pt_maillon->cpt = 0;
     printf("Entrer le score de depravation de votre PPF:\n");
     scanf("%d",&(*pt_maillon).score);
+    pt_maillon->suiv=NULL;
+
+    return pt_maillon;
+}
+
+PPF* CreerMaillonAvecIDDamnesAleatoire(int identifiant_damne)
+{
+    PPF *pt_maillon = NULL;
+    pt_maillon = (PPF*)malloc(sizeof(PPF));
+    pt_maillon->id = identifiant_damne;
+    
+    pt_maillon->cpt = 0; // à enlever ?
+    
+    pt_maillon->score = rand() % 1000;
     pt_maillon->suiv=NULL;
 
     return pt_maillon;
@@ -887,7 +903,7 @@ void aiguillageDamnesArrivants( ECH* echeancier, PPF * pt_tete,  int *identifian
 		ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+1, type_torture ); // génére des évènements arrivee
 	else
 	{
-		srand(time(NULL));
+		//srand(time(NULL));
 		printf("\n\nOK SRAND\n");
 		t_aleatoire = rand() % t_final_arret;
 		printf("\n\nOK RAND\n");

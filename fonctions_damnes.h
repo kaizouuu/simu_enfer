@@ -76,6 +76,9 @@ void menu(PPF **,PPF *,char *,FILE*,COURS_ALGO **, COURS_ALGO *,FILE_POSTE **,FI
 //fonction de base de liste chainer
 PPF* CreerMaillonDamnes();
 PPF* CreerMaillonAvecIDDamnes(int identifiant_damne);
+
+PPF* CreerMaillonAvecIDDamnesAleatoire(int identifiant_damne);
+
 void InsererMaillonEnQueueDamnes(PPF **,PPF *);
 PPF* InsererMaillonEnQueuesimpleDamnes(PPF *, PPF *);
 void InsererMaillonBonneplace(PPF **,PPF *); //fonction pour inserer les ppf à la bonne place dans le purgatoire

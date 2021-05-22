@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "fonctions_damnes.h"
 #include "simulateur.h"
 #include "torture.h"
 
 
+
 int main()
 {
+	srand(time(NULL));
+	
     FILE * database_PPF = NULL;
 
     PPF *nouveau = NULL;
