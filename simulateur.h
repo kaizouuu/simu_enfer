@@ -9,7 +9,7 @@ void simulationSed(PPF **,COURS_ALGO **,FILE_POSTE **,EPILATION_CHEVEUX **,MARSE
 void update(PPF **,COURS_ALGO **,FILE_POSTE **,EPILATION_CHEVEUX **,MARSEILLAIS **,PPF *,COURS_ALGO *,FILE_POSTE *,EPILATION_CHEVEUX *,MARSEILLAIS *, int, int, int, int);
 void updatecompteur(COURS_ALGO *, FILE_POSTE *,EPILATION_CHEVEUX *,MARSEILLAIS *);
 COURS_ALGO* copieListeFrag(COURS_ALGO *);
-void Affichageapresupdate(COURS_ALGO *, FILE_POSTE *, EPILATION_CHEVEUX *, MARSEILLAIS *);
+void Affichageapresupdate(COURS_ALGO *, FILE_POSTE *, EPILATION_CHEVEUX *, MARSEILLAIS *,int ,int ,int ,int );
 void AiguillagePurgatoireSed(PPF *,ECH *);
 
 
