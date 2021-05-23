@@ -188,29 +188,22 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
 	//struct ppf *ppf_cour = NULL;
     
     do{
-		//system("clear");
-		system("printf '\e[3;0;0t'");
+		system("clear");
         printf("\n********** Configuration de la Simulation **********\n");
         printf ("|  0 | Quitter le programme\n");
-
         printf ("|  2 | Test unitaire damnés: Afficher la liste des âmes damnées\n");
-
         printf ("|  4 | Test unitaire damnés: Supprimer un damné\n");
-        
-        printf( "|  8 | Test unitaire torture : Afficher la liste des maillon dans ma chaine ALGO\n");
-
-        
+        printf( "|  8 | Test unitaire torture : Afficher la liste des maillon dans ma chaine ALGO\n\n");
 
         printf ("| 15 | Test unitaire évènement : Afficher la file des évènements\n");
         printf ("| 16 | Test unitaire évènement : Retirer évènement (avec t_evt le plus petit)\n\n");
         
         printf ("| 17 | FONCTION CONFIGURATION : Sélection du temps d'arrêt de la simulation\n");
         printf ("| 18 | FONCTION CONFIGURATION : Séléction de l'Architecture des Enfers\n");
-        printf ("| 19 | FONCTION CONFIGURATION : Séléction du nombre de damnés original à générer à t 0 et à t aléatoire\n\n");
-        
+        printf ("| 19 | FONCTION CONFIGURATION : Séléction du nombre de damnés original à générer à t=0 et à t=aléatoire\n\n");
 
-        printf ("| 21 | FONCTION EVENEMENT : SIMULATION TOURNANT TOUTE SEULE\n");
-        printf ("| 22 | FONCTION EVENEMENT : SIMULATION ESSAI UNITAIRE \n\n");
+        printf ("| 21 | SIMULATION : Automatique\n");
+        printf ("| 22 | SIMULATION : Coup par coup\n\n");
 
         
         printf("\n********** Configuration de la Simulation **********\n");
@@ -298,7 +291,7 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
                 
             case 19:
 				system("clear");
-				printf("\nCombien d'âmes damnées souhaitez-vous créer pour lancer la simulation ?\n");	
+				printf("\nCombien d'âmes damnées souhaitez-vous créer pour lancer la simulation à t = 0 ?\n");	
 				scanf("%d",&nbr_ames_a_cree);
 				
 				for ( int j = 0;  j < nbr_ames_a_cree;  j = j+1)
@@ -311,7 +304,7 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
 				}
 				dernier_id_ppf = nbr_ames_a_cree + dernier_id_ppf;
 				
-				printf("\nCombien d'âmes damnées souhaitez-vous créer pour lancer la simulation ?\n");	
+				printf("\nCombien d'âmes damnées souhaitez-vous créer aléatoirement ?\n");	
 				scanf("%d",&nbr_ames_a_cree);
 				
 				for ( int j = 0;  j < nbr_ames_a_cree;  j = j+1)
@@ -349,18 +342,23 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
 					printf("\nHorloge interne simulation:%d, Nbr Personne Cours Algo = %d, Arrivee = %d, Attente = %d, Début Torture = %d et Fin Torture = %d. Ames Pardonnees = %d", echeancier->t_cour, echeancier-> nb_pers_cours_algo, echeancier->nbr_evt_arrivee, echeancier->nbr_evt_attente, echeancier->nbr_evt_debut_torture, echeancier->nbr_evt_fin_torture, echeancier->nbr_ames_pardonnees);
 					fflush(stdout);
 					//printf("\nHorloge interne simulation:%d", echeancier->t_cour );
-					//afficherFileEvenement(echeancier);
-
-					
+					//afficherFileEvenement(echeancier);					
 				}
-                break;
-            case 22:
-				system("clear");
-				simu_en_marche = moteurSimulation(echeancier, pt_tete_cours_algo);
-				afficherFileEvenement(echeancier);
 				printf("\nAppuyer sur ENTREE pour continuer:"); 
 				while ((getchar())!= '\n');
 				getchar();
+                break;
+            case 22:
+				system("clear");
+				while (simu_en_marche == 1 && echeancier->t_cour < t_final_arret)
+				{		
+				simu_en_marche = moteurSimulation(echeancier, pt_tete_cours_algo);
+				afficherFileEvenement(echeancier);
+				printf("\nAppuyer sur continuer la simulation:"); 
+				while ((getchar())!= '\n');
+				getchar();
+				system("clear");
+				}
 				break;
 
                 
@@ -369,21 +367,3 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
         }
     }while (i != 0);
 }
-
-
-//~ void affichageInfoSimulation (struct ech *A)
-//~ {
-	//~ //printf("\rHorloge interne simulation:%d, Nbr Personne Cours Algo = %d, Arrivee = %d, Attente = %d, Début Torture = %d et Fin Torture = %d. Ames Pardonnees = %d", echeancier->t_cour, echeancier-> nb_pers_cours_algo, echeancier->nbr_evt_arrivee, echeancier->nbr_evt_attente, echeancier->nbr_evt_debut_torture, echeancier->nbr_evt_fin_torture, echeancier->nbr_ames_pardonnees);
-	//~ printf("| DAMNES | STATUT |            \n");
-	//~ printf("|                                                                               ");
-
-	//~ printf("| Horloge : %d |", A->t_cour);
-	//~ printf("| Horloge : %d |", A->t_cour);
-	//~ printf("| DAMNES | STATUT |            \n");
-	//~ printf("|                                                                               ");
-	
-	
-	
-	
-	
-//~ }
