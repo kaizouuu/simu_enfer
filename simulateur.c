@@ -301,7 +301,6 @@ void Affichageapresupdate(COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_fil
     int tableau_affichage_cours_algo_id[TAFFICHAGE];
     int tableau_affichage_cours_algo_cpt[TAFFICHAGE];
     int i = 0;
-    int nbdanne = 3 ;
     printf ("\n\n Affichage des dannées en cours d'algo ci dessous: \n");
     {
         if(pt_tete_cours_algo == NULL)
@@ -388,7 +387,6 @@ void Affichageapresupdate(COURS_ALGO *pt_tete_cours_algo,FILE_POSTE *pt_tete_fil
 
 void simulationSed(PPF **pt_tete,COURS_ALGO **pt_tete_cours_algo,FILE_POSTE **pt_tete_file_poste,EPILATION_CHEVEUX **pt_tete_epilation_cheveux,MARSEILLAIS **pt_tete_marseillais,PPF *nouveau,COURS_ALGO *nouveau_cour_algo,FILE_POSTE *nouveau_file_poste,EPILATION_CHEVEUX *nouveau_epilation_cheveux,MARSEILLAIS *nouveau_marseillais,ECH *pt_tete_enchancier, EVT *pt_tete_evenement)
 {
-    int nb_pers_cours_algo = 3;
     AiguillagePurgatoireSed(*pt_tete, pt_tete_enchancier);
 }
 
