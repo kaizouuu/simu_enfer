@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mahe/Documents/programmation/projet/simu_enfer/fonctions_damnes.h
+
+/home/mahe/Documents/programmation/projet/simu_enfer/simulateur.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+fonctions_damnes.h
+/home/mahe/Documents/programmation/projet/simu_enfer/fonctions_damnes.h
+torture.h
+/home/mahe/Documents/programmation/projet/simu_enfer/torture.h
+simulateur.h
+/home/mahe/Documents/programmation/projet/simu_enfer/simulateur.h
+time.h
+/home/mahe/Documents/programmation/projet/simu_enfer/time.h
+
+/home/mahe/Documents/programmation/projet/simu_enfer/simulateur.h
+
+/home/mahe/Documents/programmation/projet/simu_enfer/torture.h
+

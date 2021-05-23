@@ -1,0 +1,1 @@
+/usr/bin/cc -g CMakeFiles/simu_enfer.dir/simu_enfer.c.o CMakeFiles/simu_enfer.dir/fonctions_damnes.c.o CMakeFiles/simu_enfer.dir/torture.c.o CMakeFiles/simu_enfer.dir/simulateur.c.o -o simu_enfer 
