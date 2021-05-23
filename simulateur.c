@@ -20,8 +20,6 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 	struct cours_algo*nouveau_cour_algo;
 	
 	int etat = 1;
-
-	//A->nb_pers_cours_algo = CompteurCoursAlgo(*pt_tete_cours_algo);
 	
 	if (filevideEvenement(A) == 1) // Si la file de l'échéancier est vide, on arrête la simulation  
 	{	etat = 0;
@@ -84,7 +82,6 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 			
 			case DEBUT_TORTURE : //Faut il rajouter un while (pt_tete !=NULL) pour faire boucler les damnes
 				A->nbr_evt_debut_torture --;
-			//CREER UNE SALLE DE TORTURE POUR MON DAMNE		
 				if(Evt_a_traiter->type_torture == 1)
 				{
 					nouveau_cour_algo = CreerMaillonTortureCoursAlgoSimulation(Evt_a_traiter->id_ppf);
@@ -101,8 +98,7 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 				A->nbr_evt_fin_torture --;
 				if (Evt_a_traiter->type_torture == 1)
 				{
-						A-> nb_pers_cours_algo --;
-						//SUPPRIMER LA SALLE DE TORTURE DU DAMNE					
+						A-> nb_pers_cours_algo --;			
 						SupprimerMaillonTortureCoursAlgo(pt_tete_cours_algo, Evt_a_traiter->id_ppf);	
 						A->nbr_ames_pardonnees ++;	
 				}
@@ -146,14 +142,12 @@ void aiguillageDamnesArrivants(struct ech* echeancier, struct ppf * pt_tete,  in
 		type_torture =1;
 		duree_torture = pt_damne_a_traiter->score / A->efficacite_algo;
 		echeancier->nbr_evt_arrivee ++;
-		
 	}
 
 	if (aleatoire_bool != 1)
 		ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+1, type_torture ); // génére des évènements arrivee
 	else
 	{
-		//srand(time(NULL));
 		t_aleatoire = (rand() % t_final_arret-1) + 1; //+1 pour ne pas avoir d'évènement à t = 0 et -1 pour ne pas générer d'évènement après le tps de fin. 
 		ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+t_aleatoire, type_torture ); // génére des évènements arrivee
 	}
@@ -178,14 +172,7 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
 	int id_suppr = 0;
 	
 	int a_test =0;
-	
-	int t_cour_prec = 0;
-	int t_cour_suiv = 0;
-	int t_diff = 0;
-	
-	
-	//struct evt *evt_cour = NULL;
-	//struct ppf *ppf_cour = NULL;
+
     
     do{
 		system("clear");
@@ -309,7 +296,6 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
 				
 				for ( int j = 0;  j < nbr_ames_a_cree;  j = j+1)
 				{
-					// srand(time(NULL));    
 					nouveau = CreerMaillonAvecIDDamnesAleatoire(dernier_id_ppf+j+1);////test unitaire fonction ajoutete
 					InsererMaillonEnQueueDamnes(pt_tete,nouveau);
 					a_test = dernier_id_ppf+j+1;
@@ -328,21 +314,11 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
 				printf("\n*************Simulation début*************"); 
 				while (simu_en_marche == 1 && echeancier->t_cour < t_final_arret)
 				{					
-					t_cour_prec = echeancier->t_cour;
-					t_cour_suiv = echeancier->t_cour;
 					simu_en_marche = moteurSimulation(echeancier, pt_tete_cours_algo);
-					
-					t_cour_suiv = echeancier->t_cour;
-					//calcul
-					t_diff = t_cour_suiv - t_cour_prec;
-					
-					//sleep(t_diff);
-					
-					//system("clear");
+
 					printf("\nHorloge interne simulation:%d, Nbr Personne Cours Algo = %d, Arrivee = %d, Attente = %d, Début Torture = %d et Fin Torture = %d. Ames Pardonnees = %d", echeancier->t_cour, echeancier-> nb_pers_cours_algo, echeancier->nbr_evt_arrivee, echeancier->nbr_evt_attente, echeancier->nbr_evt_debut_torture, echeancier->nbr_evt_fin_torture, echeancier->nbr_ames_pardonnees);
 					fflush(stdout);
-					//printf("\nHorloge interne simulation:%d", echeancier->t_cour );
-					//afficherFileEvenement(echeancier);					
+	
 				}
 				printf("\nAppuyer sur ENTREE pour continuer:"); 
 				while ((getchar())!= '\n');
