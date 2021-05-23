@@ -32,8 +32,8 @@ void menu(PPF **pt_tete,PPF *nouveau,char *nomrech,FILE *database_PFF,COURS_ALGO
         printf ("|  5 | Test unitaire damnés: Séléction de l'Architecture des Enfers\n");
         printf ("|  6 | Test unitaire damnés: Séléction du temps de fin du programme\n\n");
         
-        printf ("|  5 | Sauvegarde MARCHE PAS\n");
-        printf ("|  6 | Chargement Sauvegarde MARCHE PAS\n\n");
+        printf ("|  5 | Sauvegarde \n");
+        printf ("|  6 | Chargement Sauvegarde \n\n");
         
         printf( "|  7 | Test unitaire torture : Creer et inserer d'un nouveau maillon ALGO\n");
         printf( "|  8 | Test unitaire torture : Afficher la liste des maillon dans ma chaine ALGO\n");
@@ -289,13 +289,16 @@ void InsererMaillonEnQueueDamnes(PPF **pt_tete,PPF *nouveau)
 
 void AfficherMaillonDamnes(PPF *pt_tete)
 {
+    printf("\n***************** Purgatoire actuelle *****************\n");
     if(pt_tete == NULL)
         printf("\nLa liste est vide");
     while (pt_tete != NULL)
     {
-        printf ("\nID: %d", pt_tete->id);
-        printf("\nNom: %s", pt_tete->name);
-        printf("\nNombre: %d", pt_tete->score);
+
+        printf ("\nID: %d\t\t", pt_tete->id);
+        printf("Nom: %s\t\t", pt_tete->name);
+        printf("Nombre: %d\t\t", pt_tete->score);
+        printf("Flag en cour de torture: %d\n",pt_tete->cpt);
         pt_tete= pt_tete->suiv;
     }
 }
