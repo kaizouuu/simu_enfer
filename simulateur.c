@@ -90,7 +90,7 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 					nouveau_cour_algo = CreerMaillonTortureCoursAlgoSimulation(Evt_a_traiter->id_ppf);
 					InsererMaillonEnQueueTortureCoursAlgo(pt_tete_cours_algo,nouveau_cour_algo);
 				}
-				//int a = Evt_a_traiter->duree_torture;
+	
 				Evt_cree = creerEvenement(Evt_a_traiter, FIN_TORTURE, A->t_cour+Evt_a_traiter->duree_torture); //LE PLUS 20 EST A MODIFIER EN FONCTION DU TEMPS QUE PREND LA TORTURE -> duree_torture
 				ajouterAvecPrioriteFileEvenement(A,  Evt_cree->id_ppf, Evt_cree->id_score, Evt_cree->type_evt,Evt_cree->duree_torture,  Evt_cree->t_evt, Evt_cree->type_torture);
 				A->nbr_evt_fin_torture ++;
@@ -115,7 +115,7 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 				etat = -1;
 				
 		}
-//AFFICHAGE
+
 	}
 	free(Evt_a_traiter);
 	return etat;
@@ -124,91 +124,38 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 
 
 void aiguillageDamnesArrivants(struct ech* echeancier, struct ppf * pt_tete,  int *identifiant, int aleatoire_bool, int t_final_arret)
-{
-	printf("\n\nAiguillageDamnesArrivants\n");
-	
+{	
 	int type_torture = 0; 
 	int duree_torture = 0;
 	int t_aleatoire = 0;
 	
 	struct ech *A = echeancier;
 	struct ppf *pt_damne_a_traiter = pt_tete;
-	printf("\n\nAiguillageDamnesArrivants\n");
-	printf("\n\nPT TETE VALEUR %d", pt_damne_a_traiter->id);
 	
 	while(pt_damne_a_traiter->id != *identifiant)
 	{
-		printf("\n\nAiguillageDamnesArrivantsBOUCLE\n");
 		pt_damne_a_traiter = pt_damne_a_traiter->suiv;
-		printf("\n\nAiguillageDamnesArrivantsBOUCLE\n");
 	}
-	
-	printf("\n%d\n", pt_damne_a_traiter->id);
-	printf("\n%d\n", pt_damne_a_traiter->score);
 		
 	if (pt_damne_a_traiter->score <= 0)
 	{
-		//~ printf("\n\nPARADIS\n");
-		//~ SupprimerMaillonIDDamnes(&pt_tete, *identifiant);
-		//~ A->nbr_ames_pardonnees ++;
 		//PARTIE CODE POUR UTILISATION DE PLUSIEURS TORTURES EVENTUELLES
 	}
 	else 
 	{
-		printf("\n\nBLABLA\n");
 		type_torture =1;
 		duree_torture = pt_damne_a_traiter->score / A->efficacite_algo;
 		echeancier->nbr_evt_arrivee ++;
 		
 	}
-/*	
-	else if ((pt_damne_a_traiter->score > 0 ) && (pt_damne_a_traiter->score <= 250))
-	{
-		
-		printf("\n\nCas où Marseillais\n");
-		type_torture = 1;
-		
-		duree_torture = pt_damne_a_traiter->score / *efficacite_mars;
-	}
-	else if ((pt_damne_a_traiter->score > 250  ) && (pt_damne_a_traiter->score <= 500))
-	{
-		printf("\n\nCas où Epilation\n");
-		type_torture = 2;
-		
-		duree_torture = (pt_damne_a_traiter->score - 250)/ *efficacite_epil;
-	}
-	
-	else if ((pt_damne_a_traiter->score > 500 ) && (pt_damne_a_traiter->score <= 750))
-	{
-		printf("\n\nCas où File Poste\n");
-		type_torture = 3;
-		
-		duree_torture = (pt_damne_a_traiter->score - 500)/ *efficacite_poste;
-	}
-	
-	else if (pt_damne_a_traiter->score > 750 )
-	{
-		printf("\n\nCas où Cours Algo\n");
-		type_torture = 4;
-		printf("\n\nCas où Cours Algo\n");
-		duree_torture = ((pt_damne_a_traiter->score) - 750)/ *efficacite_algo;
-	}
-*/
 
-	printf("\n\nAjout\n");
-	printf("\n\nBOOLEEN %d\n", aleatoire_bool);
-	
-	//ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+1, type_torture ); 
 	if (aleatoire_bool != 1)
 		ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+1, type_torture ); // génére des évènements arrivee
 	else
 	{
 		//srand(time(NULL));
-		printf("\n\nOK SRAND\n");
 		t_aleatoire = (rand() % t_final_arret-1) + 1; //+1 pour ne pas avoir d'évènement à t = 0 et -1 pour ne pas générer d'évènement après le tps de fin. 
-		printf("\n\nOK RAND\n");
 		ajouterAvecPrioriteFileEvenement(A,  pt_damne_a_traiter->id, pt_damne_a_traiter->score, 1, duree_torture, A->t_cour+t_aleatoire, type_torture ); // génére des évènements arrivee
-		printf("\n\ncouille\n");
 	}
 }
 
@@ -396,10 +343,10 @@ void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_
 					//calcul
 					t_diff = t_cour_suiv - t_cour_prec;
 					
-					sleep(t_diff);
+					//sleep(t_diff);
 					
 					//system("clear");
-					printf("\rHorloge interne simulation:%d, Nbr Personne Cours Algo = %d, Arrivee = %d, Attente = %d, Début Torture = %d et Fin Torture = %d. Ames Pardonnees = %d", echeancier->t_cour, echeancier-> nb_pers_cours_algo, echeancier->nbr_evt_arrivee, echeancier->nbr_evt_attente, echeancier->nbr_evt_debut_torture, echeancier->nbr_evt_fin_torture, echeancier->nbr_ames_pardonnees);
+					printf("\nHorloge interne simulation:%d, Nbr Personne Cours Algo = %d, Arrivee = %d, Attente = %d, Début Torture = %d et Fin Torture = %d. Ames Pardonnees = %d", echeancier->t_cour, echeancier-> nb_pers_cours_algo, echeancier->nbr_evt_arrivee, echeancier->nbr_evt_attente, echeancier->nbr_evt_debut_torture, echeancier->nbr_evt_fin_torture, echeancier->nbr_ames_pardonnees);
 					fflush(stdout);
 					//printf("\nHorloge interne simulation:%d", echeancier->t_cour );
 					//afficherFileEvenement(echeancier);
