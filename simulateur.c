@@ -10,7 +10,7 @@
 
 //*******************************Fonction Pour L'Aiguillage*************************************************
 
-int moteurSimulation(struct ech*A, struct cours_algo **pt_tete_cours_algo)
+int moteurSimulation(struct ech*A, struct cours_algo **pt_tete_cours_algo)//fais tourner la simulation
 {
 
 	struct evt *Evt_a_traiter = NULL; //Nous servira à garder les informations de ce qu'on retire de la file
@@ -123,7 +123,7 @@ Evt_a_traiter = malloc(sizeof(struct evt));
 
 
 
-void aiguillageDamnesArrivants(struct ech* echeancier, struct ppf * pt_tete,  int *identifiant, int aleatoire_bool, int t_final_arret)
+void aiguillageDamnesArrivants(struct ech* echeancier, struct ppf * pt_tete,  int *identifiant, int aleatoire_bool, int t_final_arret)//genere un evenement d'arriver et aiguille dans les torture
 {	
 	int type_torture = 0; 
 	int duree_torture = 0;
@@ -160,14 +160,14 @@ void aiguillageDamnesArrivants(struct ech* echeancier, struct ppf * pt_tete,  in
 }
 
 
-void selectionTempsArret(int * tps)
+void selectionTempsArret(int * tps)//selection le temps final de la simu
 {
 	printf("\nVeuillez sélectionner le temps d'arrêt de la simulation: ");
 		scanf("%d",tps);
 }		
 
 
-void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_cours_algo, struct cours_algo *nouveau_cour_algo, struct ech* echeancier)
+void menu(struct ppf **pt_tete, struct ppf*nouveau, struct cours_algo **pt_tete_cours_algo, struct cours_algo *nouveau_cour_algo, struct ech* echeancier)//affichage du menu et utilisation des fonctions
 {
     int i = 0 ;
     int q = 0, r=0, s=0, t=0, u=0, v=0 ; ; //utilisé en test 15 pour retirer dans la structure évènement

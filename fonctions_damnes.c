@@ -11,7 +11,7 @@
 
 
 
-struct ppf* CreerMaillonAvecIDDamnesAleatoire(int identifiant_damne)
+struct ppf* CreerMaillonAvecIDDamnesAleatoire(int identifiant_damne)//creer un maillon avec un score de dépravation aléatoire
 {
     struct ppf *pt_maillon = NULL;
     pt_maillon = malloc(sizeof(struct ppf));
@@ -23,7 +23,7 @@ struct ppf* CreerMaillonAvecIDDamnesAleatoire(int identifiant_damne)
     return pt_maillon;
 }
 
-void InsererMaillonEnQueueDamnes(struct ppf **pt_tete,struct ppf *nouveau)
+void InsererMaillonEnQueueDamnes(struct ppf **pt_tete,struct ppf *nouveau)//insere un ppf en queue
 
 {
     struct ppf *temp= *pt_tete;
@@ -41,7 +41,7 @@ void InsererMaillonEnQueueDamnes(struct ppf **pt_tete,struct ppf *nouveau)
 }
 
 
-void AfficherMaillonDamnes(struct ppf *pt_tete)
+void AfficherMaillonDamnes(struct ppf *pt_tete)//affiche le purgatoire
 {
     if(pt_tete == NULL)
         printf("\nLa liste est vide");
@@ -56,7 +56,7 @@ void AfficherMaillonDamnes(struct ppf *pt_tete)
 
 
 
-void supprimerDamnes_DoublePointeur(struct ppf **pt_tete, int *qui)
+void supprimerDamnes_DoublePointeur(struct ppf **pt_tete, int *qui)//supprime les damné
 {
     struct ppf *pt_prec = *pt_tete;
     struct ppf *pt_courant = *pt_tete;

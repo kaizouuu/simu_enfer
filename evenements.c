@@ -7,7 +7,7 @@
 #include "simulateur.h"
 #include "torture.h"
 
-struct evt* creerEvenement(struct evt* Evt_a_traiter, int type_evt, int t_evt)
+struct evt* creerEvenement(struct evt* Evt_a_traiter, int type_evt, int t_evt)// creer le maillon de l'evenement
 {
 	struct evt *E = NULL;
 	E =  malloc(sizeof(struct evt));
@@ -60,7 +60,7 @@ struct evt* creerEvenement(struct evt* Evt_a_traiter, int type_evt, int t_evt)
 }
 
 
-void afficherFileEvenement(struct ech*F)
+void afficherFileEvenement(struct ech*F)//affiche l'echéancier
 {
 			struct evt *cour = NULL;
 			cour = F->debut;
@@ -81,7 +81,7 @@ void afficherFileEvenement(struct ech*F)
 //AUTRE TRUC AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 
 
-void initFileEvenement(struct ech *F)
+void initFileEvenement(struct ech *F) //si on veut mettre une limite pour les evenement
 {
 	F->t_cour = 0;                  
 	F->nb_evt = 0;                        
@@ -99,13 +99,13 @@ void initFileEvenement(struct ech *F)
 
 int filevideEvenement(struct ech *F)		/* retourne 1 si la file est vide, 0 sinon*/
 {	if (F->debut == NULL)
-		return 1;
+		return 1;							 //si on veut mettre une limite pour les evenement
 	else
 		return 0;
 }
 
 int filepleineEvenement(struct ech*F)	/* retourne 1 si la file est pleine SIZEMAX, 0 sinon*/
-{
+{											 //si on veut mettre une limite pour les evenement
 	int iNb = 0;
 	struct evt *cour;	
 	for(cour = F->debut; cour != NULL; cour = cour->suiv)
@@ -119,7 +119,7 @@ int filepleineEvenement(struct ech*F)	/* retourne 1 si la file est pleine SIZEMA
 
 int retirerFileEvenement(struct ech *F, int *id_ppf, int *id_score, int *type_evt, int * duree_torture, int *t_evt, int *type_torture) //On envoie Id_retire en pointeur, donc on l'a quand même à la fin de la simulation
 {	
-	struct evt *aSupp;
+	struct evt *aSupp;																													//retire le maillon en tete
 	if(filevideEvenement(F)==1)
 	{	printf("\nFile vide\n");
 		return 0;
@@ -142,7 +142,7 @@ int retirerFileEvenement(struct ech *F, int *id_ppf, int *id_score, int *type_ev
 }
 
 
-void ajouterAvecPrioriteFileEvenement(struct ech *F, int id_ppf, int id_score, int type_evt, int duree_torture, int t_evt, int type_torture)
+void ajouterAvecPrioriteFileEvenement(struct ech *F, int id_ppf, int id_score, int type_evt, int duree_torture, int t_evt, int type_torture)//ajoute le maillon à la bonne place
 {	
 	struct evt*E = NULL;
 	struct evt*E_cour = F->debut; 
@@ -194,7 +194,7 @@ void ajouterAvecPrioriteFileEvenement(struct ech *F, int id_ppf, int id_score, i
 	}
 }
 
-void selectionArchitecture(struct ech *A)
+void selectionArchitecture(struct ech *A)//permet à l'utilisateur de rentrer le nombre de place de la torture et son efficacité
 {
     printf("\n\nCombien de salles voulez-vous affecter à la section de torture par cours d'algorithmique ?\t");    
     scanf ("%d", &A->nb_place_cours_algo);

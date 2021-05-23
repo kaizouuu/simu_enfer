@@ -11,7 +11,7 @@
 //fonction pour creer les totures
 //********************************FONCTION LISTE TORTURE COURS D'ALGO**********************************************************//
 
-struct cours_algo* CreerMaillonTortureCoursAlgoSimulation(int id_ppf)
+struct cours_algo* CreerMaillonTortureCoursAlgoSimulation(int id_ppf)//creer un maillon de torture
 {
     struct cours_algo*pt_maillon = NULL;
     pt_maillon = (struct cours_algo*)malloc(sizeof(struct cours_algo));
@@ -51,7 +51,7 @@ void InsererMaillonEnQueueTortureCoursAlgo(struct cours_algo **pt_tete_cours_alg
     }
 }
 
-void AfficherMaillonTortureCoursAlgo(struct cours_algo *pt_tete_cours_algo)
+void AfficherMaillonTortureCoursAlgo(struct cours_algo *pt_tete_cours_algo)//affiche les salles de tortures
 {
     {
         if(pt_tete_cours_algo == NULL)
@@ -65,7 +65,7 @@ void AfficherMaillonTortureCoursAlgo(struct cours_algo *pt_tete_cours_algo)
     }
 }
 
-void RechercherMaillonTortureCoursAlgo(struct cours_algo *pt_tete_cours_algo,int nombrerech)
+void RechercherMaillonTortureCoursAlgo(struct cours_algo *pt_tete_cours_algo,int nombrerech)//recherche un damné par son id
 {
     if (pt_tete_cours_algo == NULL)
         printf ("\nLa liste est vide");
@@ -85,7 +85,7 @@ void RechercherMaillonTortureCoursAlgo(struct cours_algo *pt_tete_cours_algo,int
     }
 }
 
-void SupprimerMaillonTortureCoursAlgo(struct cours_algo **pt_tete_cours_algo,int nombrerech)
+void SupprimerMaillonTortureCoursAlgo(struct cours_algo **pt_tete_cours_algo,int nombrerech)//supprime un damné par son id
 {
     struct cours_algo *pt_courant = *pt_tete_cours_algo;
     struct cours_algo *pt_precedent = *pt_tete_cours_algo;
